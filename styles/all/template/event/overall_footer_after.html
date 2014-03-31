@@ -1,0 +1,48 @@
+<!-- IF S_LIGHTBOX_RESIZE -->
+
+<!-- INCLUDEJS @vse_lightbox/lightbox/js/lightbox.min.js -->
+
+<script>
+
+;(function ($, window) { // prevent conflicts with other javascript libraries
+
+	$(function () {
+
+		var resizeWidth = {LIGHTBOX_RESIZE_WIDTH},
+			targetImage = $(".postimage");
+
+		if (resizeWidth > 0 && $(window).width() > 480) {
+			targetImage.css("maxWidth", resizeWidth + "px")
+		}
+
+		targetImage.one("load", function () {
+			// do not lightbox images intentionally wrapped in external links
+			if ($(this).closest(".postlink").length > 0) return;
+			// is the image treated as a thumbnail already by phpbb?
+			var thumbnail = $(this).closest(".thumbnail").length > 0;
+			// lightbox any image that has been resized or is a thumbail
+			if ($(this).width() >= resizeWidth || thumbnail) {
+				$(this).wrap(function() {
+					var url, title;
+					if (thumbnail)  {
+						url = $(this).parent("a").attr("href");
+						title = $(this).attr("alt");
+						$(this).parent("a").removeAttr("href");
+					} else {
+						url = $(this).attr("src");
+						title = ($(this).parent(".attach-image").length > 0) ? $(this).attr("alt") : url.split("/").pop();
+					} 
+					return "<a href='" + url + "' data-lightbox='post-gallery' data-title='" + title +"'></a>";
+				});
+			}
+		}).each(function() {
+  		  if(this.complete) $(this).load();
+	  	});
+
+	});
+	
+})(jQuery, window);
+
+</script>
+
+<!-- ENDIF -->

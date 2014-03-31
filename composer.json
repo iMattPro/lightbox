@@ -1,0 +1,21 @@
+{
+    "name": "vse/lightbox",
+    "type": "phpbb-extension",
+    "description": "Lightbox for phpBB 3.1.",
+    "version": "1.0.0",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Matt Friedman (VSE)",
+            "homepage": "http://mattfriedman.me",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "phpbb/phpbb": "3.1.*@dev"
+    },
+    "extra": {
+        "display-name": "Lightbox"
+    }
+}
