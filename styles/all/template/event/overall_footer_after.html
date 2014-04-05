@@ -1,48 +1,47 @@
 <!-- IF S_LIGHTBOX_RESIZE -->
-
 <!-- INCLUDEJS @vse_lightbox/lightbox/js/lightbox.min.js -->
-
+<!-- DEFINE $LIGHTBOX_GALLERY = 'false' -->
 <script>
-
-;(function ($, window) { // prevent conflicts with other javascript libraries
-
+;(function ($, window) {
 	$(function () {
-
 		var resizeWidth = {LIGHTBOX_RESIZE_WIDTH},
-			targetImage = $(".postimage");
-
+			targetImage = $(".postimage"),
+			galleryName = "post-gallery",
+			indexImage = 0;
 		if (resizeWidth > 0 && $(window).width() > 480) {
-			targetImage.css("maxWidth", resizeWidth + "px")
+			targetImage.css("max-width", resizeWidth + "px");
+		} else {
+			return;
 		}
-
 		targetImage.one("load", function () {
-			// do not lightbox images intentionally wrapped in external links
 			if ($(this).closest(".postlink").length > 0) return;
-			// is the image treated as a thumbnail already by phpbb?
-			var thumbnail = $(this).closest(".thumbnail").length > 0;
-			// lightbox any image that has been resized or is a thumbail
-			if ($(this).width() >= resizeWidth || thumbnail) {
-				$(this).wrap(function() {
-					var url, title;
-					if (thumbnail)  {
-						url = $(this).parent("a").attr("href");
-						title = $(this).attr("alt");
-						$(this).parent("a").removeAttr("href");
-					} else {
-						url = $(this).attr("src");
-						title = ($(this).parent(".attach-image").length > 0) ? $(this).attr("alt") : url.split("/").pop();
-					} 
-					return "<a href='" + url + "' data-lightbox='post-gallery' data-title='" + title +"'></a>";
+			indexImage = ({$LIGHTBOX_GALLERY}) ? '' : indexImage + 1;
+			if ($(this).parent("a").length > 0) {
+				$(this).parent("a").attr({
+					"data-lightbox": galleryName + indexImage,
+					"data-title": $(this).attr("alt")
 				});
 			}
-		}).each(function() {
-  		  if(this.complete) $(this).load();
-	  	});
-
+			else if ($(this).width() >= resizeWidth) {
+				$(this).wrap(function () {
+					var url = $(this).attr("src"),
+						title = (url.indexOf('download/file.php') !== -1) ? $(this).attr("alt") : url.split("/").pop();
+					return "<a href='" + url + "' data-lightbox='" + galleryName + indexImage + "' data-title='" + title + "'></a>";
+				}).css({
+					"border": "solid 3px transparent",
+					"transition": "border-color 0.1s ease-out",
+					"border-radius": "6px",
+					"cursor": "pointer"
+				}).hover(function () {
+					$(this).css("border-color", "#4ae");
+				}, function () {
+					$(this).css("border-color", "transparent");
+				});
+			}
+		}).each(function () {
+			if (this.complete) $(this).load();
+		});
 	});
-	
 })(jQuery, window);
-
 </script>
-
 <!-- ENDIF -->
