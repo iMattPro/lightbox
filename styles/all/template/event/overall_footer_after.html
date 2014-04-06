@@ -2,8 +2,24 @@
 <!-- INCLUDEJS @vse_lightbox/lightbox/js/lightbox.min.js -->
 <!-- DEFINE $LIGHTBOX_GALLERY = 'false' -->
 <script>
-;(function ($, window) {
-	$(function () {
+;(function($, window) {
+	$.fn.extend({
+		borderHover: function() {
+			return this.each(function() {
+				$(this).css({
+					"border": "solid 3px transparent",
+					"transition": "border-color 0.1s ease-out",
+					"border-radius": "6px",
+					"cursor": "pointer"
+				}).hover(function() {
+					$(this).css("border-color", "#4ae");
+				}, function() {
+					$(this).css("border-color", "transparent");
+				});
+			});
+		}
+	});
+	$(function() {
 		var resizeWidth = {LIGHTBOX_RESIZE_WIDTH},
 			targetImage = $(".postimage"),
 			galleryName = "post-gallery",
@@ -13,32 +29,23 @@
 		} else {
 			return;
 		}
-		targetImage.one("load", function () {
+		targetImage.one("load", function() {
 			if ($(this).closest(".postlink").length > 0) return;
 			indexImage = ({$LIGHTBOX_GALLERY}) ? '' : indexImage + 1;
 			if ($(this).parent("a").length > 0) {
 				$(this).parent("a").attr({
 					"data-lightbox": galleryName + indexImage,
 					"data-title": $(this).attr("alt")
-				});
+				}).end().borderHover();
 			}
 			else if ($(this).width() >= resizeWidth) {
-				$(this).wrap(function () {
+				$(this).wrap(function() {
 					var url = $(this).attr("src"),
 						title = (url.indexOf('download/file.php') !== -1) ? $(this).attr("alt") : url.split("/").pop();
 					return "<a href='" + url + "' data-lightbox='" + galleryName + indexImage + "' data-title='" + title + "'></a>";
-				}).css({
-					"border": "solid 3px transparent",
-					"transition": "border-color 0.1s ease-out",
-					"border-radius": "6px",
-					"cursor": "pointer"
-				}).hover(function () {
-					$(this).css("border-color", "#4ae");
-				}, function () {
-					$(this).css("border-color", "transparent");
-				});
+				}).borderHover();
 			}
-		}).each(function () {
+		}).each(function() {
 			if (this.complete) $(this).load();
 		});
 	});
