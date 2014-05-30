@@ -60,8 +60,8 @@ class listener implements EventSubscriberInterface
 	public function lightbox_setup($event)
 	{
 		$this->template->assign_vars(array(
-			'S_LIGHTBOX_RESIZE' => (!empty($this->config['img_create_thumbnail'])) ? true : false,
-			'LIGHTBOX_RESIZE_WIDTH' => (!empty($this->config['img_max_thumb_width'])) ? $this->config['img_max_thumb_width'] : 0,
+			'S_LIGHTBOX_RESIZE' => $this->config['img_create_thumbnail'],
+			'LIGHTBOX_RESIZE_WIDTH' => $this->config['img_max_thumb_width'] ?: 0,
 		));
 	}
 }
