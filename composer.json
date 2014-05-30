@@ -20,9 +20,9 @@
     "extra": {
         "display-name": "Lightbox",
 		"version-check": {
-			"host": "mattfriedman.me",
-			"directory": "/software",
-			"filename": "lightbox.json"
+			"host": "vsephpbb.github.io",
+			"directory": "/lightbox",
+			"filename": "version.json"
 		}
     }
 }
