@@ -19,10 +19,10 @@
     },
     "extra": {
         "display-name": "Lightbox",
-		"version-check": {
-			"host": "vsephpbb.github.io",
-			"directory": "/lightbox",
-			"filename": "version.json"
-		}
+        "version-check": {
+            "host": "vsephpbb.github.io",
+            "directory": "/lightbox",
+            "filename": "version.json"
+        }
     }
 }
