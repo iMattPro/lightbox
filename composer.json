@@ -27,8 +27,8 @@
 		},
 		"version-check": {
 			"host": "vsephpbb.github.io",
-			"directory": "/lightbox",
-			"filename": "version.json"
+			"directory": "/version",
+			"filename": "lightbox.json"
 		}
 	}
 }
