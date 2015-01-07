@@ -34,8 +34,9 @@ $(function() {
 	var resizeWidth = {LIGHTBOX_RESIZE_WIDTH},
 		targetImage = $('.postimage'),
 		galleryName = 'post-gallery',
-		imagesIndex = 0;
-	if (resizeWidth > 0 && $(window).width() > 900) {
+		imagesIndex = 0,
+		mobileWidth = 900;
+	if (resizeWidth > 0 && $(window).width() > mobileWidth) {
 		targetImage.css('max-width', resizeWidth + 'px');
 	} else {
 		return;
