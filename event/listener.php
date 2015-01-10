@@ -28,7 +28,6 @@ class listener implements EventSubscriberInterface
 	*
 	* @param \phpbb\config\config        $config             Config object
 	* @param \phpbb\template\template    $template           Template object
-	* @return \vse\lightbox\event\listener
 	* @access public
 	*/
 	public function __construct(\phpbb\config\config $config, \phpbb\template\template $template)
