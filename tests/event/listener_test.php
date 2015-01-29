@@ -15,11 +15,6 @@ class listener_test extends \phpbb_test_case
 	/** @var \vse\lightbox\event\listener */
 	protected $listener;
 
-	/**
-	* Setup test environment
-	*
-	* @access public
-	*/
 	public function setUp()
 	{
 		parent::setUp();
@@ -29,11 +24,6 @@ class listener_test extends \phpbb_test_case
 		$this->config = new \phpbb\config\config(array());
 	}
 
-	/**
-	* Create our event listener
-	*
-	* @access protected
-	*/
 	protected function set_listener()
 	{
 		$this->listener = new \vse\lightbox\event\listener(
@@ -42,22 +32,12 @@ class listener_test extends \phpbb_test_case
 		);
 	}
 
-	/**
-	* Test the event listener is constructed correctly
-	*
-	* @access public
-	*/
 	public function test_construct()
 	{
 		$this->set_listener();
 		$this->assertInstanceOf('\Symfony\Component\EventDispatcher\EventSubscriberInterface', $this->listener);
 	}
 
-	/**
-	* Test the event listener is subscribing events
-	*
-	* @access public
-	*/
 	public function test_getSubscribedEvents()
 	{
 		$this->assertEquals(array(
@@ -65,12 +45,6 @@ class listener_test extends \phpbb_test_case
 		), array_keys(\vse\lightbox\event\listener::getSubscribedEvents()));
 	}
 
-	/**
-	* Data set for test_lightbox_setup
-	*
-	* @return array Array of test data
-	* @access public
-	*/
 	public function lightbox_setup_data()
 	{
 		return array(
@@ -106,10 +80,7 @@ class listener_test extends \phpbb_test_case
 	}
 
 	/**
-	* Test the lightbox_setup event
-	*
 	* @dataProvider lightbox_setup_data
-	* @access public
 	*/
 	public function test_lightbox_setup($img_create_thumbnail, $img_max_thumb_width, $expected)
 	{
