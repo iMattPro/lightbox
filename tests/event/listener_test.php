@@ -14,14 +14,17 @@ class listener_test extends \phpbb_test_case
 {
 	/** @var \vse\lightbox\event\listener */
 	protected $listener;
+	protected $config;
+	protected $template;
 
 	public function setUp()
 	{
 		parent::setUp();
 
 		// Load/Mock classes required by the event listener class
-		$this->template = new \vse\lightbox\tests\mock\template();
 		$this->config = new \phpbb\config\config(array());
+		$this->template = $this->getMockBuilder('\phpbb\template\template')
+			->getMock();
 	}
 
 	protected function set_listener()
@@ -91,10 +94,12 @@ class listener_test extends \phpbb_test_case
 
 		$this->set_listener();
 
+		$this->template->expects($this->once())
+			->method('assign_vars')
+			->with($expected);
+
 		$dispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
 		$dispatcher->addListener('core.page_header', array($this->listener, 'lightbox_setup'));
 		$dispatcher->dispatch('core.page_header');
-
-		$this->assertEquals($expected, $this->template->get_template_vars());
 	}
 }
