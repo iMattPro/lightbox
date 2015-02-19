@@ -1,11 +1,9 @@
-{% if S_LIGHTBOX_RESIZE %}
+{% if LIGHTBOX_RESIZE_WIDTH %}
 
 <!-- IF not $INCLUDED_LIGHTBOXJS -->
 	<!-- INCLUDEJS @vse_lightbox/lightbox/js/lightbox.min.js -->
 	<!-- DEFINE $INCLUDED_LIGHTBOXJS = true -->
 <!-- ENDIF -->
-
-{% set LIGHTBOX_GALLERY = 'false' %}
 
 <script>
 
@@ -36,6 +34,11 @@ $(function() {
 		galleryName = 'post-gallery',
 		imagesIndex = 0,
 		mobileWidth = 900;
+	{% if not S_LIGHTBOX_SIGNATURES %}
+		targetImage = targetImage.not(function() {
+			return $(this).closest('.signature').length > 0;
+		});
+	{% endif %}
 	if (resizeWidth > 0 && $(window).width() > mobileWidth) {
 		targetImage.css('max-width', resizeWidth + 'px');
 	} else {
@@ -46,7 +49,7 @@ $(function() {
 	setTimeout(function() {
 		targetImage.one('load', function() {
 			if ($(this).closest('.postlink').length > 0) return;
-			imagesIndex = ({{ LIGHTBOX_GALLERY }}) ? '' : imagesIndex + 1;
+			imagesIndex = ({{ S_LIGHTBOX_GALLERY }}) ? '' : imagesIndex + 1;
 			if ($(this).parent('a').length > 0) {
 				$(this).parent('a').attr({
 					'data-lightbox': galleryName + imagesIndex,
