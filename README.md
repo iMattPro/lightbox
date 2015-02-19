@@ -5,7 +5,7 @@ This extension adds the [Lightbox 2](http://lokeshdhakar.com/projects/lightbox2/
 [![Build Status](https://travis-ci.org/VSEphpbb/lightbox.png)](https://travis-ci.org/VSEphpbb/lightbox)
 
 ## Requirements
-* phpBB 3.1.0-RC2 or higher
+* phpBB 3.1.0 or higher
 * PHP 5.3.3 or higher
 
 Note: This extension is in development. Installation is only recommended for testing purposes and is not supported on live boards. This extension will be officially released following phpBB 3.1.0.
@@ -17,10 +17,9 @@ Note: This extension is in development. Installation is only recommended for tes
 4. Find Lightbox under "Disabled Extensions" and click `Enable`.
 
 ## Usage
-1. Navigate in the ACP to `Attachment settings`.
-2. Set `Create thumbnail` to `Yes`.
-3. Set the `Maximum thumbnail width in pixel` to your desired resize width.
-4. Click `Submit`.
+1. Navigate in the ACP to `Board features -> Lightbox settings`.
+2. Set the `Maximum image width in pixel` to your desired resize width.
+3. Click `Submit`.
 
 ## Uninstallation
 1. Navigate in the ACP to `Customise -> Manage extensions`.
