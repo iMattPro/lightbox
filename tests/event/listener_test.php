@@ -59,7 +59,12 @@ class listener_test extends \phpbb_test_case
 		), array_keys(\vse\lightbox\event\listener::getSubscribedEvents()));
 	}
 
-	public function lightbox_setup_data()
+	/**
+	 * Data set for test_set_lightbox_tpl_data
+	 *
+	 * @return array Array of test data
+	 */
+	public function set_lightbox_tpl_data_test_data()
 	{
 		return array(
 			array(400, 1, 1, array(
@@ -101,9 +106,15 @@ class listener_test extends \phpbb_test_case
 	}
 
 	/**
-	* @dataProvider lightbox_setup_data
-	*/
-	public function test_lightbox_setup($img_create_thumbnail, $img_max_thumb_width, $expected)
+	 * Test the set_lightbox_tpl_data event
+	 *
+	 * @param $lightbox_max_width
+	 * @param $lightbox_gallery
+	 * @param $lightbox_signatures
+	 * @param $expected
+	 * @dataProvider set_lightbox_tpl_data_test_data
+	 */
+	public function test_set_lightbox_tpl_data($lightbox_max_width, $lightbox_gallery, $lightbox_signatures, $expected)
 	{
 		$this->config = new \phpbb\config\config(array(
 			'lightbox_max_width'	=> $lightbox_max_width,
@@ -118,7 +129,7 @@ class listener_test extends \phpbb_test_case
 			->with($expected);
 
 		$dispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
-		$dispatcher->addListener('core.page_header', array($this->listener, 'lightbox_setup'));
+		$dispatcher->addListener('core.page_header', array($this->listener, 'set_lightbox_tpl_data'));
 		$dispatcher->dispatch('core.page_header');
 	}
 

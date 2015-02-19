@@ -1,20 +1,20 @@
 <?php
 /**
-*
-* Lightbox extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2014 Matt Friedman
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Lightbox extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2014 Matt Friedman
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace vse\lightbox\event;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
-* Event listener
-*/
+ * Event listener
+ */
 class listener implements EventSubscriberInterface
 {
 	/** @var \phpbb\config\config */
@@ -42,28 +42,27 @@ class listener implements EventSubscriberInterface
 	}
 
 	/**
-	* Assign functions defined in this class to event listeners in the core
-	*
-	* @return array
-	* @static
-	* @access public
-	*/
+	 * Assign functions defined in this class to event listeners in the core
+	 *
+	 * @return array
+	 * @static
+	 * @access public
+	 */
 	static public function getSubscribedEvents()
 	{
 		return array(
-			'core.page_header'	=> 'lightbox_setup',
+			'core.page_header'					=> 'set_lightbox_tpl_data',
 			'core.acp_board_config_edit_add'	=> 'add_lightbox_acp_config',
 		);
 	}
 
 	/**
-	* Setup Lightbox settings
-	*
-	* @param object $event The event object
-	* @return null
-	* @access public
-	*/
-	public function lightbox_setup($event)
+	 * Set Lightbox template data
+	 *
+	 * @return null
+	 * @access public
+	 */
+	public function set_lightbox_tpl_data()
 	{
 		$this->template->assign_vars(array(
 			'LIGHTBOX_RESIZE_WIDTH'	=> (int) $this->config['lightbox_max_width'],
