@@ -51,12 +51,14 @@ $(function() {
 			if ($(this).closest('.postlink').length > 0) return;
 			imagesIndex = ({{ S_LIGHTBOX_GALLERY }}) ? '' : imagesIndex + 1;
 			if ($(this).parent('a').length > 0) {
-				$(this).parent('a').attr({
-					'data-lightbox': galleryName + imagesIndex,
-					'data-title': $(this).attr('alt')
-				}).end().borderHover();
+				if ($(this).outerWidth() >= resizeWidth) {
+					$(this).parent('a').attr({
+						'data-lightbox': galleryName + imagesIndex,
+						'data-title': $(this).attr('alt')
+					}).end().borderHover();
+				}
 			}
-			else if ($(this).width() >= resizeWidth) {
+			else if ($(this).outerWidth() >= resizeWidth) {
 				$(this).wrap(function() {
 					var url = $(this).attr('src');
 					return $('<a/>').attr({
