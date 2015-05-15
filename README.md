@@ -12,9 +12,9 @@ Note: This extension is in development. Installation is only recommended for tes
 
 ## Installation
 1. [Download the latest release](https://github.com/VSEphpbb/lightbox/releases) and unzip it.
-2. Copy the entire contents from the unzipped folder to `phpBB/ext/vse/lightbox/`.
+2. Unzip the downloaded release and copy it to the `ext` directory of your phpBB board.
 3. Navigate in the ACP to `Customise -> Manage extensions`.
-4. Find Lightbox under "Disabled Extensions" and click `Enable`.
+4. Look for `Lightbox` under the Disabled Extensions list, and click its `Enable` link.
 
 ## Usage
 1. Navigate in the ACP to `Board features -> Lightbox settings`.
