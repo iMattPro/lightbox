@@ -32,7 +32,6 @@ $(function() {
 	var resizeWidth = {{ LIGHTBOX_RESIZE_WIDTH }},
 		targetImage = $('.postimage'),
 		galleryName = 'post-gallery',
-		imagesIndex = 0,
 		mobileWidth = 900;
 	{% if not S_LIGHTBOX_SIGNATURES %}
 		targetImage = targetImage.not(function() {
@@ -49,11 +48,11 @@ $(function() {
 	setTimeout(function() {
 		targetImage.one('load', function() {
 			if ($(this).closest('.postlink').length > 0) return;
-			imagesIndex = ({{ S_LIGHTBOX_GALLERY }}) ? '' : imagesIndex + 1;
+			var imgIndex = ({{ S_LIGHTBOX_GALLERY }}) ? '' : targetImage.index(this);
 			if ($(this).parent('a').length > 0) {
 				if ($(this).outerWidth() >= resizeWidth) {
 					$(this).parent('a').attr({
-						'data-lightbox': galleryName + imagesIndex,
+						'data-lightbox': galleryName + imgIndex,
 						'data-title': $(this).attr('alt')
 					}).end().borderHover();
 				}
@@ -63,7 +62,7 @@ $(function() {
 					var url = $(this).attr('src');
 					return $('<a/>').attr({
 						'href': url,
-						'data-lightbox': galleryName + imagesIndex,
+						'data-lightbox': galleryName + imgIndex,
 						'data-title': (url.indexOf('download/file.php') !== -1) ? $(this).attr('alt') : url.split('/').pop()
 					});
 				}).borderHover();
