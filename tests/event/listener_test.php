@@ -20,10 +20,10 @@ class listener_test extends \phpbb_test_case
 	/** @var \phpbb\config\config */
 	protected $config;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\template\template|\PHPUnit_Framework_MockObject_MockObject */
 	protected $template;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\user|\PHPUnit_Framework_MockObject_MockObject */
 	protected $user;
 
 	public function setUp()
