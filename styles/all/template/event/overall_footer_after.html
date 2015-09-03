@@ -1,80 +1,13 @@
 {% if LIGHTBOX_RESIZE_WIDTH %}
-
-<!-- IF not $INCLUDED_LIGHTBOXJS -->
-	<!-- INCLUDEJS @vse_lightbox/lightbox/js/lightbox.min.js -->
-	<!-- DEFINE $INCLUDED_LIGHTBOXJS = true -->
-<!-- ENDIF -->
-
-<script>
-
-(function($) {  // Avoid conflicts with other libraries
-
-'use strict';
-
-$.fn.extend({
-	borderHover: function() {
-		return this.each(function() {
-			$(this).css({
-				'border': 'solid 3px transparent',
-				'transition': 'border-color 0.1s ease-out',
-				'border-radius': '6px',
-				'cursor': 'pointer'
-			}).hover(function() {
-				$(this).css('border-color', '#4ae');
-			}, function() {
-				$(this).css('border-color', 'transparent');
-			});
-		});
-	}
-});
-
-$(function() {
-	var resizeWidth = {{ LIGHTBOX_RESIZE_WIDTH }},
-		targetImage = $('.postimage'),
-		galleryName = 'post-gallery',
-		mobileWidth = 900;
-	{% if not S_LIGHTBOX_SIGNATURES %}
-		targetImage = targetImage.not(function() {
-			return $(this).closest('.signature').length > 0;
-		});
+	{% INCLUDEJS '@vse_lightbox/js/lightbox.js' %}
+	{% if not definition.INCLUDED_LIGHTBOXJS %}
+		{% INCLUDEJS '@vse_lightbox/lightbox/js/lightbox.min.js' %}
+		{% DEFINE INCLUDED_LIGHTBOXJS = true %}
 	{% endif %}
-	if (resizeWidth > 0 && $(window).width() > mobileWidth) {
-		targetImage.css('max-width', resizeWidth + 'px');
-	} else {
-		return;
-	}
-	// enclosing the following in a setTimeout seems to solve issues with
-	// images not being ready and causing $(this).width() to return 0.
-	setTimeout(function() {
-		targetImage.one('load', function() {
-			if ($(this).closest('.postlink').length > 0) return;
-			var imgIndex = ({{ S_LIGHTBOX_GALLERY }}) ? '' : targetImage.index(this);
-			if ($(this).parent('a').length > 0) {
-				if ($(this).outerWidth() >= resizeWidth) {
-					$(this).parent('a').attr({
-						'data-lightbox': galleryName + imgIndex,
-						'data-title': $(this).attr('alt')
-					}).end().borderHover();
-				}
-			}
-			else if ($(this).outerWidth() >= resizeWidth) {
-				$(this).wrap(function() {
-					var url = $(this).attr('src');
-					return $('<a/>').attr({
-						'href': url,
-						'data-lightbox': galleryName + imgIndex,
-						'data-title': (url.indexOf('download/file.php') !== -1) ? $(this).attr('alt') : url.split('/').pop()
-					});
-				}).borderHover();
-			}
-		}).each(function() {
-			if (this.complete) $(this).load();
-		});
-	}, 0);
-});
-
-})(jQuery);
-
-</script>
-
+	<script>
+		var vseLightbox = {};
+		vseLightbox.resizeWidth = {{ LIGHTBOX_RESIZE_WIDTH }};
+		vseLightbox.lightboxGal = {{ S_LIGHTBOX_GALLERY }};
+		vseLightbox.lightboxSig = {{ S_LIGHTBOX_SIGNATURES }};
+	</script>
 {% endif %}
