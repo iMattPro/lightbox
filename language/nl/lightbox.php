@@ -2,10 +2,10 @@
 /**
  *
  * Lightbox extension for the phpBB Forum Software package.
+ * [Dutch] translated by Dutch Translators (https://github.com/dutch-translators)
  *
  * @copyright (c) 2015 Matt Friedman
  * @license GNU General Public License, version 2 (GPL-2.0)
- * [Dutch] translated by Dutch Translators (https://github.com/dutch-translators)
  *
  */
 

@@ -2,6 +2,7 @@
 /**
  *
  * Lightbox extension for the phpBB Forum Software package.
+ * Translation by phpbb-es
  *
  * @copyright (c) 2015 Matt Friedman
  * @license GNU General Public License, version 2 (GPL-2.0)

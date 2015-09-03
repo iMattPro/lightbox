@@ -2,10 +2,10 @@
 /**
  *
  * Lightbox extension for the phpBB Forum Software package.
+ * Polish translation by HPK.
  *
  * @copyright (c) 2015 Matt Friedman
  * @license GNU General Public License, version 2 (GPL-2.0)
- * @polish translation by HPK
  *
  */
 
