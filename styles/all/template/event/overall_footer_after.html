@@ -1,5 +1,6 @@
 {% if LIGHTBOX_RESIZE_WIDTH %}
 	{% INCLUDEJS '@vse_lightbox/js/resizer.js' %}
+	{# Test $INCLUDED_LIGHTBOXJS is not defined #}
 	{% if not definition.INCLUDED_LIGHTBOXJS %}
 		{% INCLUDEJS '@vse_lightbox/lightbox/js/lightbox.min.js' %}
 		{% DEFINE INCLUDED_LIGHTBOXJS = true %}
