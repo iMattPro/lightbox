@@ -23,7 +23,7 @@
 		var $targetImage = $('.postimage'),
 			galleryName = 'post-gallery',
 			mobileWidth = 900;
-		if (!vseLightbox.lightboxGal) {
+		if (!vseLightbox.lightboxSig) {
 			$targetImage = $targetImage.not(function() {
 				return $(this).closest('.signature').length > 0;
 			});
@@ -38,7 +38,7 @@
 		setTimeout(function() {
 			$targetImage.one('load', function() {
 				if ($(this).closest('.postlink').length > 0) return;
-				var imgIndex = (vseLightbox.lightboxSig) ? '' : $targetImage.index(this);
+				var imgIndex = (vseLightbox.lightboxGal) ? '' : $targetImage.index(this);
 				if ($(this).parent('a').length > 0) {
 					if ($(this).outerWidth() >= vseLightbox.resizeWidth) {
 						$(this).parent('a').attr({
