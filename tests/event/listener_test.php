@@ -142,17 +142,17 @@ class listener_test extends \phpbb_test_case
 	{
 		return array(
 			array( // expected config and mode
-				'features',
-				array('vars' => array('legend2' => array())),
-				array('legend_lightbox', 'lightbox_max_width', 'lightbox_gallery', 'lightbox_signatures', 'legend2'),
+				'post',
+				array('vars' => array('legend3' => array())),
+				array('legend_lightbox', 'lightbox_max_width', 'lightbox_gallery', 'lightbox_signatures', 'legend3'),
 			),
 			array( // unexpected mode
 				'foobar',
-				array('vars' => array('legend2' => array())),
-				array('legend2'),
+				array('vars' => array('legend3' => array())),
+				array('legend3'),
 			),
 			array( // unexpected config
-				'settings',
+				'post',
 				array('vars' => array('foobar' => array())),
 				array('foobar'),
 			),
