@@ -80,7 +80,7 @@ class listener implements EventSubscriberInterface
 	 */
 	public function add_lightbox_acp_config($event)
 	{
-		if ($event['mode'] == 'features' && isset($event['display_vars']['vars']['legend2']))
+		if ($event['mode'] == 'post' && isset($event['display_vars']['vars']['legend3']))
 		{
 			$this->user->add_lang_ext('vse/lightbox', 'lightbox');
 			$display_vars = $event['display_vars'];
@@ -92,7 +92,7 @@ class listener implements EventSubscriberInterface
 				'lightbox_signatures'	=> array('lang' => 'LIGHTBOX_SIGNATURES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			);
 
-			$display_vars['vars'] = phpbb_insert_config_array($display_vars['vars'], $my_config_vars, array('before' => 'legend2'));
+			$display_vars['vars'] = phpbb_insert_config_array($display_vars['vars'], $my_config_vars, array('before' => 'legend3'));
 
 			$event['display_vars'] = $display_vars;
 		}
