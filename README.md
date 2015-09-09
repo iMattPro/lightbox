@@ -17,7 +17,7 @@ Note: This extension is in development. Installation is only recommended for tes
 4. Look for `Lightbox` under the Disabled Extensions list, and click its `Enable` link.
 
 ## Usage
-1. Navigate in the ACP to `Board features -> Lightbox settings`.
+1. Navigate in the ACP to `Post settings -> Lightbox image resizing`.
 2. Set the `Maximum image width in pixel` to your desired resize width.
 3. Click `Submit`.
 
