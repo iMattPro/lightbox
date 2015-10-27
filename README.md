@@ -8,10 +8,8 @@ This extension adds the [Lightbox 2](http://lokeshdhakar.com/projects/lightbox2/
 * phpBB 3.1.0 or higher
 * PHP 5.3.3 or higher
 
-Note: This extension is in development. Installation is only recommended for testing purposes and is not supported on live boards. This extension will be officially released following phpBB 3.1.0.
-
 ## Installation
-1. [Download the latest release](https://github.com/VSEphpbb/lightbox/releases) and unzip it.
+1. [Download the latest release](https://www.phpbb.com/customise/db/extension/lightbox/) and unzip it.
 2. Unzip the downloaded release and copy it to the `ext` directory of your phpBB board.
 3. Navigate in the ACP to `Customise -> Manage extensions`.
 4. Look for `Lightbox` under the Disabled Extensions list, and click its `Enable` link.
