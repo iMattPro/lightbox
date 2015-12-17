@@ -68,6 +68,7 @@ class listener implements EventSubscriberInterface
 			'LIGHTBOX_RESIZE_WIDTH'	=> (int) $this->config['lightbox_max_width'],
 			'S_LIGHTBOX_GALLERY'	=> (int) $this->config['lightbox_gallery'],
 			'S_LIGHTBOX_SIGNATURES'	=> (int) $this->config['lightbox_signatures'],
+			'S_LIGHTBOX_IMG_TITLES'	=> (int) $this->config['lightbox_img_titles'],
 		));
 	}
 
@@ -90,6 +91,7 @@ class listener implements EventSubscriberInterface
 				'lightbox_max_width'	=> array('lang' => 'LIGHTBOX_MAX_WIDTH', 'validate' => 'int:0:99999', 'type' => 'number:0:99999', 'explain' => true, 'append' => ' ' . $this->user->lang('PIXEL')),
 				'lightbox_gallery'		=> array('lang' => 'LIGHTBOX_GALLERY', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 				'lightbox_signatures'	=> array('lang' => 'LIGHTBOX_SIGNATURES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
+				'lightbox_img_titles'	=> array('lang' => 'LIGHTBOX_IMG_TITLES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			);
 
 			$display_vars['vars'] = phpbb_insert_config_array($display_vars['vars'], $my_config_vars, array('before' => 'legend3'));

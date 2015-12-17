@@ -30,4 +30,6 @@ $lang = array_merge($lang, array(
 	'LIGHTBOX_GALLERY_EXPLAIN'		=> 'Hiermee kan makkelijk genavigeerd worden tussen alle herschaalde afbeeldingen op de pagina door gebruik te maken van het Lightbox effect.',
 	'LIGHTBOX_SIGNATURES'			=> 'Herschaal afbeeldingen in onderschrift',
 	'LIGHTBOX_SIGNATURES_EXPLAIN'	=> 'De afbeeldingen die in het onderschrift worden gebruikt herschalen.',
+	'LIGHTBOX_IMG_TITLES'			=> 'Show image file names',
+	'LIGHTBOX_IMG_TITLES_EXPLAIN'	=> 'Image names will appear as a caption in the Lightbox effect.',
 ));

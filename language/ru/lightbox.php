@@ -36,4 +36,6 @@ $lang = array_merge($lang, array(
 	'LIGHTBOX_GALLERY_EXPLAIN'		=> 'Включает простую навигацию по уменьшенным избражениям с использованием Lightbox-эффекта.',
 	'LIGHTBOX_SIGNATURES'			=> 'Уменьшать изображения в подписях',
 	'LIGHTBOX_SIGNATURES_EXPLAIN'	=> 'Если опция включена, то изображения в подписях пользователей так же будут уменьшены средствами LightBox.',
+	'LIGHTBOX_IMG_TITLES'			=> 'Show image file names',
+	'LIGHTBOX_IMG_TITLES_EXPLAIN'	=> 'Image names will appear as a caption in the Lightbox effect.',
 ));

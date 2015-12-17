@@ -43,7 +43,7 @@
 					if ($(this).outerWidth() >= vseLightbox.resizeWidth) {
 						$(this).parent('a').attr({
 							'data-lightbox': galleryName + imgIndex,
-							'data-title': $(this).attr('alt')
+							'data-title': (vseLightbox.imageTitles) ? $(this).attr('alt') : ''
 						}).end().borderHover();
 					}
 				}
@@ -53,7 +53,7 @@
 						return $('<a/>').attr({
 							'href': url,
 							'data-lightbox': galleryName + imgIndex,
-							'data-title': (url.indexOf('download/file.php') !== -1) ? $(this).attr('alt') : url.split('/').pop()
+							'data-title': (vseLightbox.imageTitles) ? ((url.indexOf('download/file.php') !== -1) ? $(this).attr('alt') : url.split('/').pop()) : ''
 						});
 					}).borderHover();
 				}

@@ -30,4 +30,6 @@ $lang = array_merge($lang, array(
 	'LIGHTBOX_GALLERY_EXPLAIN'		=> 'Lightboxエフェクトを使用するページの全てのリサイズされた画像の間で簡単なナビゲーションを許可します。',
 	'LIGHTBOX_SIGNATURES'			=> '署名画像のリサイズ',
 	'LIGHTBOX_SIGNATURES_EXPLAIN'	=> '署名でリサイズされた画像の使用を許可します。',
+	'LIGHTBOX_IMG_TITLES'			=> 'Show image file names',
+	'LIGHTBOX_IMG_TITLES_EXPLAIN'	=> 'Image names will appear as a caption in the Lightbox effect.',
 ));

@@ -30,4 +30,6 @@ $lang = array_merge($lang, array(
 	'LIGHTBOX_GALLERY_EXPLAIN'		=> 'Gör det enkelt att navigera mellan alla förminskade bilder på sidan.',
 	'LIGHTBOX_SIGNATURES'			=> 'Förminska signaturbilder',
 	'LIGHTBOX_SIGNATURES_EXPLAIN'	=> 'Tillåt att bilder som används i signaturer blir föminskande.',
+	'LIGHTBOX_IMG_TITLES'			=> 'Show image file names',
+	'LIGHTBOX_IMG_TITLES_EXPLAIN'	=> 'Image names will appear as a caption in the Lightbox effect.',
 ));

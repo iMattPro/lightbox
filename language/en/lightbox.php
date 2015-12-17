@@ -29,4 +29,6 @@ $lang = array_merge($lang, array(
 	'LIGHTBOX_GALLERY_EXPLAIN'		=> 'Allows easy navigation between all resized images on the page using the Lightbox effect.',
 	'LIGHTBOX_SIGNATURES'			=> 'Resize signature images',
 	'LIGHTBOX_SIGNATURES_EXPLAIN'	=> 'Allow images used in signatures to be resized.',
+	'LIGHTBOX_IMG_TITLES'			=> 'Show image file names',
+	'LIGHTBOX_IMG_TITLES_EXPLAIN'	=> 'Image names will appear as a caption in the Lightbox effect.',
 ));
