@@ -30,6 +30,6 @@ $lang = array_merge($lang, array(
 	'LIGHTBOX_GALLERY_EXPLAIN'		=> 'Pozwala na łatwą nawigację pomiędzy wszystkimi obrazkami, które wymagają użycia efektu Lightbox.',
 	'LIGHTBOX_SIGNATURES'			=> 'Zmiana rozmiaru obrazków w sygnaturach',
 	'LIGHTBOX_SIGNATURES_EXPLAIN'	=> 'Wykorzustuje Lightbox do zmiany rozmiaru obrazków w sygnaturach.',
-	'LIGHTBOX_IMG_TITLES'			=> 'Show image file names',
-	'LIGHTBOX_IMG_TITLES_EXPLAIN'	=> 'Image names will appear as a caption in the Lightbox effect.',
+	'LIGHTBOX_IMG_TITLES'			=> 'Pokaż nazwy obrazków',
+	'LIGHTBOX_IMG_TITLES_EXPLAIN'	=> 'Wyświetla w nagłówku nazwy obrazków.',
 ));
