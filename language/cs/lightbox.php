@@ -29,6 +29,6 @@ $lang = array_merge($lang, array(
 	'LIGHTBOX_GALLERY_EXPLAIN'		=> 'Umožňuje snadnou navigaci mezi obrázky na stránce prostřednictvím lightbox efektu.',
 	'LIGHTBOX_SIGNATURES'			=> 'Měnit velikost obrázků v podpisech',
 	'LIGHTBOX_SIGNATURES_EXPLAIN'	=> 'Umožňuje změnu velikosti obrázků v podpisech.',
-	'LIGHTBOX_IMG_TITLES'			=> 'Show image file names',
-	'LIGHTBOX_IMG_TITLES_EXPLAIN'	=> 'Image names will appear as a caption in the Lightbox effect.',
+	'LIGHTBOX_IMG_TITLES'			=> 'Zobrazovat názvy obrázků',
+	'LIGHTBOX_IMG_TITLES_EXPLAIN'	=> 'Názvy obrázků se zobrazí jako titulek v lightboxu.',
 ));
