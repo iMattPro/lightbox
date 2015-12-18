@@ -30,6 +30,6 @@ $lang = array_merge($lang, array(
 	'LIGHTBOX_GALLERY_EXPLAIN'		=> 'السماح بسهولة التنقل بين جميع الصور المُصغرة في الصفحة بإستخدام تقنية النافذة المضيئة.',
 	'LIGHTBOX_SIGNATURES'			=> 'تصغير صور التواقيع ',
 	'LIGHTBOX_SIGNATURES_EXPLAIN'	=> 'السماح بتصغير الصور الموجودة في تواقيع الأعضاء.',
-	'LIGHTBOX_IMG_TITLES'			=> 'Show image file names',
-	'LIGHTBOX_IMG_TITLES_EXPLAIN'	=> 'Image names will appear as a caption in the Lightbox effect.',
+	'LIGHTBOX_IMG_TITLES'			=> 'إظهار أسماء الصور  ',
+	'LIGHTBOX_IMG_TITLES_EXPLAIN'	=> 'سيتم عرض أسماء الصور كعنوان في خانة التفاصيل للصورة.',
 ));
