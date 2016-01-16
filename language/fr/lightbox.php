@@ -30,6 +30,6 @@ $lang = array_merge($lang, array(
 	'LIGHTBOX_GALLERY_EXPLAIN'		=> 'Permet une navigation aisée parmi toutes les images redimensionnées de la page en utilisant l’effet de la Lightbox.',
 	'LIGHTBOX_SIGNATURES'			=> 'Redimensionner les images de la signature',
 	'LIGHTBOX_SIGNATURES_EXPLAIN'	=> 'Permet aux images utilisées dans les signatures d’être redimensionnées.',
-	'LIGHTBOX_IMG_TITLES'			=> 'Show image file names',
-	'LIGHTBOX_IMG_TITLES_EXPLAIN'	=> 'Image names will appear as a caption in the Lightbox effect.',
+	'LIGHTBOX_IMG_TITLES'			=> 'Afficher les noms des fichiers des images',
+	'LIGHTBOX_IMG_TITLES_EXPLAIN'	=> 'Le nom du fichier apparaitra en tant que légende dans la Lightbox.',
 ));
