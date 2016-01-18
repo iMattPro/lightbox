@@ -2,8 +2,8 @@ services:
     vse.lightbox.listener:
         class: vse\lightbox\event\listener
         arguments:
-            - @config
-            - @template
-            - @user
+            - '@config'
+            - '@template'
+            - '@user'
         tags:
             - { name: event.listener }
