@@ -39,14 +39,16 @@
 			$targetImage.one('load', function() {
 				if ($(this).closest('.postlink').length > 0) return;
 				var imgIndex = (vseLightbox.lightboxGal) ? '' : $targetImage.index(this);
+				// attached images (check their width and height)
 				if ($(this).parent('a').length > 0) {
-					if ($(this).outerWidth() >= vseLightbox.resizeWidth) {
+					if ($(this).outerWidth() >= vseLightbox.resizeWidth || $(this).height() >= vseLightbox.resizeWidth) {
 						$(this).parent('a').attr({
 							'data-lightbox': galleryName + imgIndex,
 							'data-title': (vseLightbox.imageTitles) ? $(this).attr('alt') : ''
 						}).end().borderHover();
 					}
 				}
+				// regular images
 				else if ($(this).outerWidth() >= vseLightbox.resizeWidth) {
 					$(this).wrap(function() {
 						var url = $(this).attr('src');
