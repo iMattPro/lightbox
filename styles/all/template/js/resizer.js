@@ -19,8 +19,8 @@
 		}
 	});
 
-	$(function() {
-		var $targetImage = $('.postimage'),
+	function lightboxResizer(elements) {
+		var $targetImage = elements.find('.postimage'),
 			galleryName = 'post-gallery',
 			mobileWidth = 900;
 		if (!vseLightbox.lightboxSig) {
@@ -63,6 +63,18 @@
 				if (this.complete) $(this).load();
 			});
 		}, 0);
+	}
+
+	$(function() {
+		lightboxResizer($(document));
+	});
+
+	// Compatibility with QuickReply Reloaded extension
+	$('#qr_posts').on('qr_loaded', function(e, elements) {
+		lightboxResizer(elements);
+	});
+	$('#qr_postform').on('ajax_submit_preview', function() {
+		lightboxResizer($('#preview'));
 	});
 
 })(jQuery);
