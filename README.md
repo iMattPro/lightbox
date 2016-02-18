@@ -1,6 +1,6 @@
-# Lightbox for phpBB 3.1
+# Lightbox extension for phpBB
 
-This extension adds the [Lightbox 2](http://lokeshdhakar.com/projects/lightbox2/) jQuery plugin to phpBB 3.1. It will resize posted images to a maximum set width and display them fullscreen in a Lightbox overlay effect.
+This extension adds the [Lightbox 2](http://lokeshdhakar.com/projects/lightbox2/) jQuery plugin to phpBB. It will resize posted images to a maximum set width and display them fullscreen in a Lightbox overlay effect.
 
 [![Build Status](https://travis-ci.org/VSEphpbb/lightbox.png)](https://travis-ci.org/VSEphpbb/lightbox)
 
@@ -8,18 +8,18 @@ This extension adds the [Lightbox 2](http://lokeshdhakar.com/projects/lightbox2/
 * phpBB 3.1.0 or higher
 * PHP 5.3.3 or higher
 
-## Installation
+## Install
 1. [Download the latest release](https://www.phpbb.com/customise/db/extension/lightbox/) and unzip it.
 2. Unzip the downloaded release and copy it to the `ext` directory of your phpBB board.
 3. Navigate in the ACP to `Customise -> Manage extensions`.
-4. Look for `Lightbox` under the Disabled Extensions list, and click its `Enable` link.
+4. Look for `Lightbox` under the Disabled Extensions list and click its `Enable` link.
 
 ## Usage
 1. Navigate in the ACP to `Post settings -> Lightbox image resizing`.
 2. Set the `Maximum image width in pixel` to your desired resize width.
 3. Click `Submit`.
 
-## Uninstallation
+## Uninstall
 1. Navigate in the ACP to `Customise -> Manage extensions`.
 2. Click the `Disable` link for Lightbox.
 3. To permanently uninstall, click `Delete Data`, then delete the `lightbox` folder from `phpBB/ext/vse/`.
