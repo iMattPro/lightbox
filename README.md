@@ -3,6 +3,7 @@
 This extension adds the [Lightbox 2](http://lokeshdhakar.com/projects/lightbox2/) jQuery plugin to phpBB. It will resize posted images to a maximum set width and display them fullscreen in a Lightbox overlay effect.
 
 [![Build Status](https://travis-ci.org/VSEphpbb/lightbox.png)](https://travis-ci.org/VSEphpbb/lightbox)
+[![Latest Stable Version](https://poser.pugx.org/vse/lightbox/v/stable)](https://www.phpbb.com/customise/db/extension/lightbox/)
 
 ## Requirements
 * phpBB 3.1.0 or higher
