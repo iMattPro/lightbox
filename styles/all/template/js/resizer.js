@@ -38,10 +38,11 @@
 		setTimeout(function() {
 			$targetImage.one('load', function() {
 				if ($(this).closest('.postlink').length > 0) return;
-				var imgIndex = (vseLightbox.lightboxGal) ? '' : $targetImage.index(this);
+				var imgIndex = (vseLightbox.lightboxGal) ? '' : $targetImage.index(this),
+					imgWidth = $(this).outerWidth();
 				// attached images (check their width and height)
 				if ($(this).parent('a').length > 0) {
-					if ($(this).outerWidth() >= vseLightbox.resizeWidth || $(this).height() >= vseLightbox.resizeWidth) {
+					if (imgWidth >= vseLightbox.resizeWidth || $(this).height() >= vseLightbox.resizeWidth) {
 						$(this).parent('a').attr({
 							'data-lightbox': galleryName + imgIndex,
 							'data-title': (vseLightbox.imageTitles) ? $(this).attr('alt') : ''
@@ -49,7 +50,7 @@
 					}
 				}
 				// regular images
-				else if ($(this).outerWidth() >= vseLightbox.resizeWidth) {
+				else if (imgWidth >= vseLightbox.resizeWidth) {
 					$(this).wrap(function() {
 						var url = $(this).attr('src');
 						return $('<a/>').attr({
