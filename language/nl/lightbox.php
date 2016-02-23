@@ -26,6 +26,7 @@ $lang = array_merge($lang, array(
 	'LIGHTBOX_SETTINGS'				=> 'Lightbox instellingen',
 	'LIGHTBOX_MAX_WIDTH'			=> 'Maximale afbeeldingsbreedte in pixels',
 	'LIGHTBOX_MAX_WIDTH_EXPLAIN'	=> 'De afbeeldingen die deze breedte overschrijden worden herschaald en kunnen vergroot worden door gebruik te maken van het Lightbox effect. Zet deze waarde op 0 om het herschalen van afbeeldingen uit te schakelen.',
+	'LIGHTBOX_MAX_WIDTH_APPEND'		=> 'Aanbeveling op basis van afbeelding bijlagen: %spx',
 	'LIGHTBOX_GALLERY'				=> 'Galerij mode toestaan',
 	'LIGHTBOX_GALLERY_EXPLAIN'		=> 'Hiermee kan makkelijk genavigeerd worden tussen alle herschaalde afbeeldingen op de pagina door gebruik te maken van het Lightbox effect.',
 	'LIGHTBOX_SIGNATURES'			=> 'Herschaal afbeeldingen in onderschrift',

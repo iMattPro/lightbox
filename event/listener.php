@@ -86,9 +86,12 @@ class listener implements EventSubscriberInterface
 			$this->user->add_lang_ext('vse/lightbox', 'lightbox');
 			$display_vars = $event['display_vars'];
 
+			$max_width = $this->min_not_null($this->config['img_max_width'], (!empty($this->config['img_create_thumbnail']) ? $this->config['img_max_thumb_width'] : 0));
+			$l_append = $max_width ? $this->user->lang('LIGHTBOX_MAX_WIDTH_APPEND', $max_width) : '';
+
 			$my_config_vars = array(
 				'legend_lightbox'		=> 'LIGHTBOX_SETTINGS',
-				'lightbox_max_width'	=> array('lang' => 'LIGHTBOX_MAX_WIDTH', 'validate' => 'int:0:99999', 'type' => 'number:0:99999', 'explain' => true, 'append' => ' ' . $this->user->lang('PIXEL')),
+				'lightbox_max_width'	=> array('lang' => 'LIGHTBOX_MAX_WIDTH', 'validate' => 'int:0:99999', 'type' => 'number:0:99999', 'explain' => true, 'append' => ' ' . $this->user->lang('PIXEL') . '<br />' . $l_append),
 				'lightbox_gallery'		=> array('lang' => 'LIGHTBOX_GALLERY', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 				'lightbox_signatures'	=> array('lang' => 'LIGHTBOX_SIGNATURES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 				'lightbox_img_titles'	=> array('lang' => 'LIGHTBOX_IMG_TITLES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
@@ -98,5 +101,20 @@ class listener implements EventSubscriberInterface
 
 			$event['display_vars'] = $display_vars;
 		}
+	}
+
+	/**
+	 * Find lowest value that is not 0
+	 * Accepts variable number of comparable parameters
+	 *
+	 * @return mixed The lowest of the parameter values, false on no result.
+	 * @access protected
+	 */
+	protected function min_not_null()
+	{
+		$args = func_get_args();
+		$args = array_diff(array_map('intval', $args), array(0));
+
+		return (count($args)) ? min($args) : false;
 	}
 }

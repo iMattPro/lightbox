@@ -26,6 +26,7 @@ $lang = array_merge($lang, array(
 	'LIGHTBOX_SETTINGS'				=> 'Ajustes de Lightbox',
 	'LIGHTBOX_MAX_WIDTH'			=> 'Ancho máximo de imagen en píxeles',
 	'LIGHTBOX_MAX_WIDTH_EXPLAIN'	=> 'Las imágenes que excedan este ancho serán redimensionadas y se pueden ampliar mediante el efecto de Lightbox. Establezca este valor en 0 para desactivar el cambio de tamaño de la imagen.',
+	'LIGHTBOX_MAX_WIDTH_APPEND'		=> 'Recomendación sobre la base de la configuración de la imagen adjunta: %spx',
 	'LIGHTBOX_GALLERY'				=> 'Permitir el modo de galería',
 	'LIGHTBOX_GALLERY_EXPLAIN'		=> 'Permite una fácil navegación entre todas las imágenes redimensionadas en la página utilizando el efecto de Lightbox.',
 	'LIGHTBOX_SIGNATURES'			=> 'Redimensionar imágenes de las firmas',

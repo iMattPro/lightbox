@@ -26,6 +26,7 @@ $lang = array_merge($lang, array(
 	'LIGHTBOX_SETTINGS'				=> 'Lightbox 設定',
 	'LIGHTBOX_MAX_WIDTH'			=> '最大画像幅(ピクセル)',
 	'LIGHTBOX_MAX_WIDTH_EXPLAIN'	=> 'この幅を超える画像はリサイズされLightboxエフェクトを使用して引き伸ばすことが出来ます。この値を0に設定すると画像のリサイズを無効にします。',
+	'LIGHTBOX_MAX_WIDTH_APPEND'		=> '添付ファイルの設定に基づいて勧告: %spx',
 	'LIGHTBOX_GALLERY'				=> 'ギャラリーモードを許可',
 	'LIGHTBOX_GALLERY_EXPLAIN'		=> 'Lightboxエフェクトを使用するページの全てのリサイズされた画像の間で簡単なナビゲーションを許可します。',
 	'LIGHTBOX_SIGNATURES'			=> '署名画像のリサイズ',
