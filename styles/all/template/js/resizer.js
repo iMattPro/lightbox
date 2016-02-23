@@ -41,7 +41,9 @@
 		// images not being ready and causing $(this).width() to return 0.
 		setTimeout(function() {
 			$targetImage.one('load', function() {
-				if ($(this).closest('.postlink').length > 0) return;
+				if ($(this).closest('.postlink').length > 0) {
+					return;
+				}
 				var imgIndex = (vseLightbox.lightboxGal) ? '' : $targetImage.index(this),
 					imgWidth = $(this).outerWidth();
 				// attached images (check their width and height)
@@ -65,7 +67,9 @@
 					}).borderHover();
 				}
 			}).each(function() {
-				if (this.complete) $(this).load();
+				if (this.complete) {
+					$(this).load();
+				}
 			});
 		}, 0);
 	}
