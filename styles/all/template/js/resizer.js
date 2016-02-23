@@ -19,16 +19,20 @@
 		}
 	});
 
+	function isResizable() {
+		var mobileWidth = 900; // disable on screens < 900px
+		return (vseLightbox.resizeWidth > 0 && $(window).width() > mobileWidth);
+	}
+
 	function lightboxResizer(elements) {
 		var $targetImage = elements.find('.postimage'),
-			galleryName = 'post-gallery',
-			mobileWidth = 900;
+			galleryName = 'post-gallery';
 		if (!vseLightbox.lightboxSig) {
 			$targetImage = $targetImage.not(function() {
 				return $(this).closest('.signature').length > 0;
 			});
 		}
-		if (vseLightbox.resizeWidth > 0 && $(window).width() > mobileWidth) {
+		if (isResizable()) {
 			$targetImage.css('max-width', vseLightbox.resizeWidth + 'px');
 		} else {
 			return;
