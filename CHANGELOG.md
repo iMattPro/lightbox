@@ -1,5 +1,14 @@
 ## Changelog
 
+### 1.0.2 - 2016-02-23
+
+- Add support for QuickReply Reloaded extension
+- Handle attachments constrained by portrait height
+- Display recommended Lightbox settings in the ACP based on image attachment settings
+- Future proof compatibility for Symfony 3.0
+- JavaScript code refactoring, improving, tweaking
+- Added Brazilian-Portuguese translation
+
 ### 1.0.1 - 2016-01-16
 
 - Update Lightbox library to 2.8.2
