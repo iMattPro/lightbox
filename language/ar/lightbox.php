@@ -26,6 +26,7 @@ $lang = array_merge($lang, array(
 	'LIGHTBOX_SETTINGS'				=> 'إعدادات تصغير الصور',
 	'LIGHTBOX_MAX_WIDTH'			=> 'الحد الأقصى لعرض الصورة بالبكسل ',
 	'LIGHTBOX_MAX_WIDTH_EXPLAIN'	=> 'سيتم تصغير الصور التي تتجاوز هذه القيمة ويمكن تكبيرها بإستخدام تقنية النافذة المضيئة Lightbox. القيمة صفر يعني تعطيل هذا الخيار.',
+	'LIGHTBOX_MAX_WIDTH_APPEND'		=> 'التوصية تعتمد على إعدادات الصورة المُرفقة : %spx',
 	'LIGHTBOX_GALLERY'				=> 'السماح بالتنقل بين الصور ',
 	'LIGHTBOX_GALLERY_EXPLAIN'		=> 'السماح بسهولة التنقل بين جميع الصور المُصغرة في الصفحة بإستخدام تقنية النافذة المضيئة.',
 	'LIGHTBOX_SIGNATURES'			=> 'تصغير صور التواقيع ',
