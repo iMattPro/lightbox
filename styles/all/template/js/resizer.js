@@ -6,10 +6,10 @@
 		borderHover: function() {
 			return this.each(function() {
 				$(this).css({
-					'border': 'solid 3px transparent',
-					'transition': 'border-color 0.1s ease-out',
-					'border-radius': '6px',
-					'cursor': 'pointer'
+					border: 'solid 3px transparent',
+					borderRadius: '6px',
+					transition: 'border-color 0.1s ease-out',
+					cursor: 'pointer'
 				}).hover(function() {
 					$(this).css('border-color', '#4ae');
 				}, function() {
@@ -60,7 +60,7 @@
 					$(this).wrap(function() {
 						var url = $(this).attr('src');
 						return $('<a/>').attr({
-							'href': url,
+							href: url,
 							'data-lightbox': galleryName + imgIndex,
 							'data-title': (vseLightbox.imageTitles) ? ((url.indexOf('download/file.php') !== -1) ? $(this).attr('alt') : url.split('/').pop()) : ''
 						});
