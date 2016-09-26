@@ -25,6 +25,7 @@ $lang = array_merge($lang, array(
 	'LIGHTBOX_SETTINGS'				=> 'Lightbox prohlížení obrázků',
 	'LIGHTBOX_MAX_WIDTH'			=> 'Maximální šířka obrázku v pixelech',
 	'LIGHTBOX_MAX_WIDTH_EXPLAIN'	=> 'Obrázky, které překročí tento limit šířky budou zmenšeny. Zvětšeny budou moci být pomocí lightbox efektu. Nastavením této hodnoty na 0 vypnete funkci lightbox prohlížení obrázků.',
+	'LIGHTBOX_MAX_WIDTH_APPEND'		=> 'Doporučení založené na nastavení obrázkových příloh: %s px',
 	'LIGHTBOX_GALLERY'				=> 'Povolit režim galerie',
 	'LIGHTBOX_GALLERY_EXPLAIN'		=> 'Umožňuje snadnou navigaci mezi obrázky na stránce prostřednictvím lightbox efektu.',
 	'LIGHTBOX_SIGNATURES'			=> 'Měnit velikost obrázků v podpisech',
