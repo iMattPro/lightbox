@@ -48,7 +48,7 @@ class listener implements EventSubscriberInterface
 	 * @static
 	 * @access public
 	 */
-	static public function getSubscribedEvents()
+	public static function getSubscribedEvents()
 	{
 		return array(
 			'core.page_header'					=> 'set_lightbox_tpl_data',
@@ -59,7 +59,7 @@ class listener implements EventSubscriberInterface
 	/**
 	 * Set Lightbox template data
 	 *
-	 * @return null
+	 * @return void
 	 * @access public
 	 */
 	public function set_lightbox_tpl_data()
@@ -76,7 +76,7 @@ class listener implements EventSubscriberInterface
 	 * Add Lightbox settings to the ACP
 	 *
 	 * @param \phpbb\event\data $event The event object
-	 * @return null
+	 * @return void
 	 * @access public
 	 */
 	public function add_lightbox_acp_config($event)
