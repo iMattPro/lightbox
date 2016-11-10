@@ -1,5 +1,11 @@
 ## Changelog
 
+### 1.0.3 - 2016-11-10
+
+- Update Lightbox library to 2.9.0
+- Fixed Brazilian translation package (renamed pt-br to pt_br)
+- Various minor code and language improvements
+
 ### 1.0.2 - 2016-02-23
 
 - Add support for QuickReply Reloaded extension
