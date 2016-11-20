@@ -115,6 +115,6 @@ class listener implements EventSubscriberInterface
 		$args = func_get_args();
 		$args = array_diff(array_map('intval', $args), array(0));
 
-		return sizeof($args) ? min($args) : false;
+		return count($args) ? min($args) : false;
 	}
 }
