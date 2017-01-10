@@ -30,8 +30,13 @@ class listener_test extends \phpbb_test_case
 	{
 		parent::setUp();
 
+		global $phpbb_root_path, $phpEx;
+
 		$this->config = new \phpbb\config\config(array());
-		$this->user = $this->getMock('\phpbb\user', array(), array('\phpbb\datetime'));
+		$this->user = $this->getMock('\phpbb\user', array(), array(
+			new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx)),
+			'\phpbb\datetime'
+		));
 		$this->template = $this->getMockBuilder('\phpbb\template\template')
 			->getMock();
 	}
