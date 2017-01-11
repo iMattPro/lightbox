@@ -1,5 +1,9 @@
 ## Changelog
 
+### 1.0.4 - 2010-01-10
+
+- Minor informational update for phpBB 3.2.x
+
 ### 1.0.3 - 2016-11-10
 
 - Update Lightbox library to 2.9.0

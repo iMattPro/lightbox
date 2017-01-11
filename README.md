@@ -5,9 +5,9 @@ This extension adds the [Lightbox 2](http://lokeshdhakar.com/projects/lightbox2/
 [![Build Status](https://travis-ci.org/VSEphpbb/lightbox.png)](https://travis-ci.org/VSEphpbb/lightbox)
 [![Latest Stable Version](https://poser.pugx.org/vse/lightbox/v/stable)](https://www.phpbb.com/customise/db/extension/lightbox/)
 
-## Requirements
-* phpBB 3.1.0 or higher
-* PHP 5.3.3 or higher
+## Minimum Requirements
+* phpBB 3.1.0 or 3.2.0
+* PHP 5.3.3
 
 ## Install
 1. [Download the latest release](https://www.phpbb.com/customise/db/extension/lightbox/) and unzip it.
