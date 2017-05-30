@@ -1,6 +1,6 @@
 ## Changelog
 
-### 1.0.4 - 2010-01-10
+### 1.0.4 - 2017-01-10
 
 - Minor informational update for phpBB 3.2.x
 
