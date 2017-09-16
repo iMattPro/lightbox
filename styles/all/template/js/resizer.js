@@ -86,4 +86,13 @@
 		lightboxResizer($('#preview'));
 	});
 
+	// Compatibility with mChat extension
+	if (typeof mChat === 'object') {
+		$(mChat).on('mchat_add_message_before', function(e, data) {
+			setTimeout(function() {
+				lightboxResizer(data.message);
+			}, 0);
+		});
+	}
+
 })(jQuery);
