@@ -72,6 +72,12 @@ class listener_test extends \phpbb_test_case
 	public function set_lightbox_tpl_data_test_data()
 	{
 		return array(
+			array(400, 2, 1, 1, array(
+				'LIGHTBOX_RESIZE_WIDTH'	=> 400,
+				'S_LIGHTBOX_GALLERY'	=> 2,
+				'S_LIGHTBOX_SIGNATURES'	=> 1,
+				'S_LIGHTBOX_IMG_TITLES'	=> 1,
+			)),
 			array(400, 1, 1, 1, array(
 				'LIGHTBOX_RESIZE_WIDTH'	=> 400,
 				'S_LIGHTBOX_GALLERY'	=> 1,

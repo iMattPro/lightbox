@@ -44,13 +44,22 @@
 				if ($(this).closest('.postlink').length > 0) {
 					return;
 				}
-				var imgIndex = (vseLightbox.lightboxGal) ? '' : $targetImage.index(this),
-					imgWidth = $(this).outerWidth();
+				var imgWidth = $(this).outerWidth(),
+					galIndex =  '';
+				switch (vseLightbox.lightboxGal)
+				{
+					case 0:
+						galIndex = $targetImage.index(this);
+					break;
+					case 2:
+						galIndex = $(this).closest('.post').attr('id') || '';
+					break;
+				}
 				// attached images (check their width and height)
 				if ($(this).parent('a').length > 0) {
 					if (imgWidth >= vseLightbox.resizeWidth || $(this).height() >= vseLightbox.resizeWidth) {
 						$(this).parent('a').attr({
-							'data-lightbox': galleryName + imgIndex,
+							'data-lightbox': galleryName + galIndex,
 							'data-title': (vseLightbox.imageTitles) ? $(this).attr('alt') : ''
 						}).end().borderHover();
 					}
@@ -61,7 +70,7 @@
 						var url = $(this).attr('src');
 						return $('<a/>').attr({
 							href: url,
-							'data-lightbox': galleryName + imgIndex,
+							'data-lightbox': galleryName + galIndex,
 							'data-title': (vseLightbox.imageTitles) ? ((url.indexOf('download/file.php') !== -1) ? $(this).attr('alt') : url.split('/').pop()) : ''
 						});
 					}).borderHover();
