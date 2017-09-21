@@ -1,27 +1,26 @@
-# Lightbox for phpBB 3.1
+# Lightbox extension for phpBB
 
-This extension adds the [Lightbox 2](http://lokeshdhakar.com/projects/lightbox2/) jQuery plugin to phpBB 3.1. It will resize posted images to a maximum set width and display them fullscreen in a Lightbox overlay effect.
+This extension adds the [Lightbox 2](http://lokeshdhakar.com/projects/lightbox2/) jQuery plugin to phpBB. It will resize posted images to a maximum set width and display them fullscreen in a Lightbox overlay effect.
 
-[![Build Status](https://travis-ci.org/VSEphpbb/lightbox.png)](https://travis-ci.org/VSEphpbb/lightbox)
+[![Build Status](https://travis-ci.org/VSEphpbb/lightbox.svg)](https://travis-ci.org/VSEphpbb/lightbox)
+[![Latest Stable Version](https://poser.pugx.org/vse/lightbox/v/stable)](https://www.phpbb.com/customise/db/extension/lightbox/)
 
-## Requirements
-* phpBB 3.1.0 or higher
-* PHP 5.3.3 or higher
+## Minimum Requirements
+* phpBB 3.1.0 or 3.2.0
+* PHP 5.3.3
 
-Note: This extension is in development. Installation is only recommended for testing purposes and is not supported on live boards. This extension will be officially released following phpBB 3.1.0.
-
-## Installation
-1. [Download the latest release](https://github.com/VSEphpbb/lightbox/releases) and unzip it.
-2. Copy the entire contents from the unzipped folder to `phpBB/ext/vse/lightbox/`.
+## Install
+1. [Download the latest release](https://www.phpbb.com/customise/db/extension/lightbox/) and unzip it.
+2. Unzip the downloaded release and copy it to the `ext` directory of your phpBB board.
 3. Navigate in the ACP to `Customise -> Manage extensions`.
-4. Find Lightbox under "Disabled Extensions" and click `Enable`.
+4. Look for `Lightbox` under the Disabled Extensions list and click its `Enable` link.
 
 ## Usage
-1. Navigate in the ACP to `Board features -> Lightbox settings`.
+1. Navigate in the ACP to `Post settings -> Lightbox image resizing`.
 2. Set the `Maximum image width in pixel` to your desired resize width.
 3. Click `Submit`.
 
-## Uninstallation
+## Uninstall
 1. Navigate in the ACP to `Customise -> Manage extensions`.
 2. Click the `Disable` link for Lightbox.
 3. To permanently uninstall, click `Delete Data`, then delete the `lightbox` folder from `phpBB/ext/vse/`.

@@ -48,7 +48,7 @@ class listener implements EventSubscriberInterface
 	 * @static
 	 * @access public
 	 */
-	static public function getSubscribedEvents()
+	public static function getSubscribedEvents()
 	{
 		return array(
 			'core.page_header'					=> 'set_lightbox_tpl_data',
@@ -59,7 +59,7 @@ class listener implements EventSubscriberInterface
 	/**
 	 * Set Lightbox template data
 	 *
-	 * @return null
+	 * @return void
 	 * @access public
 	 */
 	public function set_lightbox_tpl_data()
@@ -68,33 +68,78 @@ class listener implements EventSubscriberInterface
 			'LIGHTBOX_RESIZE_WIDTH'	=> (int) $this->config['lightbox_max_width'],
 			'S_LIGHTBOX_GALLERY'	=> (int) $this->config['lightbox_gallery'],
 			'S_LIGHTBOX_SIGNATURES'	=> (int) $this->config['lightbox_signatures'],
+			'S_LIGHTBOX_IMG_TITLES'	=> (int) $this->config['lightbox_img_titles'],
 		));
 	}
 
 	/**
 	 * Add Lightbox settings to the ACP
 	 *
-	 * @param object $event The event object
-	 * @return null
+	 * @param \phpbb\event\data $event The event object
+	 * @return void
 	 * @access public
 	 */
 	public function add_lightbox_acp_config($event)
 	{
-		if ($event['mode'] == 'features' && isset($event['display_vars']['vars']['legend2']))
+		if ($event['mode'] === 'post' && array_key_exists('legend3', $event['display_vars']['vars']))
 		{
 			$this->user->add_lang_ext('vse/lightbox', 'lightbox');
 			$display_vars = $event['display_vars'];
 
+			$max_width = $this->min_not_null($this->config['img_max_width'], (!empty($this->config['img_create_thumbnail']) ? $this->config['img_max_thumb_width'] : 0));
+			$l_append = $max_width ? $this->user->lang('LIGHTBOX_MAX_WIDTH_APPEND', $max_width) : '';
+
 			$my_config_vars = array(
 				'legend_lightbox'		=> 'LIGHTBOX_SETTINGS',
-				'lightbox_max_width'	=> array('lang' => 'LIGHTBOX_MAX_WIDTH', 'validate' => 'int:0:99999', 'type' => 'number:0:99999', 'explain' => true, 'append' => ' ' . $this->user->lang('PIXEL')),
-				'lightbox_gallery'		=> array('lang' => 'LIGHTBOX_GALLERY', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
+				'lightbox_max_width'	=> array('lang' => 'LIGHTBOX_MAX_WIDTH', 'validate' => 'int:0:99999', 'type' => 'number:0:99999', 'explain' => true, 'append' => ' ' . $this->user->lang('PIXEL') . '<br />' . $l_append),
+				'lightbox_gallery'		=> array('lang' => 'LIGHTBOX_GALLERY', 'validate' => 'int', 'type' => 'select', 'function' => array($this, 'select_gallery_mode'), 'explain' => true),
 				'lightbox_signatures'	=> array('lang' => 'LIGHTBOX_SIGNATURES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
+				'lightbox_img_titles'	=> array('lang' => 'LIGHTBOX_IMG_TITLES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			);
 
-			$display_vars['vars'] = phpbb_insert_config_array($display_vars['vars'], $my_config_vars, array('before' => 'legend2'));
+			$display_vars['vars'] = phpbb_insert_config_array($display_vars['vars'], $my_config_vars, array('before' => 'legend3'));
 
 			$event['display_vars'] = $display_vars;
 		}
+	}
+
+	/**
+	 * Create options for the gallery mode select setting
+	 *
+	 * @param int    $selected The current value of the config setting
+	 * @param string $cfg_key  The name of the config key
+	 * @return string The HTML option tags
+	 * @access public
+	 */
+	public function select_gallery_mode($selected, $cfg_key = '')
+	{
+		$options = '';
+		$opt_ary = array(
+			0 => 'DISABLED',
+			1 => 'LIGHTBOX_GALLERY_ALL',
+			2 => 'LIGHTBOX_GALLERY_POSTS',
+		);
+
+		foreach ($opt_ary as $opt_key => $opt_value)
+		{
+			$options .= '<option value="' . $opt_key . '"' . (($selected == $opt_key) ? ' selected="selected"' : '') . '>' . $this->user->lang($opt_value) . '</option>';
+		}
+
+		return $options;
+	}
+
+	/**
+	 * Find lowest value that is not 0
+	 * Accepts variable number of comparable parameters
+	 *
+	 * @return mixed The lowest of the parameter values, false on no result.
+	 * @access protected
+	 */
+	protected function min_not_null()
+	{
+		$args = func_get_args();
+		$args = array_diff(array_map('intval', $args), array(0));
+
+		return count($args) ? min($args) : false;
 	}
 }

@@ -10,7 +10,7 @@
 
 namespace vse\lightbox\tests\event;
 
-require_once dirname(__FILE__) . '/../../../../../includes/functions_acp.php';
+require_once __DIR__ . '/../../../../../includes/functions_acp.php';
 
 class listener_test extends \phpbb_test_case
 {
@@ -20,18 +20,23 @@ class listener_test extends \phpbb_test_case
 	/** @var \phpbb\config\config */
 	protected $config;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\template\template|\PHPUnit_Framework_MockObject_MockObject */
 	protected $template;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\user|\PHPUnit_Framework_MockObject_MockObject */
 	protected $user;
 
 	public function setUp()
 	{
 		parent::setUp();
 
+		global $phpbb_root_path, $phpEx;
+
 		$this->config = new \phpbb\config\config(array());
-		$this->user = $this->getMock('\phpbb\user', array(), array('\phpbb\datetime'));
+		$this->user = $this->getMock('\phpbb\user', array(), array(
+			new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx)),
+			'\phpbb\datetime'
+		));
 		$this->template = $this->getMockBuilder('\phpbb\template\template')
 			->getMock();
 	}
@@ -67,40 +72,59 @@ class listener_test extends \phpbb_test_case
 	public function set_lightbox_tpl_data_test_data()
 	{
 		return array(
-			array(400, 1, 1, array(
+			array(400, 2, 1, 1, array(
+				'LIGHTBOX_RESIZE_WIDTH'	=> 400,
+				'S_LIGHTBOX_GALLERY'	=> 2,
+				'S_LIGHTBOX_SIGNATURES'	=> 1,
+				'S_LIGHTBOX_IMG_TITLES'	=> 1,
+			)),
+			array(400, 1, 1, 1, array(
 				'LIGHTBOX_RESIZE_WIDTH'	=> 400,
 				'S_LIGHTBOX_GALLERY'	=> 1,
 				'S_LIGHTBOX_SIGNATURES'	=> 1,
+				'S_LIGHTBOX_IMG_TITLES'	=> 1,
 			)),
-			array(400, 0, 1, array(
+			array(400, 0, 1, 1, array(
 				'LIGHTBOX_RESIZE_WIDTH'	=> 400,
 				'S_LIGHTBOX_GALLERY'	=> 0,
 				'S_LIGHTBOX_SIGNATURES'	=> 1,
+				'S_LIGHTBOX_IMG_TITLES'	=> 1,
 			)),
-			array(0, 1, 1, array(
+			array(0, 1, 1, 1, array(
 				'LIGHTBOX_RESIZE_WIDTH'	=> 0,
 				'S_LIGHTBOX_GALLERY'	=> 1,
 				'S_LIGHTBOX_SIGNATURES'	=> 1,
+				'S_LIGHTBOX_IMG_TITLES'	=> 1,
 			)),
-			array(0, 0, 0, array(
+			array(0, 0, 0, 0, array(
 				'LIGHTBOX_RESIZE_WIDTH'	=> 0,
 				'S_LIGHTBOX_GALLERY'	=> 0,
 				'S_LIGHTBOX_SIGNATURES'	=> 0,
+				'S_LIGHTBOX_IMG_TITLES'	=> 0,
 			)),
-			array(null, null, null, array(
+			array(null, null, null, null, array(
 				'LIGHTBOX_RESIZE_WIDTH'	=> 0,
 				'S_LIGHTBOX_GALLERY'	=> 0,
 				'S_LIGHTBOX_SIGNATURES'	=> 0,
+				'S_LIGHTBOX_IMG_TITLES'	=> 0,
 			)),
-			array(400, null, null, array(
+			array(400, null, null, null, array(
 				'LIGHTBOX_RESIZE_WIDTH'	=> 400,
 				'S_LIGHTBOX_GALLERY'	=> 0,
 				'S_LIGHTBOX_SIGNATURES'	=> 0,
+				'S_LIGHTBOX_IMG_TITLES'	=> 0,
 			)),
-			array(null, 1, 0, array(
+			array(null, 1, 0, 1, array(
 				'LIGHTBOX_RESIZE_WIDTH'	=> 0,
 				'S_LIGHTBOX_GALLERY'	=> 1,
 				'S_LIGHTBOX_SIGNATURES'	=> 0,
+				'S_LIGHTBOX_IMG_TITLES'	=> 1,
+			)),
+			array(null, 1, 0, 0, array(
+				'LIGHTBOX_RESIZE_WIDTH'	=> 0,
+				'S_LIGHTBOX_GALLERY'	=> 1,
+				'S_LIGHTBOX_SIGNATURES'	=> 0,
+				'S_LIGHTBOX_IMG_TITLES'	=> 0,
 			)),
 		);
 	}
@@ -111,15 +135,17 @@ class listener_test extends \phpbb_test_case
 	 * @param $lightbox_max_width
 	 * @param $lightbox_gallery
 	 * @param $lightbox_signatures
+	 * @param $lightbox_img_titles
 	 * @param $expected
 	 * @dataProvider set_lightbox_tpl_data_test_data
 	 */
-	public function test_set_lightbox_tpl_data($lightbox_max_width, $lightbox_gallery, $lightbox_signatures, $expected)
+	public function test_set_lightbox_tpl_data($lightbox_max_width, $lightbox_gallery, $lightbox_signatures, $lightbox_img_titles, $expected)
 	{
 		$this->config = new \phpbb\config\config(array(
 			'lightbox_max_width'	=> $lightbox_max_width,
 			'lightbox_gallery'		=> $lightbox_gallery,
 			'lightbox_signatures'	=> $lightbox_signatures,
+			'lightbox_img_titles'	=> $lightbox_img_titles,
 		));
 
 		$this->set_listener();
@@ -142,17 +168,17 @@ class listener_test extends \phpbb_test_case
 	{
 		return array(
 			array( // expected config and mode
-				'features',
-				array('vars' => array('legend2' => array())),
-				array('legend_lightbox', 'lightbox_max_width', 'lightbox_gallery', 'lightbox_signatures', 'legend2'),
+				'post',
+				array('vars' => array('legend3' => array())),
+				array('legend_lightbox', 'lightbox_max_width', 'lightbox_gallery', 'lightbox_signatures', 'lightbox_img_titles', 'legend3'),
 			),
 			array( // unexpected mode
 				'foobar',
-				array('vars' => array('legend2' => array())),
-				array('legend2'),
+				array('vars' => array('legend3' => array())),
+				array('legend3'),
 			),
 			array( // unexpected config
-				'settings',
+				'post',
 				array('vars' => array('foobar' => array())),
 				array('foobar'),
 			),
