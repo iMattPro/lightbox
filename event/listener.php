@@ -128,7 +128,7 @@ class listener implements EventSubscriberInterface
 
 		foreach ($opt_ary as $opt_key => $opt_value)
 		{
-			$options .= '<option value="' . $opt_key . '"' . (($selected == $opt_key) ? ' selected="selected"' : '') . '>' . $this->user->lang($opt_value) . '</option>';
+			$options .= '<option value="' . $opt_key . '"' . ($selected == $opt_key ? ' selected="selected"' : '') . '>' . $this->user->lang($opt_value) . '</option>';
 		}
 
 		return $options;
