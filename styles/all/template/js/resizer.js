@@ -71,7 +71,7 @@
 						return $('<a/>').attr({
 							href: url,
 							'data-lightbox': galleryName + galIndex,
-							'data-title': (vseLightbox.imageTitles) ? ((url.indexOf('download/file.php') !== -1) ? $(this).attr('alt') : url.split('/').pop()) : ''
+							'data-title': (vseLightbox.imageTitles) ? ((url.indexOf(vseLightbox.downloadFile) !== -1) ? $(this).attr('alt') : url.split('/').pop()) : ''
 						});
 					}).borderHover();
 				}
