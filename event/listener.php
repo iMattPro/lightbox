@@ -26,19 +26,24 @@ class listener implements EventSubscriberInterface
 	/** @var \phpbb\user */
 	protected $user;
 
+	/** @var string PHP file extension */
+	protected $php_ext;
+
 	/**
 	 * Constructor
 	 *
-	 * @param \phpbb\config\config        $config             Config object
-	 * @param \phpbb\template\template    $template           Template object
-	 * @param \phpbb\user                 $user               User object
+	 * @param \phpbb\config\config     $config   Config object
+	 * @param \phpbb\template\template $template Template object
+	 * @param \phpbb\user              $user     User object
+	 * @param string                   $php_ext
 	 * @access public
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\template\template $template, \phpbb\user $user)
+	public function __construct(\phpbb\config\config $config, \phpbb\template\template $template, \phpbb\user $user, $php_ext)
 	{
 		$this->config = $config;
 		$this->template = $template;
 		$this->user = $user;
+		$this->php_ext = $php_ext;
 	}
 
 	/**
@@ -69,6 +74,7 @@ class listener implements EventSubscriberInterface
 			'S_LIGHTBOX_GALLERY'	=> (int) $this->config['lightbox_gallery'],
 			'S_LIGHTBOX_SIGNATURES'	=> (int) $this->config['lightbox_signatures'],
 			'S_LIGHTBOX_IMG_TITLES'	=> (int) $this->config['lightbox_img_titles'],
+			'PHP_EXTENSION'			=> $this->php_ext,
 		));
 	}
 
@@ -122,7 +128,7 @@ class listener implements EventSubscriberInterface
 
 		foreach ($opt_ary as $opt_key => $opt_value)
 		{
-			$options .= '<option value="' . $opt_key . '"' . (($selected == $opt_key) ? ' selected="selected"' : '') . '>' . $this->user->lang($opt_value) . '</option>';
+			$options .= '<option value="' . $opt_key . '"' . ($selected == $opt_key ? ' selected="selected"' : '') . '>' . $this->user->lang($opt_value) . '</option>';
 		}
 
 		return $options;

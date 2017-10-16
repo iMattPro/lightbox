@@ -26,6 +26,9 @@ class listener_test extends \phpbb_test_case
 	/** @var \phpbb\user|\PHPUnit_Framework_MockObject_MockObject */
 	protected $user;
 
+	/** @var string PHP file extension */
+	protected $php_ext;
+
 	public function setUp()
 	{
 		parent::setUp();
@@ -39,6 +42,7 @@ class listener_test extends \phpbb_test_case
 		));
 		$this->template = $this->getMockBuilder('\phpbb\template\template')
 			->getMock();
+		$this->php_ext = $phpEx;
 	}
 
 	protected function set_listener()
@@ -46,7 +50,8 @@ class listener_test extends \phpbb_test_case
 		$this->listener = new \vse\lightbox\event\listener(
 			$this->config,
 			$this->template,
-			$this->user
+			$this->user,
+			$this->php_ext
 		);
 	}
 
@@ -77,54 +82,63 @@ class listener_test extends \phpbb_test_case
 				'S_LIGHTBOX_GALLERY'	=> 2,
 				'S_LIGHTBOX_SIGNATURES'	=> 1,
 				'S_LIGHTBOX_IMG_TITLES'	=> 1,
+				'PHP_EXTENSION'			=> 'php',
 			)),
 			array(400, 1, 1, 1, array(
 				'LIGHTBOX_RESIZE_WIDTH'	=> 400,
 				'S_LIGHTBOX_GALLERY'	=> 1,
 				'S_LIGHTBOX_SIGNATURES'	=> 1,
 				'S_LIGHTBOX_IMG_TITLES'	=> 1,
+				'PHP_EXTENSION'			=> 'php',
 			)),
 			array(400, 0, 1, 1, array(
 				'LIGHTBOX_RESIZE_WIDTH'	=> 400,
 				'S_LIGHTBOX_GALLERY'	=> 0,
 				'S_LIGHTBOX_SIGNATURES'	=> 1,
 				'S_LIGHTBOX_IMG_TITLES'	=> 1,
+				'PHP_EXTENSION'			=> 'php',
 			)),
 			array(0, 1, 1, 1, array(
 				'LIGHTBOX_RESIZE_WIDTH'	=> 0,
 				'S_LIGHTBOX_GALLERY'	=> 1,
 				'S_LIGHTBOX_SIGNATURES'	=> 1,
 				'S_LIGHTBOX_IMG_TITLES'	=> 1,
+				'PHP_EXTENSION'			=> 'php',
 			)),
 			array(0, 0, 0, 0, array(
 				'LIGHTBOX_RESIZE_WIDTH'	=> 0,
 				'S_LIGHTBOX_GALLERY'	=> 0,
 				'S_LIGHTBOX_SIGNATURES'	=> 0,
 				'S_LIGHTBOX_IMG_TITLES'	=> 0,
+				'PHP_EXTENSION'			=> 'php',
 			)),
 			array(null, null, null, null, array(
 				'LIGHTBOX_RESIZE_WIDTH'	=> 0,
 				'S_LIGHTBOX_GALLERY'	=> 0,
 				'S_LIGHTBOX_SIGNATURES'	=> 0,
 				'S_LIGHTBOX_IMG_TITLES'	=> 0,
+				'PHP_EXTENSION'			=> 'php',
 			)),
 			array(400, null, null, null, array(
 				'LIGHTBOX_RESIZE_WIDTH'	=> 400,
 				'S_LIGHTBOX_GALLERY'	=> 0,
 				'S_LIGHTBOX_SIGNATURES'	=> 0,
 				'S_LIGHTBOX_IMG_TITLES'	=> 0,
+				'PHP_EXTENSION'			=> 'php',
 			)),
 			array(null, 1, 0, 1, array(
 				'LIGHTBOX_RESIZE_WIDTH'	=> 0,
 				'S_LIGHTBOX_GALLERY'	=> 1,
 				'S_LIGHTBOX_SIGNATURES'	=> 0,
 				'S_LIGHTBOX_IMG_TITLES'	=> 1,
+				'PHP_EXTENSION'			=> 'php',
 			)),
 			array(null, 1, 0, 0, array(
 				'LIGHTBOX_RESIZE_WIDTH'	=> 0,
 				'S_LIGHTBOX_GALLERY'	=> 1,
 				'S_LIGHTBOX_SIGNATURES'	=> 0,
 				'S_LIGHTBOX_IMG_TITLES'	=> 0,
+				'PHP_EXTENSION'			=> 'php',
 			)),
 		);
 	}
