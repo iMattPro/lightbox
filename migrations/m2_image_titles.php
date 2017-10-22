@@ -17,7 +17,7 @@ class m2_image_titles extends \phpbb\db\migration\migration
 		return isset($this->config['lightbox_img_titles']);
 	}
 
-	static public function depends_on()
+	public static function depends_on()
 	{
 		return array('\vse\lightbox\migrations\m1_add_configs');
 	}

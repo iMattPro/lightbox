@@ -17,7 +17,7 @@ class m1_add_configs extends \phpbb\db\migration\migration
 		return isset($this->config['lightbox_max_width']);
 	}
 
-	static public function depends_on()
+	public static function depends_on()
 	{
 		return array('\phpbb\db\migration\data\v310\gold');
 	}

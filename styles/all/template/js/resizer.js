@@ -1,3 +1,4 @@
+/*global vseLightbox, mChat*/
 (function($) { // Avoid conflicts with other libraries
 
 	'use strict';
