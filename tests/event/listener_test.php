@@ -23,7 +23,7 @@ class listener_test extends \phpbb_test_case
 	/** @var \phpbb\template\template|\PHPUnit_Framework_MockObject_MockObject */
 	protected $template;
 
-	/** @var \phpbb\user|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\user */
 	protected $user;
 
 	/** @var string PHP file extension */
@@ -36,10 +36,10 @@ class listener_test extends \phpbb_test_case
 		global $phpbb_root_path, $phpEx;
 
 		$this->config = new \phpbb\config\config(array());
-		$this->user = $this->getMock('\phpbb\user', array(), array(
+		$this->user = new \phpbb\user(
 			new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx)),
 			'\phpbb\datetime'
-		));
+		);
 		$this->template = $this->getMockBuilder('\phpbb\template\template')
 			->getMock();
 		$this->php_ext = $phpEx;
