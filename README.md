@@ -28,4 +28,4 @@ This extension adds the [Lightbox 2](http://lokeshdhakar.com/projects/lightbox2/
 ## License
 [GNU General Public License v2](http://opensource.org/licenses/GPL-2.0)
 
-© 2014 - Matt Friedman (VSE)
+© 2014 - Matt Friedman
