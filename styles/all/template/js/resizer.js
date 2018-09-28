@@ -28,17 +28,13 @@
 		return (vseLightbox.resizeHeight > 0);
 	}
 
-	function isSmallScreen() {
+	function isMobile() {
 		var mobileWidth = 900; // disable on screens < 900px
-		return $(window).width() <= mobileWidth;
+		return $(window).width() <= mobileWidth && phpbb.isTouch;
 	}
 
-	function isWide(img) {
-		return resizeWideImages() && (img.width >= vseLightbox.resizeWidth);
-	}
-
-	function isTall(img) {
-		return resizeTallImages() && img.height >= vseLightbox.resizeHeight;
+	function isOversized(img) {
+		return (resizeWideImages() && img.width >= vseLightbox.resizeWidth) || (resizeTallImages() && img.height >= vseLightbox.resizeHeight);
 	}
 
 	function lightboxResizer(elements) {
@@ -49,12 +45,12 @@
 				return $(this).closest('.signature').length > 0;
 			});
 		}
-		} else {
-		if (!isSmallScreen() && (resizeWideImages() || resizeTallImages())) {
+		if (!isMobile() && (resizeWideImages() || resizeTallImages())) {
 			$targetImage.css({
 				'max-width': (resizeWideImages() ? vseLightbox.resizeWidth + 'px' : 'none'),
 				'max-height': (resizeTallImages() ? vseLightbox.resizeHeight + 'px' : 'none')
 			});
+		} else if (!vseLightbox.lightboxAll || isMobile()) {
 			return;
 		}
 		// enclosing the following in a setTimeout seems to solve issues with
@@ -80,7 +76,7 @@
 				}
 				// attached images
 				if ($(this).parent('a').length > 0) {
-					if (isWide(img) || isTall(img)) {
+					if (vseLightbox.lightboxAll || isOversized(img)) {
 						$(this).parent('a').attr({
 							'data-lightbox': galleryName + img.index,
 							'data-title': (vseLightbox.imageTitles) ? $(this).attr('alt') : ''
@@ -88,7 +84,7 @@
 					}
 				}
 				// regular images
-				else if (isWide(img) || isTall(img)) {
+				else if (vseLightbox.lightboxAll || isOversized(img)) {
 					$(this).wrap(function() {
 						var url = $(this).attr('src');
 						return $('<a/>').attr({

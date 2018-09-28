@@ -1,4 +1,4 @@
-{% if LIGHTBOX_RESIZE_WIDTH or LIGHTBOX_RESIZE_HEIGHT %}
+{% if S_LIGHTBOX_ALL_IMAGES or LIGHTBOX_RESIZE_WIDTH or LIGHTBOX_RESIZE_HEIGHT %}
 	{% INCLUDEJS '@vse_lightbox/js/resizer.js' %}
 	{# Test $INCLUDED_LIGHTBOXJS is not defined #}
 	{% if not definition.INCLUDED_LIGHTBOXJS %}
@@ -12,6 +12,7 @@
 		vseLightbox.lightboxGal = {{ S_LIGHTBOX_GALLERY }};
 		vseLightbox.lightboxSig = {{ S_LIGHTBOX_SIGNATURES }};
 		vseLightbox.imageTitles = {{ S_LIGHTBOX_IMG_TITLES }};
+		vseLightbox.lightboxAll = {{ S_LIGHTBOX_ALL_IMAGES }};
 		vseLightbox.downloadFile = 'download/file.{{ PHP_EXTENSION|escape("js") }}';
 	</script>
 {% endif %}

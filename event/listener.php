@@ -72,6 +72,7 @@ class listener implements EventSubscriberInterface
 		$this->template->assign_vars(array(
 			'LIGHTBOX_RESIZE_WIDTH'	 => (int) $this->config['lightbox_max_width'],
 			'LIGHTBOX_RESIZE_HEIGHT' => (int) $this->config['lightbox_max_height'],
+			'S_LIGHTBOX_ALL_IMAGES'  => (int) $this->config['lightbox_all_images'],
 			'S_LIGHTBOX_GALLERY'	 => (int) $this->config['lightbox_gallery'],
 			'S_LIGHTBOX_SIGNATURES'	 => (int) $this->config['lightbox_signatures'],
 			'S_LIGHTBOX_IMG_TITLES'	 => (int) $this->config['lightbox_img_titles'],
@@ -100,6 +101,7 @@ class listener implements EventSubscriberInterface
 				'legend_lightbox'		=> 'LIGHTBOX_SETTINGS',
 				'lightbox_max_width'	=> array('lang' => 'LIGHTBOX_MAX_WIDTH', 'validate' => 'int:0:99999', 'type' => 'number:0:99999', 'explain' => true, 'append' => ' ' . $this->user->lang('PIXEL') . '<br />' . $l_append),
 				'lightbox_max_height'	=> array('lang' => 'LIGHTBOX_MAX_HEIGHT', 'validate' => 'int:0:99999', 'type' => 'number:0:99999', 'explain' => true, 'append' => ' ' . $this->user->lang('PIXEL') . '<br />' . $l_append),
+				'lightbox_all_images'	=> array('lang' => 'LIGHTBOX_ALL_IMAGES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 				'lightbox_gallery'		=> array('lang' => 'LIGHTBOX_GALLERY', 'validate' => 'int', 'type' => 'select', 'function' => array($this, 'select_gallery_mode'), 'explain' => true),
 				'lightbox_signatures'	=> array('lang' => 'LIGHTBOX_SIGNATURES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 				'lightbox_img_titles'	=> array('lang' => 'LIGHTBOX_IMG_TITLES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),

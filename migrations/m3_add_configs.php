@@ -26,6 +26,7 @@ class m3_add_configs extends \phpbb\db\migration\migration
 	{
 		return array(
 			array('config.add', array('lightbox_max_height', 0)),
+			array('config.add', array('lightbox_all_images', 0)),
 		);
 	}
 }
