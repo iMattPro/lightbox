@@ -20,9 +20,25 @@
 		}
 	});
 
-	function isResizable() {
+	function resizeWideImages() {
+		return (vseLightbox.resizeWidth > 0);
+	}
+
+	function resizeTallImages() {
+		return (vseLightbox.resizeHeight > 0);
+	}
+
+	function isSmallScreen() {
 		var mobileWidth = 900; // disable on screens < 900px
-		return (vseLightbox.resizeWidth > 0 && $(window).width() > mobileWidth);
+		return $(window).width() <= mobileWidth;
+	}
+
+	function isWide(img) {
+		return resizeWideImages() && (img.width >= vseLightbox.resizeWidth);
+	}
+
+	function isTall(img) {
+		return resizeTallImages() && img.height >= vseLightbox.resizeHeight;
 	}
 
 	function lightboxResizer(elements) {
@@ -33,9 +49,12 @@
 				return $(this).closest('.signature').length > 0;
 			});
 		}
-		if (isResizable()) {
-			$targetImage.css('max-width', vseLightbox.resizeWidth + 'px');
 		} else {
+		if (!isSmallScreen() && (resizeWideImages() || resizeTallImages())) {
+			$targetImage.css({
+				'max-width': (resizeWideImages() ? vseLightbox.resizeWidth + 'px' : 'none'),
+				'max-height': (resizeTallImages() ? vseLightbox.resizeHeight + 'px' : 'none')
+			});
 			return;
 		}
 		// enclosing the following in a setTimeout seems to solve issues with
@@ -45,33 +64,36 @@
 				if ($(this).closest('.postlink').length > 0) {
 					return;
 				}
-				var imgWidth = $(this).outerWidth(),
-					galIndex =  '';
+				var img = {
+					index: '',
+					width: $(this).outerWidth(),
+					height: $(this).outerHeight()
+				};
 				switch (vseLightbox.lightboxGal)
 				{
 					case 0:
-						galIndex = $targetImage.index(this);
+						img.index = $targetImage.index(this);
 					break;
 					case 2:
-						galIndex = $(this).closest('.post').attr('id') || '';
+						img.index = $(this).closest('.post').attr('id') || '';
 					break;
 				}
-				// attached images (check their width and height)
+				// attached images
 				if ($(this).parent('a').length > 0) {
-					if (imgWidth >= vseLightbox.resizeWidth || $(this).height() >= vseLightbox.resizeWidth) {
+					if (isWide(img) || isTall(img)) {
 						$(this).parent('a').attr({
-							'data-lightbox': galleryName + galIndex,
+							'data-lightbox': galleryName + img.index,
 							'data-title': (vseLightbox.imageTitles) ? $(this).attr('alt') : ''
 						}).end().borderHover();
 					}
 				}
 				// regular images
-				else if (imgWidth >= vseLightbox.resizeWidth) {
+				else if (isWide(img) || isTall(img)) {
 					$(this).wrap(function() {
 						var url = $(this).attr('src');
 						return $('<a/>').attr({
 							href: url,
-							'data-lightbox': galleryName + galIndex,
+							'data-lightbox': galleryName + img.index,
 							'data-title': (vseLightbox.imageTitles) ? ((url.indexOf(vseLightbox.downloadFile) !== -1) ? $(this).attr('alt') : url.split('/').pop()) : ''
 						});
 					}).borderHover();

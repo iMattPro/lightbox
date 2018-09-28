@@ -1,4 +1,4 @@
-{% if LIGHTBOX_RESIZE_WIDTH %}
+{% if LIGHTBOX_RESIZE_WIDTH or LIGHTBOX_RESIZE_HEIGHT %}
 	{% INCLUDEJS '@vse_lightbox/js/resizer.js' %}
 	{# Test $INCLUDED_LIGHTBOXJS is not defined #}
 	{% if not definition.INCLUDED_LIGHTBOXJS %}
@@ -7,6 +7,7 @@
 	{% endif %}
 	<script>
 		var vseLightbox = {};
+		vseLightbox.resizeHeight = {{ LIGHTBOX_RESIZE_HEIGHT }};
 		vseLightbox.resizeWidth = {{ LIGHTBOX_RESIZE_WIDTH }};
 		vseLightbox.lightboxGal = {{ S_LIGHTBOX_GALLERY }};
 		vseLightbox.lightboxSig = {{ S_LIGHTBOX_SIGNATURES }};
