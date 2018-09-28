@@ -77,86 +77,37 @@ class listener_test extends \phpbb_test_case
 	public function set_lightbox_tpl_data_test_data()
 	{
 		return array(
-			array(400, 2, 1, 1, array(
-				'LIGHTBOX_RESIZE_WIDTH'	=> 400,
-				'S_LIGHTBOX_GALLERY'	=> 2,
-				'S_LIGHTBOX_SIGNATURES'	=> 1,
-				'S_LIGHTBOX_IMG_TITLES'	=> 1,
-				'PHP_EXTENSION'			=> 'php',
-			)),
-			array(400, 1, 1, 1, array(
-				'LIGHTBOX_RESIZE_WIDTH'	=> 400,
-				'S_LIGHTBOX_GALLERY'	=> 1,
-				'S_LIGHTBOX_SIGNATURES'	=> 1,
-				'S_LIGHTBOX_IMG_TITLES'	=> 1,
-				'PHP_EXTENSION'			=> 'php',
-			)),
-			array(400, 0, 1, 1, array(
-				'LIGHTBOX_RESIZE_WIDTH'	=> 400,
-				'S_LIGHTBOX_GALLERY'	=> 0,
-				'S_LIGHTBOX_SIGNATURES'	=> 1,
-				'S_LIGHTBOX_IMG_TITLES'	=> 1,
-				'PHP_EXTENSION'			=> 'php',
-			)),
-			array(0, 1, 1, 1, array(
-				'LIGHTBOX_RESIZE_WIDTH'	=> 0,
-				'S_LIGHTBOX_GALLERY'	=> 1,
-				'S_LIGHTBOX_SIGNATURES'	=> 1,
-				'S_LIGHTBOX_IMG_TITLES'	=> 1,
-				'PHP_EXTENSION'			=> 'php',
-			)),
-			array(0, 0, 0, 0, array(
-				'LIGHTBOX_RESIZE_WIDTH'	=> 0,
-				'S_LIGHTBOX_GALLERY'	=> 0,
-				'S_LIGHTBOX_SIGNATURES'	=> 0,
-				'S_LIGHTBOX_IMG_TITLES'	=> 0,
-				'PHP_EXTENSION'			=> 'php',
-			)),
-			array(null, null, null, null, array(
-				'LIGHTBOX_RESIZE_WIDTH'	=> 0,
-				'S_LIGHTBOX_GALLERY'	=> 0,
-				'S_LIGHTBOX_SIGNATURES'	=> 0,
-				'S_LIGHTBOX_IMG_TITLES'	=> 0,
-				'PHP_EXTENSION'			=> 'php',
-			)),
-			array(400, null, null, null, array(
-				'LIGHTBOX_RESIZE_WIDTH'	=> 400,
-				'S_LIGHTBOX_GALLERY'	=> 0,
-				'S_LIGHTBOX_SIGNATURES'	=> 0,
-				'S_LIGHTBOX_IMG_TITLES'	=> 0,
-				'PHP_EXTENSION'			=> 'php',
-			)),
-			array(null, 1, 0, 1, array(
-				'LIGHTBOX_RESIZE_WIDTH'	=> 0,
-				'S_LIGHTBOX_GALLERY'	=> 1,
-				'S_LIGHTBOX_SIGNATURES'	=> 0,
-				'S_LIGHTBOX_IMG_TITLES'	=> 1,
-				'PHP_EXTENSION'			=> 'php',
-			)),
-			array(null, 1, 0, 0, array(
-				'LIGHTBOX_RESIZE_WIDTH'	=> 0,
-				'S_LIGHTBOX_GALLERY'	=> 1,
-				'S_LIGHTBOX_SIGNATURES'	=> 0,
-				'S_LIGHTBOX_IMG_TITLES'	=> 0,
-				'PHP_EXTENSION'			=> 'php',
-			)),
+			array(400, 500, 0, 2, 1, 1),
+			array(400, 500, 0, 1, 1, 1),
+			array(400, 500, 0, 0, 1, 1),
+			array(0, 500, 0, 0, 1, 1),
+			array(400, 0, 0, 0, 1, 1),
+			array(0, 0, 0, 1, 1, 1),
+			array(0, 0, 0, 0, 0, 0),
+			array(null, null, null, null, null, null,),
+			array(400, 500, null, null, null, null),
+			array(null, null, 1, 1, 0, 1),
+			array(null, null, 1, 1, 0, 0),
 		);
 	}
 
 	/**
 	 * Test the set_lightbox_tpl_data event
 	 *
-	 * @param $lightbox_max_width
+	 * @param $max_width
+	 * @param $max_height
+	 * @param $all_images
 	 * @param $lightbox_gallery
 	 * @param $lightbox_signatures
 	 * @param $lightbox_img_titles
-	 * @param $expected
 	 * @dataProvider set_lightbox_tpl_data_test_data
 	 */
-	public function test_set_lightbox_tpl_data($lightbox_max_width, $lightbox_gallery, $lightbox_signatures, $lightbox_img_titles, $expected)
+	public function test_set_lightbox_tpl_data($max_width, $max_height, $all_images, $lightbox_gallery, $lightbox_signatures, $lightbox_img_titles)
 	{
 		$this->config = new \phpbb\config\config(array(
-			'lightbox_max_width'	=> $lightbox_max_width,
+			'lightbox_max_width'	=> $max_width,
+			'lightbox_max_height'	=> $max_height,
+			'lightbox_all_images'	=> $all_images,
 			'lightbox_gallery'		=> $lightbox_gallery,
 			'lightbox_signatures'	=> $lightbox_signatures,
 			'lightbox_img_titles'	=> $lightbox_img_titles,
@@ -166,7 +117,15 @@ class listener_test extends \phpbb_test_case
 
 		$this->template->expects($this->once())
 			->method('assign_vars')
-			->with($expected);
+			->with(array(
+				'LIGHTBOX_RESIZE_WIDTH'	=> (int) $max_width,
+				'LIGHTBOX_RESIZE_HEIGHT'=> (int) $max_height,
+				'S_LIGHTBOX_ALL_IMAGES' => (int) $all_images,
+				'S_LIGHTBOX_GALLERY'	=> (int) $lightbox_gallery,
+				'S_LIGHTBOX_SIGNATURES'	=> (int) $lightbox_signatures,
+				'S_LIGHTBOX_IMG_TITLES'	=> (int) $lightbox_img_titles,
+				'PHP_EXTENSION'			=> 'php',
+			));
 
 		$dispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
 		$dispatcher->addListener('core.page_header', array($this->listener, 'set_lightbox_tpl_data'));
@@ -184,7 +143,7 @@ class listener_test extends \phpbb_test_case
 			array( // expected config and mode
 				'post',
 				array('vars' => array('legend3' => array())),
-				array('legend_lightbox', 'lightbox_max_width', 'lightbox_gallery', 'lightbox_signatures', 'lightbox_img_titles', 'legend3'),
+				array('legend_lightbox', 'lightbox_max_width', 'lightbox_max_height', 'lightbox_all_images', 'lightbox_gallery', 'lightbox_signatures', 'lightbox_img_titles', 'legend3'),
 			),
 			array( // unexpected mode
 				'foobar',
