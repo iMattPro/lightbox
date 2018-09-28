@@ -20,6 +20,9 @@ class listener_test extends \phpbb_test_case
 	/** @var \phpbb\config\config */
 	protected $config;
 
+	/** @var \phpbb\language\language */
+	protected $language;
+
 	/** @var \phpbb\template\template|\PHPUnit_Framework_MockObject_MockObject */
 	protected $template;
 
@@ -36,10 +39,7 @@ class listener_test extends \phpbb_test_case
 		global $phpbb_root_path, $phpEx;
 
 		$this->config = new \phpbb\config\config(array());
-		$this->user = new \phpbb\user(
-			new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx)),
-			'\phpbb\datetime'
-		);
+		$this->language = new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx));
 		$this->template = $this->getMockBuilder('\phpbb\template\template')
 			->getMock();
 		$this->php_ext = $phpEx;
@@ -49,8 +49,8 @@ class listener_test extends \phpbb_test_case
 	{
 		$this->listener = new \vse\lightbox\event\listener(
 			$this->config,
+			$this->language,
 			$this->template,
-			$this->user,
 			$this->php_ext
 		);
 	}
