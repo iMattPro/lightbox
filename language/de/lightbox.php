@@ -2,6 +2,7 @@
 /**
  *
  * Lightbox extension for the phpBB Forum Software package.
+ * [Gernman]
  *
  * @copyright (c) 2015 Matt Friedman
  * @license GNU General Public License, version 2 (GPL-2.0)
@@ -24,8 +25,12 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'LIGHTBOX_SETTINGS'				=> 'Lightbox Bildverkleinerung',
 	'LIGHTBOX_MAX_WIDTH'			=> 'Maximale Bildbreite in pixel',
-	'LIGHTBOX_MAX_WIDTH_EXPLAIN'	=> 'Bilder, die diese Breite überschreiten, werden verkleinert und können durch den Lightbox-Effekt vergrößert werden. Setze diesen Wert auf 0, um Lightbox Image Resizing zu deaktivieren.',
+	'LIGHTBOX_MAX_WIDTH_EXPLAIN'	=> 'Bilder, die diese Breite überschreiten, werden verkleinert und können durch den Lightbox-Effekt vergrößert werden. Setze diesen Wert auf 0, um die Bildgrößenanpassung nach Breite zu deaktivieren.',
 	'LIGHTBOX_MAX_WIDTH_APPEND'		=> 'Empfehlung basierend auf den Bilderanhang-Einstellungen: %spx',
+	'LIGHTBOX_MAX_HEIGHT'			=> 'Maximale Bildhöhe in pixel',
+	'LIGHTBOX_MAX_HEIGHT_EXPLAIN'	=> 'Bilder, die diese Höhe überschreiten, werden verkleinert und können durch den Lightbox-Effekt vergrößert werden. Setze diesen Wert auf 0, um die Bildgrößenanpassung nach Höhe zu deaktivieren.',
+	'LIGHTBOX_ALL_IMAGES'			=> 'Include all images in Lightbox effect',
+	'LIGHTBOX_ALL_IMAGES_EXPLAIN'	=> 'With this setting enabled, all posted images can be opened in the Lightbox effect even if they are not being resized.',
 	'LIGHTBOX_GALLERY'				=> 'Erlaube Galeriemodus',
 	'LIGHTBOX_GALLERY_EXPLAIN'		=> 'Erlaubt einfache Navigation zwischen allen verkleinerten Bildern auf der Seite, unter Benutzung des Lightbox-Effekts.',
 	'LIGHTBOX_GALLERY_ALL'			=> 'Alle skalierten Bilder der Seite',

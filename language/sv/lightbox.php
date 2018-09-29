@@ -2,7 +2,7 @@
 /**
  *
  * Lightbox extension for the phpBB Forum Software package.
- * Swedish translation by Holger (www.maskinisten.net)
+ * [Swedish] translation by Holger (www.maskinisten.net)
  *
  * @copyright (c) 2015 Matt Friedman
  * @license GNU General Public License, version 2 (GPL-2.0)
@@ -25,8 +25,12 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'LIGHTBOX_SETTINGS'				=> 'Lightbox inställningar',
 	'LIGHTBOX_MAX_WIDTH'			=> 'Maximal bredd i pixel',
-	'LIGHTBOX_MAX_WIDTH_EXPLAIN'	=> 'Bilder som överskrider denna bredd kommer att förminskas och kan sedan förstoras med hjälp av Lightbox-effekten. Ställ in till 0 för att deaktivera bildförminskningen.',
+	'LIGHTBOX_MAX_WIDTH_EXPLAIN'	=> 'Bilder som överskrider denna bredd kommer att förminskas och kan sedan förstoras med hjälp av Lightbox-effekten. Ställ in till 0 för att deaktivera bildförminskningen efter bredd.',
 	'LIGHTBOX_MAX_WIDTH_APPEND'		=> 'Rekommendation baserad på bildbilagor: %spx',
+	'LIGHTBOX_MAX_HEIGHT'			=> 'Maximal bildhöjd i pixlar',
+	'LIGHTBOX_MAX_HEIGHT_EXPLAIN'	=> 'Bilder som överskrider denna bildhöjd kommer att förminskas och kan sedan förstoras med hjälp av Lightbox-effekten. Ställ in till 0 för att deaktivera bildförminskningen efter höjd.',
+	'LIGHTBOX_ALL_IMAGES'			=> 'Include all images in Lightbox effect',
+	'LIGHTBOX_ALL_IMAGES_EXPLAIN'	=> 'With this setting enabled, all posted images can be opened in the Lightbox effect even if they are not being resized.',
 	'LIGHTBOX_GALLERY'				=> 'Tillåt galleriläge',
 	'LIGHTBOX_GALLERY_EXPLAIN'		=> 'Gör det enkelt att navigera mellan alla förminskade bilder på sidan.',
 	'LIGHTBOX_GALLERY_ALL'			=> 'All resized images on page',
