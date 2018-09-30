@@ -193,4 +193,16 @@ class listener_test extends \phpbb_test_case
 
 		$this->assertEquals($expected_keys, $keys);
 	}
+
+	/**
+	 * Test the select_gallery_mode method
+	 */
+	public function test_select_gallery_mode()
+	{
+		$this->set_listener();
+
+		$expected = '<option value="0" selected="selected">' . $this->language->lang('DISABLED') . '</option><option value="1">' . $this->language->lang('LIGHTBOX_GALLERY_ALL') . '</option><option value="2">' . $this->language->lang('LIGHTBOX_GALLERY_POSTS') . '</option>';
+
+		$this->assertEquals($expected, $this->listener->select_gallery_mode(0));
+	}
 }
