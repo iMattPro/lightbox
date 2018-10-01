@@ -1,5 +1,13 @@
 ## Changelog
 
+### 2.0.0 - 2018-10-01
+
+- Maximum height can now be set, in addition to the maximum width, for resizing large images
+- Lightbox2 effect can now be enabled for all posted images, even images not being resized
+- Updated Lightbox2 library to 2.10.0
+- Requires 3.2.0 or newer (no longer compatible with phpBB 3.1.x)
+- Added Slovak translation
+
 ### 1.0.5 - 2017-10-15
 
 - Gallery mode can now be enabled for the whole page or per post
@@ -14,7 +22,7 @@
 
 ### 1.0.3 - 2016-11-10
 
-- Update Lightbox library to 2.9.0
+- Updated Lightbox2 library to 2.9.0
 - Fixed Brazilian translation package (renamed pt-br to pt_br)
 - Various minor code and language improvements
 
@@ -22,14 +30,14 @@
 
 - Add support for QuickReply Reloaded extension
 - Handle attachments constrained by portrait height
-- Display recommended Lightbox settings in the ACP based on image attachment settings
+- Display recommended Lightbox2 settings in the ACP based on image attachment settings
 - Future proof compatibility for Symfony 3.0
 - JavaScript code refactoring, improving, tweaking
 - Added Brazilian-Portuguese translation
 
 ### 1.0.1 - 2016-01-16
 
-- Update Lightbox library to 2.8.2
+- Updated Lightbox2 library to 2.8.2
 - Added the option to show/hide image names as captions
 - Added Czech translation
 
@@ -53,7 +61,7 @@
 ### 1.0.0-b5 - 2015-09-03
 
 - Updated Lightbox2 library from 2.7.1 to 2.8.1
-- Added Arabic, Spanish, French, Italian, Japanese, Dutch, Polish and Swedish translations.
+- Added Arabic, Spanish, French, Italian, Japanese, Dutch, Polish and Swedish translations
 
 ### 1.0.0-b4 - 2015-02-24
 
