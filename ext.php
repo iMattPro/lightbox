@@ -8,7 +8,7 @@
  *
  */
 
-namespace vse\lightbox\event;
+namespace vse\lightbox;
 
 /**
  * Extension class for custom enable/disable/purge actions

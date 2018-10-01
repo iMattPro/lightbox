@@ -26,6 +26,7 @@ $lang = array_merge($lang, array(
 	'LIGHTBOX_SETTINGS'				=> 'Lightbox resim yeniden boyutlandırma',
 	'LIGHTBOX_MAX_WIDTH'			=> 'Piksel cinsinden en yüksek resim genişliği',
 	'LIGHTBOX_MAX_WIDTH_EXPLAIN'	=> 'Bu genişliği aşan resimler yeniden boyutlandırılacaktır ve Lightbox efekti kullanarak büyütülecektir. Lightbox resim yeniden boyutlandırmayı kapatmak için bu değeri 0 olarak ayarlayın.',
+	'LIGHTBOX_MAX_WIDTH_APPEND'		=> 'Recommendation based on image attachment settings: %spx',
 	'LIGHTBOX_MAX_HEIGHT'			=> 'Maximum image height',
 	'LIGHTBOX_MAX_HEIGHT_EXPLAIN'	=> 'Images that exceed this height will be resized and can be enlarged using the Lightbox effect. Set this value to 0 to disable Lightbox image resizing by height.',
 	'LIGHTBOX_ALL_IMAGES'			=> 'Include all images in Lightbox effect',
