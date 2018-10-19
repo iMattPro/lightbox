@@ -116,10 +116,17 @@
 
 	// Compatibility with mChat extension
 	if (typeof mChat === 'object') {
-		$(mChat).on('mchat_add_message_before', function(e, data) {
-			setTimeout(function() {
-				lightboxResizer(data.message);
-			}, 0);
+		$(mChat).on({
+			mchat_add_message_before: function(e, data) {
+				setTimeout(function() {
+					lightboxResizer(data.message);
+				}, 0);
+			},
+			mchat_edit_message_before: function(e, data) {
+				setTimeout(function() {
+					lightboxResizer(data.newMessage);
+				}, 0);
+			}
 		});
 	}
 
