@@ -3,7 +3,8 @@ services:
         class: vse\lightbox\event\listener
         arguments:
             - '@config'
+            - '@language'
             - '@template'
-            - '@user'
+            - '%core.php_ext%'
         tags:
             - { name: event.listener }

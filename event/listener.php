@@ -20,25 +20,30 @@ class listener implements EventSubscriberInterface
 	/** @var \phpbb\config\config */
 	protected $config;
 
+	/** @var \phpbb\language\language */
+	protected $language;
+
 	/** @var \phpbb\template\template */
 	protected $template;
 
-	/** @var \phpbb\user */
-	protected $user;
+	/** @var string PHP file extension */
+	protected $php_ext;
 
 	/**
 	 * Constructor
 	 *
-	 * @param \phpbb\config\config        $config             Config object
-	 * @param \phpbb\template\template    $template           Template object
-	 * @param \phpbb\user                 $user               User object
+	 * @param \phpbb\config\config     $config   Config object
+	 * @param \phpbb\language\language $language
+	 * @param \phpbb\template\template $template Template object
+	 * @param string                   $php_ext
 	 * @access public
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\template\template $template, \phpbb\user $user)
+	public function __construct(\phpbb\config\config $config, \phpbb\language\language $language, \phpbb\template\template $template, $php_ext)
 	{
 		$this->config = $config;
+		$this->language = $language;
 		$this->template = $template;
-		$this->user = $user;
+		$this->php_ext = $php_ext;
 	}
 
 	/**
@@ -65,10 +70,13 @@ class listener implements EventSubscriberInterface
 	public function set_lightbox_tpl_data()
 	{
 		$this->template->assign_vars(array(
-			'LIGHTBOX_RESIZE_WIDTH'	=> (int) $this->config['lightbox_max_width'],
-			'S_LIGHTBOX_GALLERY'	=> (int) $this->config['lightbox_gallery'],
-			'S_LIGHTBOX_SIGNATURES'	=> (int) $this->config['lightbox_signatures'],
-			'S_LIGHTBOX_IMG_TITLES'	=> (int) $this->config['lightbox_img_titles'],
+			'LIGHTBOX_RESIZE_WIDTH'	 => (int) $this->config['lightbox_max_width'],
+			'LIGHTBOX_RESIZE_HEIGHT' => (int) $this->config['lightbox_max_height'],
+			'S_LIGHTBOX_ALL_IMAGES'  => (int) $this->config['lightbox_all_images'],
+			'S_LIGHTBOX_GALLERY'	 => (int) $this->config['lightbox_gallery'],
+			'S_LIGHTBOX_SIGNATURES'	 => (int) $this->config['lightbox_signatures'],
+			'S_LIGHTBOX_IMG_TITLES'	 => (int) $this->config['lightbox_img_titles'],
+			'PHP_EXTENSION'			 => $this->php_ext,
 		));
 	}
 
@@ -83,15 +91,17 @@ class listener implements EventSubscriberInterface
 	{
 		if ($event['mode'] === 'post' && array_key_exists('legend3', $event['display_vars']['vars']))
 		{
-			$this->user->add_lang_ext('vse/lightbox', 'lightbox');
+			$this->language->add_lang('lightbox', 'vse/lightbox');
 			$display_vars = $event['display_vars'];
 
 			$max_width = $this->min_not_null($this->config['img_max_width'], (!empty($this->config['img_create_thumbnail']) ? $this->config['img_max_thumb_width'] : 0));
-			$l_append = $max_width ? $this->user->lang('LIGHTBOX_MAX_WIDTH_APPEND', $max_width) : '';
+			$l_append = $max_width ? $this->language->lang('LIGHTBOX_MAX_WIDTH_APPEND', $max_width) : '';
 
 			$my_config_vars = array(
 				'legend_lightbox'		=> 'LIGHTBOX_SETTINGS',
-				'lightbox_max_width'	=> array('lang' => 'LIGHTBOX_MAX_WIDTH', 'validate' => 'int:0:99999', 'type' => 'number:0:99999', 'explain' => true, 'append' => ' ' . $this->user->lang('PIXEL') . '<br />' . $l_append),
+				'lightbox_max_width'	=> array('lang' => 'LIGHTBOX_MAX_WIDTH', 'validate' => 'int:0:99999', 'type' => 'number:0:99999', 'explain' => true, 'append' => ' ' . $this->language->lang('PIXEL') . '<br />' . $l_append),
+				'lightbox_max_height'	=> array('lang' => 'LIGHTBOX_MAX_HEIGHT', 'validate' => 'int:0:99999', 'type' => 'number:0:99999', 'explain' => true, 'append' => ' ' . $this->language->lang('PIXEL') . '<br />' . $l_append),
+				'lightbox_all_images'	=> array('lang' => 'LIGHTBOX_ALL_IMAGES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 				'lightbox_gallery'		=> array('lang' => 'LIGHTBOX_GALLERY', 'validate' => 'int', 'type' => 'select', 'function' => array($this, 'select_gallery_mode'), 'explain' => true),
 				'lightbox_signatures'	=> array('lang' => 'LIGHTBOX_SIGNATURES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 				'lightbox_img_titles'	=> array('lang' => 'LIGHTBOX_IMG_TITLES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
@@ -122,7 +132,7 @@ class listener implements EventSubscriberInterface
 
 		foreach ($opt_ary as $opt_key => $opt_value)
 		{
-			$options .= '<option value="' . $opt_key . '"' . (($selected == $opt_key) ? ' selected="selected"' : '') . '>' . $this->user->lang($opt_value) . '</option>';
+			$options .= '<option value="' . $opt_key . '"' . ($selected == $opt_key ? ' selected="selected"' : '') . '>' . $this->language->lang($opt_value) . '</option>';
 		}
 
 		return $options;

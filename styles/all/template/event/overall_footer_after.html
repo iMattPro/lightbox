@@ -1,15 +1,19 @@
-{% if LIGHTBOX_RESIZE_WIDTH %}
+{% if S_LIGHTBOX_ALL_IMAGES or LIGHTBOX_RESIZE_WIDTH or LIGHTBOX_RESIZE_HEIGHT %}
 	{% INCLUDEJS '@vse_lightbox/js/resizer.js' %}
 	{# Test $INCLUDED_LIGHTBOXJS is not defined #}
 	{% if not definition.INCLUDED_LIGHTBOXJS %}
+		{% INCLUDECSS '@vse_lightbox/lightbox/css/lightbox.min.css' %}
 		{% INCLUDEJS '@vse_lightbox/lightbox/js/lightbox.min.js' %}
 		{% DEFINE INCLUDED_LIGHTBOXJS = true %}
 	{% endif %}
 	<script>
 		var vseLightbox = {};
+		vseLightbox.resizeHeight = {{ LIGHTBOX_RESIZE_HEIGHT }};
 		vseLightbox.resizeWidth = {{ LIGHTBOX_RESIZE_WIDTH }};
 		vseLightbox.lightboxGal = {{ S_LIGHTBOX_GALLERY }};
 		vseLightbox.lightboxSig = {{ S_LIGHTBOX_SIGNATURES }};
 		vseLightbox.imageTitles = {{ S_LIGHTBOX_IMG_TITLES }};
+		vseLightbox.lightboxAll = {{ S_LIGHTBOX_ALL_IMAGES }};
+		vseLightbox.downloadFile = 'download/file.{{ PHP_EXTENSION|escape("js") }}';
 	</script>
 {% endif %}

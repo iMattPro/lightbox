@@ -3,18 +3,18 @@
  *
  * Lightbox extension for the phpBB Forum Software package.
  *
- * @copyright (c) 2015 Matt Friedman
+ * @copyright (c) 2018 Matt Friedman
  * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */
 
 namespace vse\lightbox\migrations;
 
-class m2_image_titles extends \phpbb\db\migration\migration
+class m3_add_configs extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
-		return isset($this->config['lightbox_img_titles']);
+		return $this->config->offsetExists('lightbox_max_height');
 	}
 
 	public static function depends_on()
@@ -25,7 +25,8 @@ class m2_image_titles extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return array(
-			array('config.add', array('lightbox_img_titles', 0)),
+			array('config.add', array('lightbox_max_height', 0)),
+			array('config.add', array('lightbox_all_images', 0)),
 		);
 	}
 }
