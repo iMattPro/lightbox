@@ -1,5 +1,11 @@
 ## Changelog
 
+### 2.0.1 - 2019-05-24
+
+- Updated Lightbox2 library to 2.11.0
+- Made the gallery label "Image" translatable
+- Fixed Lightbox effect in edited mChat messages
+
 ### 2.0.0 - 2018-10-01
 
 - Maximum height can now be set, in addition to the maximum width, for resizing large images

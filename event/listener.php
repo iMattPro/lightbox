@@ -69,6 +69,7 @@ class listener implements EventSubscriberInterface
 	 */
 	public function set_lightbox_tpl_data()
 	{
+		$this->language->add_lang('common', 'vse/lightbox');
 		$this->template->assign_vars(array(
 			'LIGHTBOX_RESIZE_WIDTH'	 => (int) $this->config['lightbox_max_width'],
 			'LIGHTBOX_RESIZE_HEIGHT' => (int) $this->config['lightbox_max_height'],
