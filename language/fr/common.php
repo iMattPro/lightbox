@@ -23,5 +23,5 @@ if (empty($lang) || !is_array($lang))
 }
 
 $lang = array_merge($lang, array(
-	'LIGHTBOX_GALLERY_LABEL'		=> 'Image %1 de %2',
+	'LIGHTBOX_GALLERY_LABEL'		=> 'Image %1 sur %2',
 ));
