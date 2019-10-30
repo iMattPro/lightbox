@@ -11,9 +11,9 @@
 					borderRadius: '6px',
 					transition: 'border-color 0.1s ease-out',
 					cursor: 'pointer'
-				}).hover(function() {
+				}).on('mouseenter', function() {
 					$(this).css('border-color', '#4ae');
-				}, function() {
+				}).on('mouseleave',  function() {
 					$(this).css('border-color', 'transparent');
 				});
 			});
