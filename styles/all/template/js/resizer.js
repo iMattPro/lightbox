@@ -96,7 +96,7 @@
 				}
 			}).each(function() {
 				if (this.complete) {
-					$(this).load();
+					$(this).trigger('load');
 				}
 			});
 		}, 0);
