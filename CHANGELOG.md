@@ -1,5 +1,11 @@
 ## Changelog
 
+### 2.0.2 - 2020-01-10
+
+- Updated Lightbox2 library to 2.11.1
+- jQuery v3 / phpBB v3.3 compatibility fixes
+- Added Slovenian translation
+
 ### 2.0.1 - 2019-05-24
 
 - Updated Lightbox2 library to 2.11.0
