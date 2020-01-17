@@ -1,0 +1,11 @@
+{% if LIGHTBOX_RESIZE_HEIGHT || LIGHTBOX_RESIZE_WIDTH %}
+	<style>
+		@media (min-width: 900px) {
+			{% if S_LIGHTBOX_SIGNATURES %}.signature img.postimage,{% endif %}
+			.content img.postimage {
+				{{ LIGHTBOX_RESIZE_HEIGHT ? 'max-height: ' ~ LIGHTBOX_RESIZE_HEIGHT ~ 'px !important;' : '' }}
+				{{ LIGHTBOX_RESIZE_WIDTH ? 'max-width: ' ~ LIGHTBOX_RESIZE_WIDTH ~ 'px !important;' : '' }}
+			}
+		}
+	</style>
+{% endif %}

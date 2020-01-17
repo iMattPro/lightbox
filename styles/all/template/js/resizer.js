@@ -38,20 +38,15 @@
 	}
 
 	function lightboxResizer(elements) {
+		if (isMobile() || (!resizeWideImages() && !resizeTallImages() && !vseLightbox.lightboxAll)) {
+			return;
+		}
 		var $targetImage = elements.find('.postimage'),
 			galleryName = 'post-gallery';
 		if (!vseLightbox.lightboxSig) {
 			$targetImage = $targetImage.not(function() {
 				return $(this).closest('.signature').length > 0;
 			});
-		}
-		if (!isMobile() && (resizeWideImages() || resizeTallImages())) {
-			$targetImage.css({
-				'max-width': (resizeWideImages() ? vseLightbox.resizeWidth + 'px' : 'none'),
-				'max-height': (resizeTallImages() ? vseLightbox.resizeHeight + 'px' : 'none')
-			});
-		} else if (!vseLightbox.lightboxAll || isMobile()) {
-			return;
 		}
 		// enclosing the following in a setTimeout seems to solve issues with
 		// images not being ready and causing $(this).width() to return 0.
@@ -89,7 +84,7 @@
 						var url = $(this).attr('src');
 						return $('<a/>').attr({
 							href: url,
-							'data-lightbox': galleryName + img.index,
+							'data-lightbox': (vseLightbox.lightboxSig && $(this).closest('.signature').length > 0) ? $targetImage.index(this) : galleryName + img.index,
 							'data-title': (vseLightbox.imageTitles) ? ((url.indexOf(vseLightbox.downloadFile) !== -1) ? $(this).attr('alt') : url.split('/').pop()) : ''
 						});
 					}).borderHover();
