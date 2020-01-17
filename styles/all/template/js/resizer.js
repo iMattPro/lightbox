@@ -89,7 +89,7 @@
 						var url = $(this).attr('src');
 						return $('<a/>').attr({
 							href: url,
-							'data-lightbox': galleryName + img.index,
+							'data-lightbox': (vseLightbox.lightboxSig && $(this).closest('.signature').length > 0) ? $targetImage.index(this) : galleryName + img.index,
 							'data-title': (vseLightbox.imageTitles) ? ((url.indexOf(vseLightbox.downloadFile) !== -1) ? $(this).attr('alt') : url.split('/').pop()) : ''
 						});
 					}).borderHover();
