@@ -2,7 +2,7 @@
 /**
  *
  * Lightbox extension for the phpBB Forum Software package.
- * [French] translation by Galixte (http://www.galixte.com)
+ * [Slovenian]
  *
  * @copyright (c) 2015 Matt Friedman
  * @license GNU General Public License, version 2 (GPL-2.0)
@@ -23,5 +23,5 @@ if (empty($lang) || !is_array($lang))
 }
 
 $lang = array_merge($lang, array(
-	'LIGHTBOX_GALLERY_LABEL'		=> 'Image %1 sur %2',
+	'LIGHTBOX_GALLERY_LABEL'		=> 'Slika %1 od %2',
 ));

@@ -2,7 +2,7 @@
 /**
  *
  * Lightbox extension for the phpBB Forum Software package.
- * [Arabic] Translated By : Bassel Taha Alhitary - www.alhitary.net
+ * [Arabic] Translated By : Bassel Taha Alhitary <https://www.alhitary.net>
  *
  * @copyright (c) 2015 Matt Friedman
  * @license GNU General Public License, version 2 (GPL-2.0)
@@ -23,5 +23,5 @@ if (empty($lang) || !is_array($lang))
 }
 
 $lang = array_merge($lang, array(
-	'LIGHTBOX_GALLERY_LABEL'		=> 'Image %1 of %2',
+	'LIGHTBOX_GALLERY_LABEL'		=> 'الصورة %1 من %2',
 ));

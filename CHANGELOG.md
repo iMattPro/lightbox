@@ -1,5 +1,13 @@
 ## Changelog
 
+### 2.0.2 - 2020-01-16
+
+- Updated Lightbox2 library to 2.11.1
+- jQuery v3 / phpBB v3.3 compatibility fixes
+- Eliminated visible image resizing by setting max-width/height in CSS now instead of JavaScript
+- Resized user signature images will no longer be included in Lightbox gallery mode
+- Added Slovenian translation
+
 ### 2.0.1 - 2019-05-24
 
 - Updated Lightbox2 library to 2.11.0
