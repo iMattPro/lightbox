@@ -100,7 +100,12 @@
 	$(function() {
 		lightboxResizer($(document));
 	});
-
+	
+	// Compatibility with SimpleSpoiler extension
+	$('div.spoiler').click(function() {
+        lightboxResizer($(document));
+	});
+	
 	// Compatibility with QuickReply Reloaded extension
 	$('#qr_posts').on('qr_loaded', function(e, elements) {
 		lightboxResizer(elements);
