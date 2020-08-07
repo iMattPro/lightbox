@@ -2,7 +2,7 @@
 /**
  *
  * Lightbox extension for the phpBB Forum Software package.
- * [Dutch] translated by Dutch Translators (https://github.com/dutch-translators)
+ * [Dutch] Translation by Derky <http://www.derky.nl>
  *
  * @copyright (c) 2015 Matt Friedman
  * @license GNU General Public License, version 2 (GPL-2.0)
@@ -23,5 +23,5 @@ if (empty($lang) || !is_array($lang))
 }
 
 $lang = array_merge($lang, array(
-	'LIGHTBOX_GALLERY_LABEL'		=> 'Bilde %1 av %2',
+	'LIGHTBOX_GALLERY_LABEL'		=> 'Afbeelding %1 van %2',
 ));
