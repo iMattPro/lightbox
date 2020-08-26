@@ -102,7 +102,7 @@
 	});
 	
 	// Compatibility with SimpleSpoiler extension
-	$('div.spoiler').click(function() {
+	$('div.spoiler-body').click(function() {
         lightboxResizer($(document));
 	});
 	
