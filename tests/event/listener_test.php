@@ -32,7 +32,7 @@ class listener_test extends \phpbb_test_case
 	/** @var string PHP file extension */
 	protected $php_ext;
 
-	public function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
