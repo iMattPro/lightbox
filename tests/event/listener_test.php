@@ -58,12 +58,12 @@ class listener_test extends \phpbb_test_case
 	public function test_construct()
 	{
 		$this->set_listener();
-		$this->assertInstanceOf('\Symfony\Component\EventDispatcher\EventSubscriberInterface', $this->listener);
+		self::assertInstanceOf('\Symfony\Component\EventDispatcher\EventSubscriberInterface', $this->listener);
 	}
 
 	public function test_getSubscribedEvents()
 	{
-		$this->assertEquals(array(
+		self::assertEquals(array(
 			'core.page_header',
 			'core.acp_board_config_edit_add',
 		), array_keys(\vse\lightbox\event\listener::getSubscribedEvents()));
@@ -115,7 +115,7 @@ class listener_test extends \phpbb_test_case
 
 		$this->set_listener();
 
-		$this->template->expects($this->once())
+		$this->template->expects(self::once())
 			->method('assign_vars')
 			->with(array(
 				'LIGHTBOX_RESIZE_WIDTH'	=> (int) $max_width,
@@ -185,12 +185,12 @@ class listener_test extends \phpbb_test_case
 		$event_data_after = $event->get_data_filtered($event_data);
 		foreach ($event_data as $expected)
 		{
-			$this->assertArrayHasKey($expected, $event_data_after);
+			self::assertArrayHasKey($expected, $event_data_after);
 		}
 		extract($event_data_after);
 
 		$keys = array_keys($display_vars['vars']);
 
-		$this->assertEquals($expected_keys, $keys);
+		self::assertEquals($expected_keys, $keys);
 	}
 }
