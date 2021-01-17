@@ -1,5 +1,10 @@
 ## Changelog
 
+### 2.0.3 - 2020-12-28
+
+- Updated Lightbox2 library to 2.11.3
+- Added support for images inside spoiler BBCodes from the ABBC3 and SimpleSpoiler extensions
+
 ### 2.0.2 - 2020-01-16
 
 - Updated Lightbox2 library to 2.11.1

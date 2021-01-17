@@ -109,6 +109,22 @@
 		lightboxResizer($('#preview'));
 	});
 
+	// Compatibility with SimpleSpoiler extension
+	$('.spoiler-header').on('click', function(e) {
+		var spoiler = e.target.closest('.spoiler');
+		if (!spoiler.hasAttribute('open')) {
+			lightboxResizer($(spoiler).find('.spoiler-body'));
+		}
+	});
+
+	// Compatibility with ABBC3 spoil BBCode
+	$('.spoilbtn').on('click', function(e) {
+		var spoilcontent = $(e.target.closest('.spoilwrapper')).find('.spoilcontent');
+		if (spoilcontent.css('display') === 'none') {
+			lightboxResizer(spoilcontent);
+		}
+	});
+
 	// Compatibility with mChat extension
 	if (typeof mChat === 'object') {
 		$(mChat).on({
