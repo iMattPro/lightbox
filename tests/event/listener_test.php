@@ -23,7 +23,7 @@ class listener_test extends \phpbb_test_case
 	/** @var \phpbb\language\language */
 	protected $language;
 
-	/** @var \phpbb\template\template|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \phpbb\template\template|\PHPUnit\Framework\MockObject\MockObject */
 	protected $template;
 
 	/** @var \phpbb\user */
@@ -127,9 +127,9 @@ class listener_test extends \phpbb_test_case
 				'PHP_EXTENSION'			=> 'php',
 			));
 
-		$dispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
+		$dispatcher = new \phpbb\event\dispatcher();
 		$dispatcher->addListener('core.page_header', array($this->listener, 'set_lightbox_tpl_data'));
-		$dispatcher->dispatch('core.page_header');
+		$dispatcher->trigger_event('core.page_header');
 	}
 
 	/**
@@ -175,19 +175,17 @@ class listener_test extends \phpbb_test_case
 	{
 		$this->set_listener();
 
-		$dispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
+		$dispatcher = new \phpbb\event\dispatcher();
 		$dispatcher->addListener('core.acp_board_config_edit_add', array($this->listener, 'add_lightbox_acp_config'));
 
 		$event_data = array('display_vars', 'mode');
-		$event = new \phpbb\event\data(compact($event_data));
-		$dispatcher->dispatch('core.acp_board_config_edit_add', $event);
+		$event_data_after = $dispatcher->trigger_event('core.acp_board_config_edit_add', compact($event_data));
 
-		$event_data_after = $event->get_data_filtered($event_data);
 		foreach ($event_data as $expected)
 		{
 			self::assertArrayHasKey($expected, $event_data_after);
 		}
-		extract($event_data_after);
+		extract($event_data_after, EXTR_OVERWRITE);
 
 		$keys = array_keys($display_vars['vars']);
 
