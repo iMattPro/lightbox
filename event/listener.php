@@ -55,10 +55,10 @@ class listener implements EventSubscriberInterface
 	 */
 	public static function getSubscribedEvents()
 	{
-		return array(
+		return [
 			'core.page_header'					=> 'set_lightbox_tpl_data',
 			'core.acp_board_config_edit_add'	=> 'add_lightbox_acp_config',
-		);
+		];
 	}
 
 	/**
@@ -70,7 +70,7 @@ class listener implements EventSubscriberInterface
 	public function set_lightbox_tpl_data()
 	{
 		$this->language->add_lang('common', 'vse/lightbox');
-		$this->template->assign_vars(array(
+		$this->template->assign_vars([
 			'LIGHTBOX_RESIZE_WIDTH'	 => (int) $this->config['lightbox_max_width'],
 			'LIGHTBOX_RESIZE_HEIGHT' => (int) $this->config['lightbox_max_height'],
 			'S_LIGHTBOX_ALL_IMAGES'  => (int) $this->config['lightbox_all_images'],
@@ -78,7 +78,7 @@ class listener implements EventSubscriberInterface
 			'S_LIGHTBOX_SIGNATURES'	 => (int) $this->config['lightbox_signatures'],
 			'S_LIGHTBOX_IMG_TITLES'	 => (int) $this->config['lightbox_img_titles'],
 			'PHP_EXTENSION'			 => $this->php_ext,
-		));
+		]);
 	}
 
 	/**
@@ -93,24 +93,21 @@ class listener implements EventSubscriberInterface
 		if ($event['mode'] === 'post' && array_key_exists('legend3', $event['display_vars']['vars']))
 		{
 			$this->language->add_lang('lightbox', 'vse/lightbox');
-			$display_vars = $event['display_vars'];
 
 			$max_width = $this->min_not_null($this->config['img_max_width'], (!empty($this->config['img_create_thumbnail']) ? $this->config['img_max_thumb_width'] : 0));
 			$l_append = $max_width ? $this->language->lang('LIGHTBOX_MAX_WIDTH_APPEND', $max_width) : '';
 
-			$my_config_vars = array(
+			$my_config_vars = [
 				'legend_lightbox'		=> 'LIGHTBOX_SETTINGS',
-				'lightbox_max_width'	=> array('lang' => 'LIGHTBOX_MAX_WIDTH', 'validate' => 'int:0:99999', 'type' => 'number:0:99999', 'explain' => true, 'append' => ' ' . $this->language->lang('PIXEL') . '<br />' . $l_append),
-				'lightbox_max_height'	=> array('lang' => 'LIGHTBOX_MAX_HEIGHT', 'validate' => 'int:0:99999', 'type' => 'number:0:99999', 'explain' => true, 'append' => ' ' . $this->language->lang('PIXEL') . '<br />' . $l_append),
-				'lightbox_all_images'	=> array('lang' => 'LIGHTBOX_ALL_IMAGES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-				'lightbox_gallery'		=> array('lang' => 'LIGHTBOX_GALLERY', 'validate' => 'int', 'type' => 'select', 'function' => 'build_select', 'params' => array(array(0 => 'DISABLED', 1 => 'LIGHTBOX_GALLERY_ALL', 2 => 'LIGHTBOX_GALLERY_POSTS'), '{CONFIG_VALUE}'), 'explain' => true),
-				'lightbox_signatures'	=> array('lang' => 'LIGHTBOX_SIGNATURES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-				'lightbox_img_titles'	=> array('lang' => 'LIGHTBOX_IMG_TITLES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-			);
+				'lightbox_max_width'	=> ['lang' => 'LIGHTBOX_MAX_WIDTH', 'validate' => 'int:0:99999', 'type' => 'number:0:99999', 'explain' => true, 'append' => ' ' . $this->language->lang('PIXEL') . '<br />' . $l_append],
+				'lightbox_max_height'	=> ['lang' => 'LIGHTBOX_MAX_HEIGHT', 'validate' => 'int:0:99999', 'type' => 'number:0:99999', 'explain' => true, 'append' => ' ' . $this->language->lang('PIXEL') . '<br />' . $l_append],
+				'lightbox_all_images'	=> ['lang' => 'LIGHTBOX_ALL_IMAGES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true],
+				'lightbox_gallery'		=> ['lang' => 'LIGHTBOX_GALLERY', 'validate' => 'int', 'type' => 'select', 'function' => 'build_select', 'params' => [[0 => 'DISABLED', 1 => 'LIGHTBOX_GALLERY_ALL', 2 => 'LIGHTBOX_GALLERY_POSTS'], '{CONFIG_VALUE}'], 'explain' => true],
+				'lightbox_signatures'	=> ['lang' => 'LIGHTBOX_SIGNATURES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true],
+				'lightbox_img_titles'	=> ['lang' => 'LIGHTBOX_IMG_TITLES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true],
+			];
 
-			$display_vars['vars'] = phpbb_insert_config_array($display_vars['vars'], $my_config_vars, array('before' => 'legend3'));
-
-			$event['display_vars'] = $display_vars;
+			$event->update_subarray('display_vars', 'vars', phpbb_insert_config_array($event['display_vars']['vars'], $my_config_vars, ['before' => 'legend3']));
 		}
 	}
 
@@ -124,7 +121,7 @@ class listener implements EventSubscriberInterface
 	protected function min_not_null()
 	{
 		$args = func_get_args();
-		$args = array_diff(array_map('intval', $args), array(0));
+		$args = array_diff(array_map('intval', $args), [0]);
 
 		return count($args) ? min($args) : false;
 	}
