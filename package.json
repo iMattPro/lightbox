@@ -1,6 +1,4 @@
 {
-	"name": "vse-lightbox",
-	"version": "2.0.3",
 	"author": "Matt Friedman",
 	"license": "GPL-2.0",
 	"dependencies": {
@@ -14,9 +12,6 @@
 		"copy-lightbox": "npm-run-all --parallel copy-css copy-images copy-js",
 		"copy-css": "copyfiles --flat node_modules/lightbox2/dist/css/*.css styles/all/template/lightbox/css",
 		"copy-images": "copyfiles --flat node_modules/lightbox2/dist/images/*.png node_modules/lightbox2/dist/images/*.gif styles/all/template/lightbox/images",
-		"copy-js": "copyfiles --flat node_modules/lightbox2/dist/js/*.js node_modules/lightbox2/dist/js/*.map styles/all/template/lightbox/js",
-		"bump-major": "npm version major --git-tag-version=false",
-		"bump-minor": "npm version minor --git-tag-version=false",
-		"bump-patch": "npm version patch --git-tag-version=false"
+		"copy-js": "copyfiles --flat node_modules/lightbox2/dist/js/*.js node_modules/lightbox2/dist/js/*.map styles/all/template/lightbox/js"
 	}
 }
