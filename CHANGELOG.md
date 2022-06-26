@@ -1,5 +1,9 @@
 ## Changelog
 
+### 2.0.4 - 2022-06-16
+
+- Fixed a bug where attached images were not being resized
+
 ### 2.0.3 - 2020-12-28
 
 - Updated Lightbox2 library to 2.11.3
