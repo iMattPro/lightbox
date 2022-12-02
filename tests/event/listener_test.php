@@ -40,8 +40,7 @@ class listener_test extends \phpbb_test_case
 
 		$this->config = new \phpbb\config\config(array());
 		$this->language = new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx));
-		$this->template = $this->getMockBuilder('\phpbb\template\template')
-			->getMock();
+		$this->template = $this->createMock('\phpbb\template\template');
 		$this->php_ext = $phpEx;
 	}
 

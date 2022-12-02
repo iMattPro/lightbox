@@ -29,19 +29,13 @@ class ext_test extends \phpbb_test_case
 		parent::setUp();
 
 		// Stub the container
-		$this->container = $this->getMockBuilder('\Symfony\Component\DependencyInjection\ContainerInterface')
-			->disableOriginalConstructor()
-			->getMock();
+		$this->container = $this->createMock('\Symfony\Component\DependencyInjection\ContainerInterface');
 
 		// Stub the ext finder and disable its constructor
-		$this->extension_finder = $this->getMockBuilder('\phpbb\finder')
-			->disableOriginalConstructor()
-			->getMock();
+		$this->extension_finder = $this->createMock('\phpbb\finder');
 
 		// Stub the migrator and disable its constructor
-		$this->migrator = $this->getMockBuilder('\phpbb\db\migrator')
-			->disableOriginalConstructor()
-			->getMock();
+		$this->migrator = $this->createMock('\phpbb\db\migrator');
 	}
 
 	/**
