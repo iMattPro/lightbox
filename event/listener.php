@@ -56,7 +56,7 @@ class listener implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return [
-			'core.page_header'					=> 'set_lightbox_tpl_data',
+			'core.page_header'				=> 'set_lightbox_tpl_data',
 			'core.acp_board_config_edit_add'	=> 'add_lightbox_acp_config',
 		];
 	}
@@ -112,7 +112,7 @@ class listener implements EventSubscriberInterface
 	}
 
 	/**
-	 * Find lowest value that is not 0
+	 * Find the lowest value that is not 0
 	 * Accepts variable number of comparable parameters
 	 *
 	 * @return mixed The lowest of the parameter values, false on no result.
