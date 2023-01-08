@@ -9,9 +9,6 @@
 		"npm-run-all": "^4.1.5"
 	},
 	"scripts": {
-		"copy-lightbox": "npm-run-all --parallel copy-css copy-images copy-js",
-		"copy-css": "copyfiles --flat node_modules/lightbox2/dist/css/*.css styles/all/template/lightbox/css",
-		"copy-images": "copyfiles --flat node_modules/lightbox2/dist/images/*.png node_modules/lightbox2/dist/images/*.gif styles/all/template/lightbox/images",
-		"copy-js": "copyfiles --flat node_modules/lightbox2/dist/js/*.js node_modules/lightbox2/dist/js/*.map styles/all/template/lightbox/js"
+		"copy-lightbox": "copyfiles --exclude \"node_modules/lightbox2/dist/js/*plus-jquery.*\" -u 3 node_modules/lightbox2/dist/**/* styles/all/template/lightbox"
 	}
 }
