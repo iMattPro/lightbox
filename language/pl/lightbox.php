@@ -25,10 +25,10 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'LIGHTBOX_SETTINGS'				=> 'Ustawienia Lightbox',
 	'LIGHTBOX_MAX_WIDTH'			=> 'Maksymalna szerokość obrazka w pikselach',
-	'LIGHTBOX_MAX_WIDTH_EXPLAIN'	=> 'Obrazki, które przekraczają podaną szerokość, zostaną zmniejszone, a powiększenie będzie można uzyskać przez efekt Lightbox.<br /> Ustaw wartość na 0, aby wyłączyć zmianę rozmiaru obrazu według szerokości.',
+	'LIGHTBOX_MAX_WIDTH_EXPLAIN'	=> 'Obrazki, które przekraczają podaną szerokość, zostaną zmniejszone, a powiększenie będzie można uzyskać przez efekt Lightbox.<br> Ustaw wartość na 0, aby wyłączyć zmianę rozmiaru obrazu według szerokości.',
 	'LIGHTBOX_MAX_WIDTH_APPEND'		=> 'Zalecenie podstawie ustawień załączanego obrazka: %spx',
 	'LIGHTBOX_MAX_HEIGHT'			=> 'Maksymalna wysokość obrazu w pikselach',
-	'LIGHTBOX_MAX_HEIGHT_EXPLAIN'	=> 'Obrazki, które przekraczają podaną wysokość, zostaną zmniejszone, a powiększenie będzie można uzyskać przez efekt Lightbox.<br /> Ustaw wartość na 0, aby wyłączyć zmianę rozmiaru obrazu według wysokości.',
+	'LIGHTBOX_MAX_HEIGHT_EXPLAIN'	=> 'Obrazki, które przekraczają podaną wysokość, zostaną zmniejszone, a powiększenie będzie można uzyskać przez efekt Lightbox.<br> Ustaw wartość na 0, aby wyłączyć zmianę rozmiaru obrazu według wysokości.',
 	'LIGHTBOX_ALL_IMAGES'			=> 'Include all images in Lightbox effect',
 	'LIGHTBOX_ALL_IMAGES_EXPLAIN'	=> 'With this setting enabled, all posted images can be opened in the Lightbox effect even if they are not being resized.',
 	'LIGHTBOX_GALLERY'				=> 'Zezwól na tryb galerii',
