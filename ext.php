@@ -15,8 +15,8 @@ namespace vse\lightbox;
  */
 class ext extends \phpbb\extension\base
 {
-	/** @var string Require 3.3.5 due to lang_js() */
-	const PHPBB_MIN_VERSION = '3.3.5';
+	/** @var string */
+	const PHPBB_MIN_VERSION = '4.0.0-a1';
 
 	/**
 	 * {@inheritdoc}
