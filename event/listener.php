@@ -102,13 +102,25 @@ class listener implements EventSubscriberInterface
 				'lightbox_max_width'	=> ['lang' => 'LIGHTBOX_MAX_WIDTH', 'validate' => 'int:0:99999', 'type' => 'number:0:99999', 'explain' => true, 'append' => ' ' . $this->language->lang('PIXEL') . '<br>' . $l_append],
 				'lightbox_max_height'	=> ['lang' => 'LIGHTBOX_MAX_HEIGHT', 'validate' => 'int:0:99999', 'type' => 'number:0:99999', 'explain' => true, 'append' => ' ' . $this->language->lang('PIXEL') . '<br>' . $l_append],
 				'lightbox_all_images'	=> ['lang' => 'LIGHTBOX_ALL_IMAGES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true],
-				'lightbox_gallery'		=> ['lang' => 'LIGHTBOX_GALLERY', 'validate' => 'int', 'type' => 'select', 'function' => 'build_select', 'params' => [[0 => 'DISABLED', 1 => 'LIGHTBOX_GALLERY_ALL', 2 => 'LIGHTBOX_GALLERY_POSTS'], '{CONFIG_VALUE}'], 'explain' => true],
+				'lightbox_gallery'		=> ['lang' => 'LIGHTBOX_GALLERY', 'validate' => 'int', 'type' => 'select', 'function' => [$this, 'lb_select'], 'params' => [[0 => 'DISABLED', 1 => 'LIGHTBOX_GALLERY_ALL', 2 => 'LIGHTBOX_GALLERY_POSTS'], '{CONFIG_VALUE}'], 'explain' => true],
 				'lightbox_signatures'	=> ['lang' => 'LIGHTBOX_SIGNATURES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true],
 				'lightbox_img_titles'	=> ['lang' => 'LIGHTBOX_IMG_TITLES', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true],
 			];
 
 			$event->update_subarray('display_vars', 'vars', phpbb_insert_config_array($event['display_vars']['vars'], $my_config_vars, ['before' => 'legend3']));
 		}
+	}
+
+	/**
+	 * Get select options for ACP
+	 *
+	 * @param array $options
+	 * @param bool|int|string $default
+	 * @return array
+	 */
+	public function lb_select(array $options, bool|int|string $default): array
+	{
+		return ['options' => build_select($options, $default)];
 	}
 
 	/**
