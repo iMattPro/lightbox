@@ -231,9 +231,9 @@ jobs:
               run: |
                   if [ $COVERAGE == '1' ]
                   then
-                      phpBB/vendor/bin/phpunit --configuration phpBB/ext/$EXTNAME/.github/phpunit-$DB-github.xml --bootstrap ./tests/bootstrap.php --coverage-clover build/logs/clover.xml
+                      phpBB/vendor/bin/phpunit --configuration phpBB/ext/$EXTNAME/.github/phpunit-$DB-github.xml --bootstrap ./tests/bootstrap.php --coverage-clover build/logs/clover.xml --testsuite 'phpBB Test Suite'
                   else
-                      phpBB/vendor/bin/phpunit --configuration phpBB/ext/$EXTNAME/.github/phpunit-$DB-github.xml --bootstrap ./tests/bootstrap.php
+                      phpBB/vendor/bin/phpunit --configuration phpBB/ext/$EXTNAME/.github/phpunit-$DB-github.xml --bootstrap ./tests/bootstrap.php --testsuite 'phpBB Test Suite'
                   fi
               working-directory: ./phpBB3
 
@@ -350,7 +350,7 @@ jobs:
             - name: Run unit tests
               env:
                   DB: ${{steps.database-type.outputs.db}}
-              run: phpBB/vendor/bin/phpunit --configuration phpBB/ext/$EXTNAME/.github/phpunit-$DB-github.xml --bootstrap ./tests/bootstrap.php
+              run: phpBB/vendor/bin/phpunit --configuration phpBB/ext/$EXTNAME/.github/phpunit-$DB-github.xml --bootstrap ./tests/bootstrap.php --testsuite 'phpBB Test Suite'
               working-directory: ./phpBB3
     # END PostgreSQL Job
 
@@ -453,6 +453,6 @@ jobs:
             - name: Run unit tests
               env:
                   DB: ${{steps.database-type.outputs.db}}
-              run: phpBB/vendor/bin/phpunit --configuration phpBB/ext/$EXTNAME/.github/phpunit-$DB-github.xml --bootstrap ./tests/bootstrap.php
+              run: phpBB/vendor/bin/phpunit --configuration phpBB/ext/$EXTNAME/.github/phpunit-$DB-github.xml --bootstrap ./tests/bootstrap.php --testsuite 'phpBB Test Suite'
               working-directory: ./phpBB3
     # END Other Tests Job
