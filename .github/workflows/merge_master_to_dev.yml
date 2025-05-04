@@ -45,8 +45,10 @@ jobs:
       - name: Push temp branch if merge failed
         if: env.MERGE_EXIT_CODE != '0'
         run: |
-          git push origin ${{ env.BRANCH_NAME }}
-          echo "Conflict detected. Temp branch pushed."
+            git add -A
+            git commit -m "Conflict: merge master into dev/4.0 (automatic commit with conflicts)"
+            git push origin ${{ env.BRANCH_NAME }}
+            echo "Conflict detected. Temp branch pushed."
 
       - name: Create Pull Request if merge failed
         if: env.MERGE_EXIT_CODE != '0'
@@ -59,3 +61,4 @@ jobs:
           base: dev/4.0
           draft: false
           labels: conflict
+          delete-branch: true
