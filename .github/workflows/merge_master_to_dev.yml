@@ -26,7 +26,6 @@ jobs:
         id: merge
         run: |
           git fetch origin master
-          # Create a unique branch name
           BRANCH_NAME="merge-master-into-dev-4.0-$(date +'%Y%m%d%H%M%S')"
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
@@ -41,6 +40,13 @@ jobs:
         run: |
           git push origin HEAD:dev/4.0
           echo "Merged cleanly and pushed to dev/4.0."
+
+      - name: Commit conflict markers and push temp branch (excluding workflows)
+        if: env.MERGE_EXIT_CODE != '0'
+        run: |
+          git add . ':!**/.github/workflows/**'
+          git commit -m "Conflict: merge master into dev/4.0 (with conflicts)"
+          git push origin ${{ env.BRANCH_NAME }}
 
       - name: Create Pull Request if merge failed
         if: env.MERGE_EXIT_CODE != '0'
