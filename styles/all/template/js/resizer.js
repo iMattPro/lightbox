@@ -29,8 +29,16 @@
 	}
 
 	function isMobile() {
-		var mobileWidth = 900; // disable on screens < 900px
-		return $(window).width() <= mobileWidth && phpbb.isTouch;
+		// Check if running as PWA (in standalone mode or display-mode: standalone)
+		const isPWA = window.matchMedia('(display-mode: standalone)').matches ||
+			window.navigator.standalone ||
+			document.referrer.includes('android-app://');
+
+		// Check if on a mobile device using more reliable methods
+		const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+			('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0);
+
+		return !isPWA && isMobileDevice;
 	}
 
 	function isOversized(img) {
