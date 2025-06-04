@@ -8,7 +8,7 @@
  *
  */
 
-namespace vse\lightbox\tests\system;
+namespace vse\lightbox\tests;
 
 class ext_test extends \phpbb_test_case
 {
