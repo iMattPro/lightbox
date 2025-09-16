@@ -73,7 +73,7 @@ class listener_test extends \phpbb_test_case
 	 *
 	 * @return array Array of test data
 	 */
-	public function set_lightbox_tpl_data_test_data()
+	public static function set_lightbox_tpl_data_test_data()
 	{
 		return array(
 			array(400, 500, 0, 2, 1, 1),
@@ -136,7 +136,7 @@ class listener_test extends \phpbb_test_case
 	 *
 	 * @return array Array of test data
 	 */
-	public function add_lightbox_acp_config_data()
+	public static function add_lightbox_acp_config_data()
 	{
 		return array(
 			array( // expected config and mode
