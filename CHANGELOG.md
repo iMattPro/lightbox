@@ -1,5 +1,10 @@
 ## Changelog
 
+### 2.0.5 - 2025-05-22
+
+- Updated Lightbox2 library to 2.11.4
+- Allow Lightbox2 to work in a progressive web application
+
 ### 2.0.4 - 2022-06-16
 
 - Fixed a bug where attached images were not being resized
@@ -21,7 +26,7 @@
 
 - Updated Lightbox2 library to 2.11.0
 - Made the gallery label "Image" translatable
-- Fixed Lightbox effect in edited mChat messages
+- Fixed the Lightbox effect in edited mChat messages
 
 ### 2.0.0 - 2018-10-01
 
@@ -46,7 +51,7 @@
 ### 1.0.3 - 2016-11-10
 
 - Updated Lightbox2 library to 2.9.0
-- Fixed Brazilian translation package (renamed pt-br to pt_br)
+- Fixed the Brazilian translation package (renamed pt-br to pt_br)
 - Various minor code and language improvements
 
 ### 1.0.2 - 2016-02-23
@@ -92,14 +97,14 @@
 
 ### 1.0.0-b3 - 2015-02-18
 
-- Added independent ACP settings to "Board features" section
-- Added option to disable resizing images in signatures (Prosilver themes only)
+- Added independent ACP settings to the "Board features" section
+- Added an option to disable resizing images in signatures (Prosilver themes only)
 - Updated javascript code
 - Updated template code to TWIG
 
 ### 1.0.0-b1 - 2014-10-30
 
-- Javascript improvements and use a settimeout to cure image ready issues
+- JavaScript improvements and use a set timeout to cure image-ready issues
 
 ### 1.0.0-a2 - 2014-07-12
 
