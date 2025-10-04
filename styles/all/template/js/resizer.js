@@ -46,6 +46,10 @@
 	}
 
 	function lightboxResizer(elements) {
+		if (typeof vseLightbox === 'undefined') {
+			return;
+		}
+
 		if (isMobile() || (!resizeWideImages() && !resizeTallImages() && !vseLightbox.lightboxAll)) {
 			return;
 		}
@@ -56,53 +60,72 @@
 				return $(this).closest('.signature').length > 0;
 			});
 		}
-		// enclosing the following in a setTimeout seems to solve issues with
-		// images not being ready and causing $(this).width() to return 0.
-		setTimeout(function() {
-			$targetImage.one('load', function() {
-				if ($(this).closest('.postlink').length > 0) {
-					return;
+		// Process images with proper loading detection for modern browsers
+		function processImage($img) {
+			if ($img.closest('.postlink').length > 0) {
+				return;
+			}
+
+			var naturalWidth = $img[0].naturalWidth || 0;
+			var naturalHeight = $img[0].naturalHeight || 0;
+			var displayWidth = $img.outerWidth() || parseInt($img.attr('width')) || naturalWidth;
+			var displayHeight = $img.outerHeight() || parseInt($img.attr('height')) || naturalHeight;
+
+			var img = {
+				index: '',
+				width: Math.max(displayWidth, naturalWidth),
+				height: Math.max(displayHeight, naturalHeight)
+			};
+			switch (vseLightbox.lightboxGal)
+			{
+				case 0:
+					img.index = $targetImage.index($img);
+				break;
+				case 2:
+					img.index = $img.closest('.post').attr('id') || '';
+				break;
+			}
+			// attached images
+			if ($img.parent('a').length > 0) {
+				if (vseLightbox.lightboxAll || isOversized(img)) {
+					$img.parent('a').attr({
+						'data-lightbox': galleryName + img.index,
+						'data-title': (vseLightbox.imageTitles) ? $img.attr('alt') : ''
+					});
+					$img.borderHover();
 				}
-				var img = {
-					index: '',
-					width: $(this).outerWidth(),
-					height: $(this).outerHeight()
-				};
-				switch (vseLightbox.lightboxGal)
-				{
-					case 0:
-						img.index = $targetImage.index(this);
-					break;
-					case 2:
-						img.index = $(this).closest('.post').attr('id') || '';
-					break;
-				}
-				// attached images
-				if ($(this).parent('a').length > 0) {
-					if (vseLightbox.lightboxAll || isOversized(img)) {
-						$(this).parent('a').attr({
-							'data-lightbox': galleryName + img.index,
-							'data-title': (vseLightbox.imageTitles) ? $(this).attr('alt') : ''
-						}).end().borderHover();
-					}
-				}
-				// regular images
-				else if (vseLightbox.lightboxAll || isOversized(img)) {
-					$(this).wrap(function() {
-						var url = $(this).attr('src');
-						return $('<a/>').attr({
-							href: url,
-							'data-lightbox': (vseLightbox.lightboxSig && $(this).closest('.signature').length > 0) ? $targetImage.index(this) : galleryName + img.index,
-							'data-title': (vseLightbox.imageTitles) ? ((url.indexOf(vseLightbox.downloadFile) !== -1) ? $(this).attr('alt') : url.split('/').pop()) : ''
-						});
-					}).borderHover();
-				}
-			}).each(function() {
-				if (this.complete) {
-					$(this).trigger('load');
+			}
+			// regular images
+			else if (vseLightbox.lightboxAll || isOversized(img)) {
+				var url = $img.attr('src');
+				$img.wrap($('<a/>').attr({
+					href: url,
+					'data-lightbox': (vseLightbox.lightboxSig && $img.closest('.signature').length > 0) ? $targetImage.index($img) : galleryName + img.index,
+					'data-title': (vseLightbox.imageTitles) ? ((url.indexOf(vseLightbox.downloadFile) !== -1) ? $img.attr('alt') : url.split('/').pop()) : ''
+				}));
+				$img.borderHover();
+			}
+		}
+
+		$targetImage.each(function() {
+			var $img = $(this);
+			var img = this;
+
+			// Use requestAnimationFrame to ensure DOM is ready
+			requestAnimationFrame(function() {
+				if (img.complete || img.readyState === 4) {
+					processImage($img);
+				} else {
+					$img.one('load error', function() {
+						processImage($img);
+					});
+					// Fallback timeout
+					setTimeout(function() {
+						processImage($img);
+					}, 100);
 				}
 			});
-		}, 0);
+		});
 	}
 
 	$(function() {
