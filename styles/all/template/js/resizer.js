@@ -134,12 +134,20 @@
 		}
 		// Compatibility with ABBC3 spoil BBCode
 		if (e.target.matches('.spoilbtn')) {
+			// Legacy ABBC3 spoiler
 			const spoilwrapper = e.target.closest('.spoilwrapper');
 			if (spoilwrapper) {
 				const spoilcontent = spoilwrapper.querySelector('.spoilcontent');
 				if (spoilcontent && getComputedStyle(spoilcontent).display === 'none') {
 					lightboxResizer(spoilcontent);
 				}
+			}
+		}
+		// New ABBC3 spoiler (details/summary)
+		if (e.target.matches('summary')) {
+			const spoiler = e.target.closest('.abbc3-spoiler');
+			if (spoiler && !spoiler.hasAttribute('open')) {
+				lightboxResizer(spoiler);
 			}
 		}
 	});
