@@ -1,34 +1,22 @@
 /*global vseLightbox, mChat*/
-(function($) { // Avoid conflicts with other libraries
-
+(() => {
 	'use strict';
 
-	$.fn.extend({
-		borderHover: function() {
-			return this.each(function() {
-				$(this).css({
-					border: 'solid 3px transparent',
-					borderRadius: '6px',
-					transition: 'border-color 0.1s ease-out',
-					cursor: 'pointer'
-				}).on('mouseenter', function() {
-					$(this).css('border-color', '#4ae');
-				}).on('mouseleave',  function() {
-					$(this).css('border-color', 'transparent');
-				});
-			});
-		}
-	});
+	const addBorderHover = (img) => {
+		Object.assign(img.style, {
+			border: 'solid 3px transparent',
+			borderRadius: '6px',
+			transition: 'border-color 0.1s ease-out',
+			cursor: 'pointer'
+		});
+		img.addEventListener('mouseenter', () => img.style.borderColor = '#4ae');
+		img.addEventListener('mouseleave', () => img.style.borderColor = 'transparent');
+	};
 
-	function resizeWideImages() {
-		return (vseLightbox.resizeWidth > 0);
-	}
+	const resizeWideImages = () => vseLightbox.resizeWidth > 0;
+	const resizeTallImages = () => vseLightbox.resizeHeight > 0;
 
-	function resizeTallImages() {
-		return (vseLightbox.resizeHeight > 0);
-	}
-
-	function isMobile() {
+	const isMobile = () => {
 		// Check if running as PWA (in standalone mode or display-mode: standalone)
 		const isPWA = window.matchMedia('(display-mode: standalone)').matches ||
 			window.navigator.standalone ||
@@ -39,137 +27,135 @@
 			('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0);
 
 		return !isPWA && isMobileDevice;
-	}
+	};
 
-	function isOversized(img) {
-		return (resizeWideImages() && img.width >= vseLightbox.resizeWidth) || (resizeTallImages() && img.height >= vseLightbox.resizeHeight);
-	}
+	const isOversized = (img) =>
+		(resizeWideImages() && img.width >= vseLightbox.resizeWidth) ||
+		(resizeTallImages() && img.height >= vseLightbox.resizeHeight);
 
-	function lightboxResizer(elements) {
-		if (typeof vseLightbox === 'undefined') {
+	const lightboxResizer = (container) => {
+		if (typeof vseLightbox === 'undefined' || isMobile() ||
+			(!resizeWideImages() && !resizeTallImages() && !vseLightbox.lightboxAll)) {
 			return;
 		}
 
-		if (isMobile() || (!resizeWideImages() && !resizeTallImages() && !vseLightbox.lightboxAll)) {
-			return;
-		}
-		var $targetImage = elements.find('.postimage'),
-			galleryName = 'post-gallery';
+		let images = Array.from(container.querySelectorAll('.postimage'));
 		if (!vseLightbox.lightboxSig) {
-			$targetImage = $targetImage.not(function() {
-				return $(this).closest('.signature').length > 0;
-			});
+			images = images.filter(img => !img.closest('.signature'));
 		}
-		// Process images with proper loading detection for modern browsers
-		function processImage($img) {
-			if ($img.closest('.postlink').length > 0) {
+
+		const processImage = (img, index) => {
+			if (img.closest('.postlink')) {
 				return;
 			}
 
-			var naturalWidth = $img[0].naturalWidth || 0;
-			var naturalHeight = $img[0].naturalHeight || 0;
-			var displayWidth = $img.outerWidth() || parseInt($img.attr('width')) || naturalWidth;
-			var displayHeight = $img.outerHeight() || parseInt($img.attr('height')) || naturalHeight;
+			const naturalWidth = img.naturalWidth || 0;
+			const naturalHeight = img.naturalHeight || 0;
+			const rect = img.getBoundingClientRect();
+			const displayWidth = rect.width || parseInt(img.getAttribute('width')) || naturalWidth;
+			const displayHeight = rect.height || parseInt(img.getAttribute('height')) || naturalHeight;
 
-			var img = {
-				index: '',
+			const post = img.closest('.post');
+			const imgData = {
 				width: Math.max(displayWidth, naturalWidth),
-				height: Math.max(displayHeight, naturalHeight)
+				height: Math.max(displayHeight, naturalHeight),
+				index: vseLightbox.lightboxGal === 0 ? index :
+					   vseLightbox.lightboxGal === 2 ? (post ? post.id : '') : ''
 			};
-			switch (vseLightbox.lightboxGal)
-			{
-				case 0:
-					img.index = $targetImage.index($img);
-				break;
-				case 2:
-					img.index = $img.closest('.post').attr('id') || '';
-				break;
+
+			const galleryName = 'post-gallery';
+			const shouldProcess = vseLightbox.lightboxAll || isOversized(imgData);
+
+			if (!shouldProcess) {
+				return;
 			}
-			// attached images
-			if ($img.parent('a').length > 0) {
-				if (vseLightbox.lightboxAll || isOversized(img)) {
-					$img.parent('a').attr({
-						'data-lightbox': galleryName + img.index,
-						'data-title': (vseLightbox.imageTitles) ? $img.attr('alt') : ''
-					});
-					$img.borderHover();
+
+			const parentLink = img.parentElement;
+			if (parentLink.tagName === 'A') {
+				// attached images
+				parentLink.setAttribute('data-lightbox', galleryName + imgData.index);
+				if (vseLightbox.imageTitles) {
+					parentLink.setAttribute('data-title', img.alt || '');
 				}
+				addBorderHover(img);
+			} else {
+				// regular images
+				const link = document.createElement('a');
+				link.href = img.src;
+				link.setAttribute('data-lightbox',
+					(vseLightbox.lightboxSig && img.closest('.signature')) ? index : galleryName + imgData.index
+				);
+				if (vseLightbox.imageTitles) {
+					const title = img.src.includes(vseLightbox.downloadFile) ?
+						img.alt : img.src.split('/').pop();
+					link.setAttribute('data-title', title || '');
+				}
+				img.parentNode.insertBefore(link, img);
+				link.appendChild(img);
+				addBorderHover(img);
 			}
-			// regular images
-			else if (vseLightbox.lightboxAll || isOversized(img)) {
-				var url = $img.attr('src');
-				$img.wrap($('<a/>').attr({
-					href: url,
-					'data-lightbox': (vseLightbox.lightboxSig && $img.closest('.signature').length > 0) ? $targetImage.index($img) : galleryName + img.index,
-					'data-title': (vseLightbox.imageTitles) ? ((url.indexOf(vseLightbox.downloadFile) !== -1) ? $img.attr('alt') : url.split('/').pop()) : ''
-				}));
-				$img.borderHover();
-			}
-		}
+		};
 
-		$targetImage.each(function() {
-			var $img = $(this);
-			var img = this;
-
-			// Use requestAnimationFrame to ensure DOM is ready
-			requestAnimationFrame(function() {
+		// Use requestAnimationFrame to ensure DOM is ready
+		images.forEach((img, index) => {
+			requestAnimationFrame(() => {
 				if (img.complete || img.readyState === 4) {
-					processImage($img);
+					processImage(img, index);
 				} else {
-					$img.one('load error', function() {
-						processImage($img);
-					});
+					const handler = () => processImage(img, index);
+					img.addEventListener('load', handler, { once: true });
+					img.addEventListener('error', handler, { once: true });
 					// Fallback timeout
-					setTimeout(function() {
-						processImage($img);
-					}, 100);
+					setTimeout(() => processImage(img, index), 100);
 				}
 			});
 		});
-	}
+	};
 
-	$(function() {
-		lightboxResizer($(document));
-	});
+	document.addEventListener('DOMContentLoaded', () => lightboxResizer(document));
 
 	// Compatibility with QuickReply Reloaded extension
-	$('#qr_posts').on('qr_loaded', function(e, elements) {
-		lightboxResizer(elements);
-	});
-	$('#qr_postform').on('ajax_submit_preview', function() {
-		lightboxResizer($('#preview'));
-	});
+	const qrPosts = document.getElementById('qr_posts');
+	if (qrPosts) {
+		qrPosts.addEventListener('qr_loaded', (e) => {
+			lightboxResizer(e.detail.elements || e.target);
+		});
+	}
+	const qrPostform = document.getElementById('qr_postform');
+	if (qrPostform) {
+		qrPostform.addEventListener('ajax_submit_preview', () => {
+			lightboxResizer(document.getElementById('preview'));
+		});
+	}
 
 	// Compatibility with SimpleSpoiler extension
-	$('.spoiler-header').on('click', function(e) {
-		var spoiler = e.target.closest('.spoiler');
-		if (!spoiler.hasAttribute('open')) {
-			lightboxResizer($(spoiler).find('.spoiler-body'));
+	document.addEventListener('click', (e) => {
+		if (e.target.matches('.spoiler-header')) {
+			const spoiler = e.target.closest('.spoiler');
+			if (!spoiler.hasAttribute('open')) {
+				lightboxResizer(spoiler.querySelector('.spoiler-body'));
+			}
 		}
-	});
-
-	// Compatibility with ABBC3 spoil BBCode
-	$('.spoilbtn').on('click', function(e) {
-		var spoilcontent = $(e.target.closest('.spoilwrapper')).find('.spoilcontent');
-		if (spoilcontent.css('display') === 'none') {
-			lightboxResizer(spoilcontent);
+		// Compatibility with ABBC3 spoil BBCode
+		if (e.target.matches('.spoilbtn')) {
+			const spoilwrapper = e.target.closest('.spoilwrapper');
+			if (spoilwrapper) {
+				const spoilcontent = spoilwrapper.querySelector('.spoilcontent');
+				if (spoilcontent && getComputedStyle(spoilcontent).display === 'none') {
+					lightboxResizer(spoilcontent);
+				}
+			}
 		}
 	});
 
 	// Compatibility with mChat extension
-	if (typeof mChat === 'object') {
-		$(mChat).on({
-			mchat_add_message_before: function(e, data) {
-				setTimeout(function() {
-					lightboxResizer(data.message);
-				}, 0);
-			},
-			mchat_edit_message_before: function(e, data) {
-				setTimeout(function() {
-					lightboxResizer(data.newMessage);
-				}, 0);
-			}
+	if (typeof mChat === 'object' && mChat.addEventListener) {
+		mChat.addEventListener('mchat_add_message_before', (e) => {
+			setTimeout(() => lightboxResizer(e.detail.message), 0);
+		});
+		mChat.addEventListener('mchat_edit_message_before', (e) => {
+			setTimeout(() => lightboxResizer(e.detail.newMessage), 0);
 		});
 	}
 
-})(jQuery);
+})();
