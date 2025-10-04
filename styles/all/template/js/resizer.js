@@ -13,51 +13,34 @@
 		img.addEventListener('mouseleave', () => img.style.borderColor = 'transparent');
 	};
 
-	const resizeWideImages = () => vseLightbox.resizeWidth > 0;
-	const resizeTallImages = () => vseLightbox.resizeHeight > 0;
-
 	const isMobile = () => {
 		// Check if running as PWA (in standalone mode or display-mode: standalone)
 		const isPWA = window.matchMedia('(display-mode: standalone)').matches ||
 			window.navigator.standalone ||
 			document.referrer.includes('android-app://');
-
 		// Check if on a mobile device using more reliable methods
 		const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
 			('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0);
-
 		return !isPWA && isMobileDevice;
 	};
 
 	const isOversized = (img) =>
-		(resizeWideImages() && img.width >= vseLightbox.resizeWidth) ||
-		(resizeTallImages() && img.height >= vseLightbox.resizeHeight);
+		(vseLightbox.resizeWidth > 0 && img.width >= vseLightbox.resizeWidth) ||
+		(vseLightbox.resizeHeight > 0 && img.height >= vseLightbox.resizeHeight);
 
 	const lightboxResizer = (container) => {
 		if (typeof vseLightbox === 'undefined' || isMobile() ||
-			(!resizeWideImages() && !resizeTallImages() && !vseLightbox.lightboxAll)) {
+			(vseLightbox.resizeWidth <= 0 && vseLightbox.resizeHeight <= 0 && !vseLightbox.lightboxAll)) {
 			return;
 		}
 
-		let images = Array.from(container.querySelectorAll('.postimage'));
-		if (!vseLightbox.lightboxSig) {
-			images = images.filter(img => !img.closest('.signature'));
-		}
-		// Skip images in hidden spoilers during an initial DOM load
-		images = images.filter(img => {
-			// Skip images in closed SimpleSpoiler
-			if (img.closest('.spoiler:not([open])')) {
+		const selector = vseLightbox.lightboxSig ? '.postimage' : '.postimage:not(.signature .postimage)';
+		const images = Array.from(container.querySelectorAll(selector)).filter(img => {
+			if (img.closest('.spoiler:not([open]), .abbc3-spoiler:not([open])')) {
 				return false;
 			}
-
-			// Skip images in hidden legacy ABBC3 spoiler content
 			const spoilcontent = img.closest('.spoilcontent');
-			if (spoilcontent && getComputedStyle(spoilcontent).display === 'none') {
-				return false;
-			}
-
-			// Skip images in closed new ABBC3 spoiler
-			return !img.closest('.abbc3-spoiler:not([open])');
+			return !(spoilcontent && spoilcontent.style.display === 'none');
 		});
 
 		const processImage = (img, index) => {
@@ -65,66 +48,48 @@
 				return;
 			}
 
-			const naturalWidth = img.naturalWidth || 0;
-			const naturalHeight = img.naturalHeight || 0;
 			const rect = img.getBoundingClientRect();
-			const displayWidth = rect.width || parseInt(img.getAttribute('width')) || naturalWidth;
-			const displayHeight = rect.height || parseInt(img.getAttribute('height')) || naturalHeight;
-
-			const post = img.closest('.post');
 			const imgData = {
-				width: Math.max(displayWidth, naturalWidth),
-				height: Math.max(displayHeight, naturalHeight),
-				index: vseLightbox.lightboxGal === 0 ? index :
-					   vseLightbox.lightboxGal === 2 ? (post ? post.id : '') : ''
+				width: Math.max(rect.width || parseInt(img.getAttribute('width')) || img.naturalWidth || 0, img.naturalWidth || 0),
+				height: Math.max(rect.height || parseInt(img.getAttribute('height')) || img.naturalHeight || 0, img.naturalHeight || 0),
+				index: vseLightbox.lightboxGal === 0 ? index : vseLightbox.lightboxGal === 2 ? (img.closest('.post') ? img.closest('.post').id : '') : ''
 			};
 
-			const galleryName = 'post-gallery';
-			const shouldProcess = vseLightbox.lightboxAll || isOversized(imgData);
-
-			if (!shouldProcess) {
+			if (!vseLightbox.lightboxAll && !isOversized(imgData)) {
 				return;
 			}
 
+			const galleryId = 'post-gallery' + imgData.index;
 			const parentLink = img.parentElement;
+
 			if (parentLink.tagName === 'A') {
 				// attached images
-				parentLink.setAttribute('data-lightbox', galleryName + imgData.index);
+				parentLink.setAttribute('data-lightbox', galleryId);
 				if (vseLightbox.imageTitles) {
 					parentLink.setAttribute('data-title', img.alt || '');
 				}
-				addBorderHover(img);
 			} else {
-				// regular images
+				// bbcode images
 				const link = document.createElement('a');
 				link.href = img.src;
-				link.setAttribute('data-lightbox',
-					(vseLightbox.lightboxSig && img.closest('.signature')) ? index : galleryName + imgData.index
-				);
+				link.setAttribute('data-lightbox', (vseLightbox.lightboxSig && img.closest('.signature')) ? index : galleryId);
 				if (vseLightbox.imageTitles) {
-					const title = String(img.src.includes(vseLightbox.downloadFile) ?
-						(img.alt || '') : (img.src.split('/').pop() || ''));
-					link.setAttribute('data-title', title);
+					link.setAttribute('data-title', img.src.includes(vseLightbox.downloadFile) ? (img.alt || '') : (img.src.split('/').pop() || ''));
 				}
 				img.parentNode.insertBefore(link, img);
 				link.appendChild(img);
-				addBorderHover(img);
 			}
+			addBorderHover(img);
 		};
 
-		// Use requestAnimationFrame to ensure DOM is ready
 		images.forEach((img, index) => {
-			requestAnimationFrame(() => {
-				if (img.complete || img.readyState === 4) {
-					processImage(img, index);
-				} else {
-					const handler = () => processImage(img, index);
-					img.addEventListener('load', handler, { once: true });
-					img.addEventListener('error', handler, { once: true });
-					// Fallback timeout
-					setTimeout(() => processImage(img, index), 100);
-				}
-			});
+			if (img.complete) {
+				processImage(img, index);
+			} else {
+				const handler = () => processImage(img, index);
+				img.addEventListener('load', handler, { once: true });
+				img.addEventListener('error', handler, { once: true });
+			}
 		});
 	};
 
@@ -140,42 +105,34 @@
 		});
 	}
 
-	// Compatibility with SimpleSpoiler extension
+	// Handle spoiler clicks
 	document.addEventListener('click', (e) => {
-		if (e.target.matches('.spoiler-header')) {
-			const spoiler = e.target.closest('.spoiler');
-			if (!spoiler.hasAttribute('open')) {
-				setTimeout(() => lightboxResizer(spoiler.querySelector('.spoiler-body')), 0);
-			}
-		}
-		// Compatibility with ABBC3 spoil BBCode
-		if (e.target.matches('.spoilbtn')) {
-			// Legacy ABBC3 spoiler
+		let container;
+		if (e.target.matches('.spoiler-header') && !e.target.closest('.spoiler').hasAttribute('open')) {
+			container = e.target.closest('.spoiler').querySelector('.spoiler-body');
+		} else if (e.target.matches('.spoilbtn')) {
 			const spoilwrapper = e.target.closest('.spoilwrapper');
 			if (spoilwrapper) {
 				const spoilcontent = spoilwrapper.querySelector('.spoilcontent');
-				if (spoilcontent && getComputedStyle(spoilcontent).display === 'none') {
-					setTimeout(() => lightboxResizer(spoilcontent), 0);
+				if (spoilcontent && spoilcontent.style.display === 'none') {
+					container = spoilcontent;
 				}
 			}
+		} else if (e.target.matches('summary') && !e.target.closest('.abbc3-spoiler').hasAttribute('open')) {
+			container = e.target.closest('.abbc3-spoiler');
 		}
-		// New ABBC3 spoiler (details/summary)
-		if (e.target.matches('summary')) {
-			const spoiler = e.target.closest('.abbc3-spoiler');
-			if (spoiler && !spoiler.hasAttribute('open')) {
-				setTimeout(() => lightboxResizer(spoiler), 0);
-			}
+		if (container) {
+			setTimeout(() => lightboxResizer(container), 0);
 		}
 	});
 
 	// Compatibility with mChat extension
-	if (typeof mChat === 'object' && typeof $ !== 'undefined') {
-		$(mChat).on('mchat_add_message_before', (e, data) => {
-			setTimeout(() => lightboxResizer(data.message), 0);
-		});
-		$(mChat).on('mchat_edit_message_before', (e, data) => {
-			setTimeout(() => lightboxResizer(data.newMessage), 0);
-		});
+	if (typeof $ !== 'undefined') {
+		if (typeof mChat === 'object') {
+			$(mChat).on('mchat_add_message_before mchat_edit_message_before', (e, data) => {
+				setTimeout(() => lightboxResizer(data.message || data.newMessage), 0);
+			});
+		}
 	}
 
 })();
