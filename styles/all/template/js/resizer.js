@@ -115,15 +115,11 @@
 	document.addEventListener('DOMContentLoaded', () => lightboxResizer(document));
 
 	// Compatibility with QuickReply Reloaded extension
-	const qrPosts = document.getElementById('qr_posts');
-	if (qrPosts) {
-		qrPosts.addEventListener('qr_loaded', (e) => {
-			lightboxResizer(e.detail.elements || e.target);
+	if (typeof $ !== 'undefined') {
+		$('#qr_posts').on('qr_loaded', (e, elements) => {
+			lightboxResizer(elements);
 		});
-	}
-	const qrPostform = document.getElementById('qr_postform');
-	if (qrPostform) {
-		qrPostform.addEventListener('ajax_submit_preview', () => {
+		$('#qr_postform').on('ajax_submit_preview', () => {
 			lightboxResizer(document.getElementById('preview'));
 		});
 	}
@@ -149,12 +145,12 @@
 	});
 
 	// Compatibility with mChat extension
-	if (typeof mChat === 'object' && mChat.addEventListener) {
-		mChat.addEventListener('mchat_add_message_before', (e) => {
-			setTimeout(() => lightboxResizer(e.detail.message), 0);
+	if (typeof mChat === 'object' && typeof $ !== 'undefined') {
+		$(mChat).on('mchat_add_message_before', (e, data) => {
+			setTimeout(() => lightboxResizer(data.message), 0);
 		});
-		mChat.addEventListener('mchat_edit_message_before', (e) => {
-			setTimeout(() => lightboxResizer(e.detail.newMessage), 0);
+		$(mChat).on('mchat_edit_message_before', (e, data) => {
+			setTimeout(() => lightboxResizer(data.newMessage), 0);
 		});
 	}
 
