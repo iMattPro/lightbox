@@ -43,21 +43,21 @@
 		if (!vseLightbox.lightboxSig) {
 			images = images.filter(img => !img.closest('.signature'));
 		}
-		// Skip images in hidden spoilers during initial load
+		// Skip images in hidden spoilers during an initial DOM load
 		images = images.filter(img => {
 			// Skip images in closed SimpleSpoiler
-			if (img.closest('.spoiler:not([open])')) return false;
-			
+			if (img.closest('.spoiler:not([open])')) {
+				return false;
+			}
+
 			// Skip images in hidden legacy ABBC3 spoiler content
 			const spoilcontent = img.closest('.spoilcontent');
 			if (spoilcontent && getComputedStyle(spoilcontent).display === 'none') {
 				return false;
 			}
-			
+
 			// Skip images in closed new ABBC3 spoiler
-			if (img.closest('.abbc3-spoiler:not([open])')) return false;
-			
-			return true;
+			return !img.closest('.abbc3-spoiler:not([open])');
 		});
 
 		const processImage = (img, index) => {
