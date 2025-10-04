@@ -86,9 +86,9 @@
 					(vseLightbox.lightboxSig && img.closest('.signature')) ? index : galleryName + imgData.index
 				);
 				if (vseLightbox.imageTitles) {
-					const title = img.src.includes(vseLightbox.downloadFile) ?
-						img.alt : img.src.split('/').pop();
-					link.setAttribute('data-title', title || '');
+					const title = String(img.src.includes(vseLightbox.downloadFile) ?
+						(img.alt || '') : (img.src.split('/').pop() || ''));
+					link.setAttribute('data-title', title);
 				}
 				img.parentNode.insertBefore(link, img);
 				link.appendChild(img);
