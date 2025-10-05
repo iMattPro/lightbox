@@ -124,12 +124,13 @@
 	});
 
 	// Compatibility with mChat extension
-	if (typeof $ !== 'undefined') {
-		if (typeof mChat === 'object') {
-			$(mChat).on('mchat_add_message_before mchat_edit_message_before', (e, data) => {
-				setTimeout(() => lightboxResizer(data.message || data.newMessage), 0);
-			});
-		}
+	if (typeof mChat === 'object' && typeof $ !== 'undefined') {
+		$(mChat).on('mchat_add_message_before', (e, data) => {
+			setTimeout(() => lightboxResizer(data.message[0] || data.message), 0);
+		});
+		$(mChat).on('mchat_edit_message_before', (e, data) => {
+			setTimeout(() => lightboxResizer(data.newMessage[0] || data.newMessage), 0);
+		});
 	}
 
 })();
