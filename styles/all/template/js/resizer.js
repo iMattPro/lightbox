@@ -113,10 +113,7 @@
 		} else if (e.target.matches('.spoilbtn')) {
 			const spoilwrapper = e.target.closest('.spoilwrapper');
 			if (spoilwrapper) {
-				const spoilcontent = spoilwrapper.querySelector('.spoilcontent');
-				if (spoilcontent && spoilcontent.style.display === 'none') {
-					container = spoilcontent;
-				}
+				container = spoilwrapper.querySelector('.spoilcontent');
 			}
 		} else if (e.target.matches('summary') && !e.target.closest('.abbc3-spoiler').hasAttribute('open')) {
 			container = e.target.closest('.abbc3-spoiler');
