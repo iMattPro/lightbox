@@ -26,6 +26,7 @@
 		<delete file="${dir}/README.md" />
 		<delete file="${dir}/package.json" />
 		<delete file="${dir}/package-lock.json" />
+		<delete file="${dir}/jest.config.js" />
 	</target>
 
 	<!--
