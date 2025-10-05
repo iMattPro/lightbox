@@ -14,11 +14,13 @@ describe('Lightbox Resizer', () => {
 		// Load and execute the resizer script in isolated scope
 		const resizerPath = path.join(__dirname, '../../styles/all/template/js/resizer.js');
 		const resizerCode = fs.readFileSync(resizerPath, 'utf8');
-		// Extract lightboxResizer function for testing
-		const modifiedCode = resizerCode.replace(
-			'const lightboxResizer = (container) =>',
-			'global.lightboxResizer = (container) =>'
-		);
+		// Extract functions for testing
+		const modifiedCode = resizerCode
+			.replace('const lightboxResizer = (container) =>', 'global.lightboxResizer = (container) =>')
+			.replace('const processImage = (img, index) =>', 'global.processImage = (img, index) =>')
+			.replace('const isImageVisible = (img) =>', 'global.isImageVisible = (img) =>')
+			.replace('const getImageDimensions = (img) =>', 'global.getImageDimensions = (img) =>')
+			.replace('const getGalleryId = (img, index) =>', 'global.getGalleryId = (img, index) =>');
 		eval(modifiedCode);
 		lightboxResizer = global.lightboxResizer;
 

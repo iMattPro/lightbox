@@ -12,10 +12,12 @@ describe('Lightbox Resizer - Comprehensive Tests', () => {
 		document.body.innerHTML = '';
 		const resizerPath = path.join(__dirname, '../../styles/all/template/js/resizer.js');
 		const resizerCode = fs.readFileSync(resizerPath, 'utf8');
-		const modifiedCode = resizerCode.replace(
-			'const lightboxResizer = (container) =>',
-			'global.lightboxResizer = (container) =>'
-		);
+		const modifiedCode = resizerCode
+			.replace('const lightboxResizer = (container) =>', 'global.lightboxResizer = (container) =>')
+			.replace('const processImage = (img, index) =>', 'global.processImage = (img, index) =>')
+			.replace('const isImageVisible = (img) =>', 'global.isImageVisible = (img) =>')
+			.replace('const getImageDimensions = (img) =>', 'global.getImageDimensions = (img) =>')
+			.replace('const getGalleryId = (img, index) =>', 'global.getGalleryId = (img, index) =>');
 		eval(modifiedCode);
 		lightboxResizer = global.lightboxResizer;
 
@@ -120,7 +122,7 @@ describe('Lightbox Resizer - Comprehensive Tests', () => {
 
 	test('should handle incomplete images with load events', (done) => {
 		Object.defineProperty(mockImg, 'complete', { value: false, writable: true });
-		
+
 		lightboxResizer(mockContainer);
 
 		// Simulate image load
