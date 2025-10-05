@@ -28,9 +28,9 @@
 		return !isPWA && isMobileDevice;
 	};
 
-	const isOversized = (img) =>
-		(vseLightbox.resizeWidth > 0 && img.width >= vseLightbox.resizeWidth) ||
-		(vseLightbox.resizeHeight > 0 && img.height >= vseLightbox.resizeHeight);
+	const isOversized = (imgData) =>
+		(vseLightbox.resizeWidth > 0 && imgData.width >= vseLightbox.resizeWidth) ||
+		(vseLightbox.resizeHeight > 0 && imgData.height >= vseLightbox.resizeHeight);
 
 	const getImageDimensions = (img) => {
 		const rect = img.getBoundingClientRect();
