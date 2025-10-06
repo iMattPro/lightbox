@@ -20,7 +20,7 @@
 
 	const isMobile = () => {
 		const isMobileDevice = CONFIG.MOBILE_REGEX.test(navigator.userAgent) ||
-			('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0);
+			('maxTouchPoints' in navigator && navigator.maxTouchPoints > 2 && window.screen.width <= 1024);
 		const isPWA = isMobileDevice &&
 			(window.matchMedia('(display-mode: standalone)').matches ||
 			window.navigator.standalone ||
