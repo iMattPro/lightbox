@@ -1,5 +1,12 @@
 ## Changelog
 
+### 2.0.6 - 2025-10-06
+
+- Fixed an issue where this extension stopped working with the newest releases of Chrome and Edge.
+- Fixed an issue where this extension would not work with touchscreen laptops like a Surface.
+- Added support for updated ABBC3 spoiler BBCode.
+- Added Romanian translation.
+
 ### 2.0.5 - 2025-05-22
 
 - Updated Lightbox2 library to 2.11.4
