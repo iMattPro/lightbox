@@ -6,6 +6,5 @@ phpunit.xml.*	export-ignore
 composer.lock	export-ignore
 README.md		export-ignore
 build.xml		export-ignore
-jest.config.js	export-ignore
 package.json	export-ignore
 package-lock.json	export-ignore
