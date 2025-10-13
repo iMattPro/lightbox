@@ -1,3 +1,4 @@
+/* jshint ignore:start */
 // Mock global objects
 global.vseLightbox = {
 	resizeWidth: 800,
