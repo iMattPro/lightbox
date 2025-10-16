@@ -1,3 +1,4 @@
+node_modules/	export-ignore
 tests/			export-ignore
 .github/		export-ignore
 .gitignore		export-ignore
@@ -6,4 +7,5 @@ phpunit.xml.*	export-ignore
 composer.lock	export-ignore
 README.md		export-ignore
 build.xml		export-ignore
-
+package.json	export-ignore
+package-lock.json	export-ignore

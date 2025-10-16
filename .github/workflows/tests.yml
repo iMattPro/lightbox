@@ -3,6 +3,17 @@ name: Tests
 on: [push, pull_request]
 
 jobs:
+    js-tests:
+        name: JavaScript tests
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: '18'
+            - run: npm ci
+            - run: npm test
+
     call-tests:
         name: Extension tests
         uses: phpbb-extensions/test-framework/.github/workflows/tests.yml@master
