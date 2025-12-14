@@ -26,9 +26,6 @@ class listener_test extends \phpbb_test_case
 	/** @var \phpbb\template\template|\PHPUnit\Framework\MockObject\MockObject */
 	protected $template;
 
-	/** @var \phpbb\user */
-	protected $user;
-
 	/** @var string PHP file extension */
 	protected $php_ext;
 
@@ -36,12 +33,14 @@ class listener_test extends \phpbb_test_case
 	{
 		parent::setUp();
 
-		global $phpbb_root_path, $phpEx;
+		global $user, $phpbb_root_path, $phpEx;
 
 		$this->config = new \phpbb\config\config(array());
 		$this->language = new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx));
 		$this->template = $this->createMock('\phpbb\template\template');
 		$this->php_ext = $phpEx;
+
+		$user = new \phpbb\user($this->language, '\phpbb\datetime');
 	}
 
 	protected function set_listener()
@@ -184,10 +183,96 @@ class listener_test extends \phpbb_test_case
 		{
 			self::assertArrayHasKey($expected, $event_data_after);
 		}
-		extract($event_data_after, EXTR_OVERWRITE);
+		extract($event_data_after);
 
 		$keys = array_keys($display_vars['vars']);
 
 		self::assertEquals($expected_keys, $keys);
+	}
+
+	public function lb_select_data()
+	{
+		return [
+			'phpbb3 disabled' => [
+				'3.3.15',
+				[
+					0 => 'DISABLED',
+					1 => 'LIGHTBOX_GALLERY_ALL',
+					2 => 'LIGHTBOX_GALLERY_POSTS'
+				],
+				0,
+				'<option value="0" selected="selected">DISABLED</option><option value="1">LIGHTBOX_GALLERY_ALL</option><option value="2">LIGHTBOX_GALLERY_POSTS</option>',
+			],
+			'phpbb3 all' => [
+				'3.3.15',
+				[
+					0 => 'DISABLED',
+					1 => 'LIGHTBOX_GALLERY_ALL',
+					2 => 'LIGHTBOX_GALLERY_POSTS'
+				],
+				1,
+				'<option value="0">DISABLED</option><option value="1" selected="selected">LIGHTBOX_GALLERY_ALL</option><option value="2">LIGHTBOX_GALLERY_POSTS</option>',
+			],
+			'phpbb3 posts' => [
+				'3.3.15',
+				[
+					0 => 'DISABLED',
+					1 => 'LIGHTBOX_GALLERY_ALL',
+					2 => 'LIGHTBOX_GALLERY_POSTS'
+				],
+				2,
+				'<option value="0">DISABLED</option><option value="1">LIGHTBOX_GALLERY_ALL</option><option value="2" selected="selected">LIGHTBOX_GALLERY_POSTS</option>',
+			],
+			'phpbb4 disabled' => [
+				'4.0.0',
+				[
+					0 => 'DISABLED',
+					1 => 'LIGHTBOX_GALLERY_ALL',
+					2 => 'LIGHTBOX_GALLERY_POSTS'
+				],
+				0,
+				['options' => '<option value="0" selected="selected">DISABLED</option><option value="1">LIGHTBOX_GALLERY_ALL</option><option value="2">LIGHTBOX_GALLERY_POSTS</option>'],
+			],
+			'phpbb4 all' => [
+				'4.0.0',
+				[
+					0 => 'DISABLED',
+					1 => 'LIGHTBOX_GALLERY_ALL',
+					2 => 'LIGHTBOX_GALLERY_POSTS'
+				],
+				1,
+				['options' => '<option value="0">DISABLED</option><option value="1" selected="selected">LIGHTBOX_GALLERY_ALL</option><option value="2">LIGHTBOX_GALLERY_POSTS</option>'],
+			],
+			'phpbb4 posts' => [
+				'4.0.0',
+				[
+					0 => 'DISABLED',
+					1 => 'LIGHTBOX_GALLERY_ALL',
+					2 => 'LIGHTBOX_GALLERY_POSTS'
+				],
+				2,
+				['options' => '<option value="0">DISABLED</option><option value="1">LIGHTBOX_GALLERY_ALL</option><option value="2" selected="selected">LIGHTBOX_GALLERY_POSTS</option>'],
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider lb_select_data
+	 */
+	public function test_lb_select($env, $options, $default, $expected)
+	{
+		global $user;
+
+		$user->lang = [
+			'DISABLED' => 'DISABLED',
+			'LIGHTBOX_GALLERY_ALL' => 'LIGHTBOX_GALLERY_ALL',
+			'LIGHTBOX_GALLERY_POSTS' => 'LIGHTBOX_GALLERY_POSTS',
+		];
+
+		$this->config['version'] = $env;
+
+		$this->set_listener();
+
+		$this->assertEquals($expected, $this->listener->lb_select($options, $default));
 	}
 }
