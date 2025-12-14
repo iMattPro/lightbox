@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "Lightbox for phpBB can resize posted images to a maximum set height/width and display them full-screen in an elegant Lightbox overlay effect.",
 	"homepage": "https://github.com/iMattPro/lightbox",
-	"version": "2.1.0-dev",
+	"version": "2.0.6-dev",
 	"keywords": ["phpbb", "extension", "lightbox", "image", "resizer"],
 	"license": "GPL-2.0-only",
 	"authors": [
@@ -27,9 +27,6 @@
 			"directory": "/customise/db/extension/lightbox",
 			"filename": "version_check",
 			"ssl": true
-		},
-		"branch-alias": {
-			"dev-dev/4.0": "2.1.x-dev"
 		}
 	},
 	"config": {
