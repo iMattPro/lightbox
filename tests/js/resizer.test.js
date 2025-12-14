@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 
+/* jshint ignore:start */
 const fs = require('fs');
 const path = require('path');
 
@@ -11,7 +12,7 @@ describe('Lightbox Resizer', () => {
 	beforeEach(() => {
 		// Reset DOM
 		document.body.innerHTML = '';
-		// Load and execute the resizer script in isolated scope
+		// Load and execute the resizer script in an isolated scope
 		const resizerPath = path.join(__dirname, '../../styles/all/template/js/resizer.js');
 		const resizerCode = fs.readFileSync(resizerPath, 'utf8');
 		// Extract functions for testing
@@ -59,7 +60,7 @@ describe('Lightbox Resizer', () => {
 	test('should process oversized images when lightboxAll is false', () => {
 		// Temporarily disable lightboxAll
 		global.vseLightbox.lightboxAll = false;
-		// Create oversized image
+		// Create an oversized image
 		mockImg.getBoundingClientRect = jest.fn(() => ({
 			width: 1000,
 			height: 800

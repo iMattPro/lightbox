@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 
+/* jshint ignore:start */
 const fs = require('fs');
 const path = require('path');
 

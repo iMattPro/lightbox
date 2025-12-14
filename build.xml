@@ -14,6 +14,7 @@
 		${dir}/ is the folder of your extension, e.g. ext/nickvergessen/newspage/
 		-->
 		<delete dir="${dir}/.github" />
+		<delete dir="${dir}/node_modules" />
 		<delete dir="${dir}/tests" />
 		<delete dir="${dir}/vendor" />
 
@@ -26,7 +27,6 @@
 		<delete file="${dir}/README.md" />
 		<delete file="${dir}/package.json" />
 		<delete file="${dir}/package-lock.json" />
-		<delete file="${dir}/jest.config.js" />
 	</target>
 
 	<!--
