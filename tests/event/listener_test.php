@@ -10,24 +10,36 @@
 
 namespace vse\lightbox\tests\event;
 
+use phpbb\config\config;
+use phpbb\event\dispatcher;
+use phpbb\language\language;
+use phpbb\language\language_file_loader;
+use phpbb\template\template;
+use phpbb\user;
+use phpbb_test_case;
+use PHPUnit\Framework\MockObject\MockObject;
+use vse\lightbox\event\listener;
+use phpbb\datetime;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
 require_once __DIR__ . '/../../../../../includes/functions_acp.php';
 
-class listener_test extends \phpbb_test_case
+class listener_test extends phpbb_test_case
 {
-	/** @var \vse\lightbox\event\listener */
-	protected $listener;
+	/** @var listener */
+	protected listener $listener;
 
-	/** @var \phpbb\config\config */
-	protected $config;
+	/** @var config */
+	protected config $config;
 
-	/** @var \phpbb\language\language */
-	protected $language;
+	/** @var language */
+	protected language $language;
 
-	/** @var \phpbb\template\template|\PHPUnit\Framework\MockObject\MockObject */
-	protected $template;
+	/** @var template|MockObject */
+	protected template|MockObject $template;
 
 	/** @var string PHP file extension */
-	protected $php_ext;
+	protected string $php_ext;
 
 	protected function setUp(): void
 	{
@@ -35,17 +47,17 @@ class listener_test extends \phpbb_test_case
 
 		global $user, $phpbb_root_path, $phpEx;
 
-		$this->config = new \phpbb\config\config(array());
-		$this->language = new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx));
-		$this->template = $this->createMock('\phpbb\template\template');
+		$this->config = new config(array());
+		$this->language = new language(new language_file_loader($phpbb_root_path, $phpEx));
+		$this->template = $this->createMock(template::class);
 		$this->php_ext = $phpEx;
 
-		$user = new \phpbb\user($this->language, '\phpbb\datetime');
+		$user = new user($this->language, datetime::class);
 	}
 
-	protected function set_listener()
+	protected function set_listener(): void
 	{
-		$this->listener = new \vse\lightbox\event\listener(
+		$this->listener = new listener(
 			$this->config,
 			$this->language,
 			$this->template,
@@ -53,18 +65,18 @@ class listener_test extends \phpbb_test_case
 		);
 	}
 
-	public function test_construct()
+	public function test_construct(): void
 	{
 		$this->set_listener();
-		self::assertInstanceOf('\Symfony\Component\EventDispatcher\EventSubscriberInterface', $this->listener);
+		self::assertInstanceOf(EventSubscriberInterface::class, $this->listener);
 	}
 
-	public function test_getSubscribedEvents()
+	public function test_getSubscribedEvents(): void
 	{
 		self::assertEquals(array(
 			'core.page_header',
 			'core.acp_board_config_edit_add',
-		), array_keys(\vse\lightbox\event\listener::getSubscribedEvents()));
+		), array_keys(listener::getSubscribedEvents()));
 	}
 
 	/**
@@ -72,7 +84,7 @@ class listener_test extends \phpbb_test_case
 	 *
 	 * @return array Array of test data
 	 */
-	public static function set_lightbox_tpl_data_test_data()
+	public static function set_lightbox_tpl_data_test_data(): array
 	{
 		return array(
 			array(400, 500, 0, 2, 1, 1),
@@ -100,9 +112,9 @@ class listener_test extends \phpbb_test_case
 	 * @param $lightbox_img_titles
 	 * @dataProvider set_lightbox_tpl_data_test_data
 	 */
-	public function test_set_lightbox_tpl_data($max_width, $max_height, $all_images, $lightbox_gallery, $lightbox_signatures, $lightbox_img_titles)
+	public function test_set_lightbox_tpl_data($max_width, $max_height, $all_images, $lightbox_gallery, $lightbox_signatures, $lightbox_img_titles): void
 	{
-		$this->config = new \phpbb\config\config(array(
+		$this->config = new config(array(
 			'lightbox_max_width'	=> $max_width,
 			'lightbox_max_height'	=> $max_height,
 			'lightbox_all_images'	=> $all_images,
@@ -125,7 +137,7 @@ class listener_test extends \phpbb_test_case
 				'PHP_EXTENSION'			=> 'php',
 			));
 
-		$dispatcher = new \phpbb\event\dispatcher();
+		$dispatcher = new dispatcher();
 		$dispatcher->addListener('core.page_header', array($this->listener, 'set_lightbox_tpl_data'));
 		$dispatcher->trigger_event('core.page_header');
 	}
@@ -135,7 +147,7 @@ class listener_test extends \phpbb_test_case
 	 *
 	 * @return array Array of test data
 	 */
-	public static function add_lightbox_acp_config_data()
+	public static function add_lightbox_acp_config_data(): array
 	{
 		return array(
 			array( // expected config and mode
@@ -169,11 +181,11 @@ class listener_test extends \phpbb_test_case
 	 * @param $expected_keys
 	 * @dataProvider add_lightbox_acp_config_data
 	 */
-	public function test_add_lightbox_acp_config($mode, $display_vars, $expected_keys)
+	public function test_add_lightbox_acp_config($mode, $display_vars, $expected_keys): void
 	{
 		$this->set_listener();
 
-		$dispatcher = new \phpbb\event\dispatcher();
+		$dispatcher = new dispatcher();
 		$dispatcher->addListener('core.acp_board_config_edit_add', array($this->listener, 'add_lightbox_acp_config'));
 
 		$event_data = array('display_vars', 'mode');
@@ -190,7 +202,7 @@ class listener_test extends \phpbb_test_case
 		self::assertEquals($expected_keys, $keys);
 	}
 
-	public function lb_select_data()
+	public static function lb_select_data(): array
 	{
 		return [
 			'phpbb3 disabled' => [
@@ -201,7 +213,11 @@ class listener_test extends \phpbb_test_case
 					2 => 'LIGHTBOX_GALLERY_POSTS'
 				],
 				0,
-				'<option value="0" selected="selected">DISABLED</option><option value="1">LIGHTBOX_GALLERY_ALL</option><option value="2">LIGHTBOX_GALLERY_POSTS</option>',
+				[
+					['value' => 0, 'selected' => true, 'label' => 'Disabled'],
+					['value' => 1, 'selected' => false, 'label' => 'LIGHTBOX_GALLERY_ALL'],
+					['value' => 2, 'selected' => false, 'label' => 'LIGHTBOX_GALLERY_POSTS'],
+				],
 			],
 			'phpbb3 all' => [
 				'3.3.15',
@@ -211,7 +227,11 @@ class listener_test extends \phpbb_test_case
 					2 => 'LIGHTBOX_GALLERY_POSTS'
 				],
 				1,
-				'<option value="0">DISABLED</option><option value="1" selected="selected">LIGHTBOX_GALLERY_ALL</option><option value="2">LIGHTBOX_GALLERY_POSTS</option>',
+				[
+					['value' => 0, 'selected' => false, 'label' => 'Disabled'],
+					['value' => 1, 'selected' => true, 'label' => 'LIGHTBOX_GALLERY_ALL'],
+					['value' => 2, 'selected' => false, 'label' => 'LIGHTBOX_GALLERY_POSTS'],
+				],
 			],
 			'phpbb3 posts' => [
 				'3.3.15',
@@ -221,7 +241,11 @@ class listener_test extends \phpbb_test_case
 					2 => 'LIGHTBOX_GALLERY_POSTS'
 				],
 				2,
-				'<option value="0">DISABLED</option><option value="1">LIGHTBOX_GALLERY_ALL</option><option value="2" selected="selected">LIGHTBOX_GALLERY_POSTS</option>',
+				[
+					['value' => 0, 'selected' => false, 'label' => 'Disabled'],
+					['value' => 1, 'selected' => false, 'label' => 'LIGHTBOX_GALLERY_ALL'],
+					['value' => 2, 'selected' => true, 'label' => 'LIGHTBOX_GALLERY_POSTS'],
+				],
 			],
 			'phpbb4 disabled' => [
 				'4.0.0',
@@ -231,7 +255,13 @@ class listener_test extends \phpbb_test_case
 					2 => 'LIGHTBOX_GALLERY_POSTS'
 				],
 				0,
-				['options' => '<option value="0" selected="selected">DISABLED</option><option value="1">LIGHTBOX_GALLERY_ALL</option><option value="2">LIGHTBOX_GALLERY_POSTS</option>'],
+				['options' =>
+					[
+						['value' => 0, 'selected' => true, 'label' => 'Disabled'],
+						['value' => 1, 'selected' => false, 'label' => 'LIGHTBOX_GALLERY_ALL'],
+						['value' => 2, 'selected' => false, 'label' => 'LIGHTBOX_GALLERY_POSTS'],
+					],
+				],
 			],
 			'phpbb4 all' => [
 				'4.0.0',
@@ -241,7 +271,13 @@ class listener_test extends \phpbb_test_case
 					2 => 'LIGHTBOX_GALLERY_POSTS'
 				],
 				1,
-				['options' => '<option value="0">DISABLED</option><option value="1" selected="selected">LIGHTBOX_GALLERY_ALL</option><option value="2">LIGHTBOX_GALLERY_POSTS</option>'],
+				['options' =>
+					[
+						['value' => 0, 'selected' => false, 'label' => 'Disabled'],
+						['value' => 1, 'selected' => true, 'label' => 'LIGHTBOX_GALLERY_ALL'],
+						['value' => 2, 'selected' => false, 'label' => 'LIGHTBOX_GALLERY_POSTS'],
+					],
+				],
 			],
 			'phpbb4 posts' => [
 				'4.0.0',
@@ -251,7 +287,13 @@ class listener_test extends \phpbb_test_case
 					2 => 'LIGHTBOX_GALLERY_POSTS'
 				],
 				2,
-				['options' => '<option value="0">DISABLED</option><option value="1">LIGHTBOX_GALLERY_ALL</option><option value="2" selected="selected">LIGHTBOX_GALLERY_POSTS</option>'],
+				['options' =>
+					[
+						['value' => 0, 'selected' => false, 'label' => 'Disabled'],
+						['value' => 1, 'selected' => false, 'label' => 'LIGHTBOX_GALLERY_ALL'],
+						['value' => 2, 'selected' => true, 'label' => 'LIGHTBOX_GALLERY_POSTS'],
+					],
+				],
 			],
 		];
 	}
@@ -259,15 +301,10 @@ class listener_test extends \phpbb_test_case
 	/**
 	 * @dataProvider lb_select_data
 	 */
-	public function test_lb_select($env, $options, $default, $expected)
+	public function test_lb_select($env, $options, $default, $expected): void
 	{
-		global $user;
-
-		$user->lang = [
-			'DISABLED' => 'DISABLED',
-			'LIGHTBOX_GALLERY_ALL' => 'LIGHTBOX_GALLERY_ALL',
-			'LIGHTBOX_GALLERY_POSTS' => 'LIGHTBOX_GALLERY_POSTS',
-		];
+		global $language;
+		$language = $this->language;
 
 		$this->config['version'] = $env;
 
