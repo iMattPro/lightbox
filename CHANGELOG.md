@@ -1,5 +1,13 @@
 ## Changelog
 
+### 2.0.6 - 2025-12-16
+
+- Fixed an issue where this extension stopped working with the newest releases of Chrome and Edge.
+- Fixed an issue where this extension would not work with touchscreen laptops like a Surface.
+- Added support for updated ABBC3 spoiler BBCode.
+- Added Romanian translation.
+- Ensured continuing compatibility with phpBB3 and phpBB4
+
 ### 2.0.5 - 2025-05-22
 
 - Updated Lightbox2 library to 2.11.4
