@@ -95,7 +95,7 @@ describe('Lightbox Resizer', () => {
 		expect(mockImg.style.cursor).toBe('pointer');
 	});
 
-	test('should handle mobile detection', () => {
+	test('should process images on mobile devices', () => {
 		// Mock mobile user agent
 		Object.defineProperty(navigator, 'userAgent', {
 			value: 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)',
@@ -106,7 +106,8 @@ describe('Lightbox Resizer', () => {
 
 		lightboxResizer(mockContainer);
 
-		// Should not process on mobile
-		expect(mockImg.parentElement.tagName).toBe('DIV');
+		const link = mockImg.parentElement;
+		expect(link.tagName).toBe('A');
+		expect(link.getAttribute('data-lightbox')).toBe('post-gallery0');
 	});
 });

@@ -3,8 +3,7 @@
 	'use strict';
 
 	const CONFIG = {
-		BORDER_COLOR: '#4ae',
-		MOBILE_REGEX: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+		BORDER_COLOR: '#4ae'
 	};
 
 	const addBorderHover = (img) => {
@@ -16,16 +15,6 @@
 		});
 		img.addEventListener('mouseenter', () => img.style.borderColor = CONFIG.BORDER_COLOR);
 		img.addEventListener('mouseleave', () => img.style.borderColor = 'transparent');
-	};
-
-	const isMobile = () => {
-		const isMobileDevice = CONFIG.MOBILE_REGEX.test(navigator.userAgent) ||
-			('maxTouchPoints' in navigator && navigator.maxTouchPoints > 2 && window.screen.width <= 1024);
-		const isPWA = isMobileDevice &&
-			(window.matchMedia('(display-mode: standalone)').matches ||
-			window.navigator.standalone ||
-			document.referrer.includes('android-app://'));
-		return !isPWA && isMobileDevice;
 	};
 
 	const isOversized = (imgData) =>
@@ -105,8 +94,9 @@
 	};
 
 	const lightboxResizer = (container) => {
-		if (typeof vseLightbox === 'undefined' || isMobile() ||
-			(vseLightbox.resizeWidth <= 0 && vseLightbox.resizeHeight <= 0 && !vseLightbox.lightboxAll)) {
+		if (typeof vseLightbox === 'undefined' ||
+			(vseLightbox.resizeWidth <= 0 && vseLightbox.resizeHeight <= 0 && !vseLightbox.lightboxAll) ||
+			!container) {
 			return;
 		}
 
