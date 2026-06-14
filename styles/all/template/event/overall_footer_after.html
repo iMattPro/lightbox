@@ -2,8 +2,8 @@
 	{% INCLUDEJS '@vse_lightbox/js/resizer.js' %}
 	{# Test $INCLUDED_LIGHTBOXJS is not defined #}
 	{% if not definition.INCLUDED_LIGHTBOXJS %}
-		{% INCLUDECSS '@vse_lightbox/lightbox/lightbox3.css' %}
-		{% INCLUDEJS '@vse_lightbox/lightbox/lightbox3.min.js' %}
+		{% INCLUDECSS '@vse_lightbox/lightbox3.css' %}
+		{% INCLUDEJS '@vse_lightbox/js/lightbox3.min.js' %}
 		{% DEFINE INCLUDED_LIGHTBOXJS = true %}
 	{% endif %}
 	<script>

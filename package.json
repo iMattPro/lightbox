@@ -23,7 +23,10 @@
 		]
 	},
 	"scripts": {
-		"copy-lightbox": "copyfiles -u 3 node_modules/lightbox3/dist/lightbox3.min.js node_modules/lightbox3/dist/lightbox3.min.js.map node_modules/lightbox3/dist/lightbox3.css styles/all/template/lightbox",
+		"build": "npm run copy-lightbox",
+		"copy-lightbox": "run-s copy-lightbox:js copy-lightbox:css",
+		"copy-lightbox:js": "copyfiles -u 3 node_modules/lightbox3/dist/lightbox3.min.js node_modules/lightbox3/dist/lightbox3.min.js.map styles/all/template/js",
+		"copy-lightbox:css": "copyfiles -u 3 node_modules/lightbox3/dist/lightbox3.css styles/all/theme",
 		"test": "jest",
 		"test:basic": "jest resizer.test.js",
 		"test:comprehensive": "jest resizer.comprehensive.test.js",
