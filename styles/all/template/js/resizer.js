@@ -95,7 +95,8 @@
 
 	const lightboxResizer = (container) => {
 		if (typeof vseLightbox === 'undefined' ||
-			(vseLightbox.resizeWidth <= 0 && vseLightbox.resizeHeight <= 0 && !vseLightbox.lightboxAll)) {
+			(vseLightbox.resizeWidth <= 0 && vseLightbox.resizeHeight <= 0 && !vseLightbox.lightboxAll) ||
+			!container) {
 			return;
 		}
 
