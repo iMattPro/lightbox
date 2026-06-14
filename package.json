@@ -1,13 +1,12 @@
 {
+	"private": true,
 	"author": "Matt Friedman",
 	"license": "GPL-2.0",
-	"dependencies": {
-		"lightbox3": "^1.1.0"
-	},
 	"devDependencies": {
 		"copyfiles": "^2.4.1",
-		"jest": "^29.7.0",
-		"jest-environment-jsdom": "^29.0.0",
+		"jest": "^30.4.2",
+		"jest-environment-jsdom": "^30.4.1",
+		"lightbox3": "^1.1.0",
 		"npm-run-all": "^4.1.5"
 	},
 	"jest": {
