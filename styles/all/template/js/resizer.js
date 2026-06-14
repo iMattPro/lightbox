@@ -2,19 +2,10 @@
 (() => {
 	'use strict';
 
-	const CONFIG = {
-		BORDER_COLOR: '#4ae'
-	};
-
-	const addBorderHover = (img) => {
+	const addLightboxAffordance = (img) => {
 		Object.assign(img.style, {
-			border: 'solid 3px transparent',
-			borderRadius: '6px',
-			transition: 'border-color 0.1s ease-out',
 			cursor: 'pointer'
 		});
-		img.addEventListener('mouseenter', () => img.style.borderColor = CONFIG.BORDER_COLOR);
-		img.addEventListener('mouseleave', () => img.style.borderColor = 'transparent');
 	};
 
 	const isOversized = (imgData) =>
@@ -90,7 +81,7 @@
 			const finalGalleryId = (vseLightbox.lightboxSig && img.closest('.signature')) ? index : galleryId;
 			createLightboxLink(img, finalGalleryId);
 		}
-		addBorderHover(img);
+		addLightboxAffordance(img);
 	};
 
 	const lightboxResizer = (container) => {

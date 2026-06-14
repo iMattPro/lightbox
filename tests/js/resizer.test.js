@@ -88,10 +88,15 @@ describe('Lightbox Resizer', () => {
 		expect(mockImg.parentElement.tagName).toBe('DIV');
 	});
 
-	test('should add hover effects to processed images', () => {
+	test('should add pointer cursor to processed images without visual border changes', () => {
 		lightboxResizer(mockContainer);
 
-		expect(mockImg.style.border).toBe('3px solid transparent');
+		expect(mockImg.style.border).toBe('');
+		expect(mockImg.style.borderColor).toBe('');
+		expect(mockImg.style.outline).toBe('');
+		expect(mockImg.style.outlineOffset).toBe('');
+		expect(mockImg.style.borderRadius).toBe('');
+		expect(mockImg.style.transition).toBe('');
 		expect(mockImg.style.cursor).toBe('pointer');
 	});
 
