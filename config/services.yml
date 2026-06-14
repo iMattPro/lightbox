@@ -1,8 +1,10 @@
 services:
     vse.lightbox.listener:
         class: vse\lightbox\event\listener
-        autowire: true
-        bind:
-            $php_ext: '%core.php_ext%'
+        arguments:
+            - '@config'
+            - '@language'
+            - '@template'
+            - '%core.php_ext%'
         tags:
             - { name: event.listener }
