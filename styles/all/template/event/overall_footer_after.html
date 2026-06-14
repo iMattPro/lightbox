@@ -2,18 +2,19 @@
 	{% INCLUDEJS '@vse_lightbox/js/resizer.js' %}
 	{# Test $INCLUDED_LIGHTBOXJS is not defined #}
 	{% if not definition.INCLUDED_LIGHTBOXJS %}
-		{% INCLUDECSS '@vse_lightbox/lightbox/css/lightbox.min.css' %}
-		{% INCLUDEJS '@vse_lightbox/lightbox/js/lightbox.min.js' %}
+		{% INCLUDECSS '@vse_lightbox/lightbox/lightbox3.css' %}
+		{% INCLUDEJS '@vse_lightbox/lightbox/lightbox3.min.js' %}
 		{% DEFINE INCLUDED_LIGHTBOXJS = true %}
 	{% endif %}
 	<script>
-		var vseLightbox = {};
-		vseLightbox.resizeHeight = {{ LIGHTBOX_RESIZE_HEIGHT }};
-		vseLightbox.resizeWidth = {{ LIGHTBOX_RESIZE_WIDTH }};
-		vseLightbox.lightboxGal = {{ S_LIGHTBOX_GALLERY }};
-		vseLightbox.lightboxSig = {{ S_LIGHTBOX_SIGNATURES }};
-		vseLightbox.imageTitles = {{ S_LIGHTBOX_IMG_TITLES }};
-		vseLightbox.lightboxAll = {{ S_LIGHTBOX_ALL_IMAGES }};
-		vseLightbox.downloadFile = 'download/file.{{ PHP_EXTENSION|escape("js") }}';
+		const vseLightbox = {
+			resizeHeight: {{ LIGHTBOX_RESIZE_HEIGHT }},
+			resizeWidth: {{ LIGHTBOX_RESIZE_WIDTH }},
+			lightboxGal: {{ S_LIGHTBOX_GALLERY }},
+			lightboxSig: {{ S_LIGHTBOX_SIGNATURES }},
+			imageTitles: {{ S_LIGHTBOX_IMG_TITLES }},
+			lightboxAll: {{ S_LIGHTBOX_ALL_IMAGES }},
+			downloadFile: 'download/file.{{ PHP_EXTENSION|escape("js") }}'
+		};
 	</script>
 {% endif %}
