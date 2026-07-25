@@ -8,7 +8,7 @@
 		'<': '&lt;',
 		'>': '&gt;',
 		'"': '&quot;',
-		"'": '&#39;'
+		'\'': '&#39;'
 	}[char]));
 
 	const addLightboxAffordance = (img) => {
