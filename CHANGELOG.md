@@ -1,5 +1,16 @@
 ## Changelog
 
+### 3.0.1 - 2026-07-25
+
+- Updated Lightbox3 to 1.2.1.
+- Fixed a stored XSS vulnerability in attachment image titles.
+- Fixed Lightbox initialization when all images are still loading.
+- Fixed gallery ID collisions for dynamically processed images and signature images.
+- Improved handling of images removed before deferred processing.
+- Improved image title entity handling.
+- Tightened validation of the gallery mode ACP setting.
+- Updated Polish translation.
+
 ### 3.0.0 - 2026-06-15
 
 - Updated to the new Lightbox3 library.
