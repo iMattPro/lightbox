@@ -84,6 +84,43 @@ describe('Lightbox Resizer - Comprehensive Tests', () => {
 		expect(mockImg.parentElement.getAttribute('data-title')).toBe('Test Image');
 	});
 
+	test('should encode attachment titles before passing them to Lightbox3', () => {
+		const maliciousTitle = '<img src=x onerror=alert(1)>.png';
+		mockImg.alt = maliciousTitle;
+		mockImg.src = 'download/file.php?id=123';
+		global.vseLightbox.imageTitles = true;
+
+		lightboxResizer(mockContainer);
+
+		const title = mockImg.parentElement.getAttribute('data-title');
+		const caption = document.createElement('span');
+		caption.innerHTML = title;
+
+		expect(title).toBe('&lt;img src=x onerror=alert(1)&gt;.png');
+		expect(caption.textContent).toBe(maliciousTitle);
+		expect(caption.firstElementChild).toBeNull();
+	});
+
+	test('should encode titles on images already wrapped in links', () => {
+		const maliciousTitle = '<img src=x onerror=alert(1)>.png';
+		const link = document.createElement('a');
+		mockImg.alt = maliciousTitle;
+		mockContainer.removeChild(mockImg);
+		link.appendChild(mockImg);
+		mockContainer.appendChild(link);
+		global.vseLightbox.imageTitles = true;
+
+		lightboxResizer(mockContainer);
+
+		const title = link.getAttribute('data-title');
+		const caption = document.createElement('span');
+		caption.innerHTML = title;
+
+		expect(title).toBe('&lt;img src=x onerror=alert(1)&gt;.png');
+		expect(caption.textContent).toBe(maliciousTitle);
+		expect(caption.firstElementChild).toBeNull();
+	});
+
 	test('should handle images in ABBC3 spoilers', () => {
 		const spoiler = document.createElement('div');
 		spoiler.className = 'abbc3-spoiler';

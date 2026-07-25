@@ -2,6 +2,15 @@
 (() => {
 	'use strict';
 
+	// Lightbox3 renders data-title using innerHTML, so caption text must be encoded here.
+	const escapeHtml = (value) => value.replace(/[&<>"']/g, (char) => ({
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;',
+		'"': '&quot;',
+		"'": '&#39;'
+	}[char]));
+
 	const addLightboxAffordance = (img) => {
 		Object.assign(img.style, {
 			cursor: 'pointer'
@@ -46,7 +55,7 @@
 
 		if (vseLightbox.imageTitles) {
 			const title = img.src.includes(vseLightbox.downloadFile) ? (img.alt || '') : (img.src.split('/').pop() || '');
-			link.setAttribute('data-title', title);
+			link.setAttribute('data-title', escapeHtml(title));
 		}
 
 		img.parentNode.insertBefore(link, img);
@@ -57,7 +66,7 @@
 		const parentLink = img.parentElement;
 		parentLink.setAttribute('data-lightbox', galleryId);
 		if (vseLightbox.imageTitles) {
-			parentLink.setAttribute('data-title', img.alt || '');
+			parentLink.setAttribute('data-title', escapeHtml(img.alt || ''));
 		}
 	};
 
