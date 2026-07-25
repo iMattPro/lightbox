@@ -1,4 +1,4 @@
-/*global vseLightbox, mChat*/
+/*global vseLightbox, mChat, Lightbox3*/
 (() => {
 	'use strict';
 
@@ -169,6 +169,13 @@
 	document.addEventListener('DOMContentLoaded', () => {
 		lightboxResizer(document);
 		initExtensionCompatibility();
+
+		// Ensure delegated handlers exist when all image processing was deferred.
+		setTimeout(() => {
+			if (typeof Lightbox3 !== 'undefined' && Lightbox3.Lightbox) {
+				Lightbox3.Lightbox.init();
+			}
+		}, 0);
 	});
 
 	document.addEventListener('click', handleSpoilerClick);

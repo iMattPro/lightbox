@@ -173,6 +173,25 @@ describe('Lightbox Resizer - Comprehensive Tests', () => {
 		}, 10);
 	});
 
+	test('should initialize Lightbox3 when all image processing is deferred', () => {
+		jest.useFakeTimers();
+		Object.defineProperty(mockImg, 'complete', { value: false, writable: true });
+		global.Lightbox3 = {
+			Lightbox: {
+				init: jest.fn()
+			}
+		};
+
+		document.dispatchEvent(new Event('DOMContentLoaded'));
+		expect(global.Lightbox3.Lightbox.init).not.toHaveBeenCalled();
+
+		jest.runOnlyPendingTimers();
+		expect(global.Lightbox3.Lightbox.init).toHaveBeenCalled();
+
+		delete global.Lightbox3;
+		jest.useRealTimers();
+	});
+
 	test('should handle PWA detection', () => {
 		window.matchMedia = jest.fn().mockImplementation(query => ({
 			matches: query === '(display-mode: standalone)',
