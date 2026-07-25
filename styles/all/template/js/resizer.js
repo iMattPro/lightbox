@@ -2,8 +2,18 @@
 (() => {
 	'use strict';
 
-	// Lightbox3 renders data-title using innerHTML, so caption text must be encoded here.
-	const escapeHtml = (value) => value.replace(/[&<>"']/g, (char) => ({
+	const standaloneGalleryIds = new WeakMap();
+	let nextStandaloneGalleryId = 0;
+
+	const decodeHtmlEntities = (value) => value.replace(/&(amp|lt|gt|quot);/g, (entity) => ({
+		'&amp;': '&',
+		'&lt;': '<',
+		'&gt;': '>',
+		'&quot;': '"'
+	}[entity]));
+
+	// Lightbox3 renders data-title using innerHTML, so title text must be escaped here.
+	const escapeHtml = (value) => decodeHtmlEntities(value).replace(/[&<>"']/g, (char) => ({
 		'&': '&amp;',
 		'<': '&lt;',
 		'>': '&gt;',
@@ -29,9 +39,16 @@
 		};
 	};
 
-	const getGalleryId = (img, index) => {
+	const getStandaloneGalleryId = (img) => {
+		if (!standaloneGalleryIds.has(img)) {
+			standaloneGalleryIds.set(img, nextStandaloneGalleryId++);
+		}
+		return standaloneGalleryIds.get(img);
+	};
+
+	const getGalleryId = (img) => {
 		if (vseLightbox.lightboxGal === 0) {
-			return index;
+			return getStandaloneGalleryId(img);
 		}
 		if (vseLightbox.lightboxGal === 2) {
 			const post = img.closest('.post');
@@ -70,8 +87,8 @@
 		}
 	};
 
-	const processImage = (img, index) => {
-		if (img.closest('.postlink')) {
+	const processImage = (img) => {
+		if (!img.parentElement || img.closest('.postlink')) {
 			return;
 		}
 
@@ -80,14 +97,16 @@
 			return;
 		}
 
-		const galleryIndex = getGalleryId(img, index);
+		const galleryIndex = getGalleryId(img);
 		const galleryId = 'post-gallery' + galleryIndex;
 		const parentLink = img.parentElement;
 
 		if (parentLink.tagName === 'A') {
 			setupAttachedImage(img, galleryId);
 		} else {
-			const finalGalleryId = (vseLightbox.lightboxSig && img.closest('.signature')) ? index : galleryId;
+			const finalGalleryId = (vseLightbox.lightboxSig && img.closest('.signature')) ?
+				'post-gallery' + getStandaloneGalleryId(img) :
+				galleryId;
 			createLightboxLink(img, finalGalleryId);
 		}
 		addLightboxAffordance(img);
@@ -103,13 +122,17 @@
 		const selector = vseLightbox.lightboxSig ? '.postimage' : '.postimage:not(.signature .postimage)';
 		const images = Array.from(container.querySelectorAll(selector)).filter(isImageVisible);
 
-		images.forEach((img, index) => {
+		images.forEach((img) => {
 			if (img.complete) {
-				processImage(img, index);
+				processImage(img);
 			} else {
-				const handler = () => processImage(img, index);
-				img.addEventListener('load', handler, { once: true });
-				img.addEventListener('error', handler, { once: true });
+				const handler = () => {
+					img.removeEventListener('load', handler);
+					img.removeEventListener('error', handler);
+					processImage(img);
+				};
+				img.addEventListener('load', handler);
+				img.addEventListener('error', handler);
 			}
 		});
 	};

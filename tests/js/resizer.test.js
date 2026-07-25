@@ -18,10 +18,10 @@ describe('Lightbox Resizer', () => {
 		// Extract functions for testing
 		const modifiedCode = resizerCode
 			.replace('const lightboxResizer = (container) =>', 'global.lightboxResizer = (container) =>')
-			.replace('const processImage = (img, index) =>', 'global.processImage = (img, index) =>')
+			.replace('const processImage = (img) =>', 'global.processImage = (img) =>')
 			.replace('const isImageVisible = (img) =>', 'global.isImageVisible = (img) =>')
 			.replace('const getImageDimensions = (img) =>', 'global.getImageDimensions = (img) =>')
-			.replace('const getGalleryId = (img, index) =>', 'global.getGalleryId = (img, index) =>');
+			.replace('const getGalleryId = (img) =>', 'global.getGalleryId = (img) =>');
 		eval(modifiedCode);
 		lightboxResizer = global.lightboxResizer;
 

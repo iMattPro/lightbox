@@ -11,14 +11,23 @@ describe('Lightbox Resizer - Comprehensive Tests', () => {
 
 	beforeEach(() => {
 		document.body.innerHTML = '';
+		Object.assign(global.vseLightbox, {
+			resizeWidth: 800,
+			resizeHeight: 600,
+			lightboxAll: true,
+			lightboxSig: true,
+			lightboxGal: 0,
+			imageTitles: true,
+			downloadFile: 'download/file.php'
+		});
 		const resizerPath = path.join(__dirname, '../../styles/all/template/js/resizer.js');
 		const resizerCode = fs.readFileSync(resizerPath, 'utf8');
 		const modifiedCode = resizerCode
 			.replace('const lightboxResizer = (container) =>', 'global.lightboxResizer = (container) =>')
-			.replace('const processImage = (img, index) =>', 'global.processImage = (img, index) =>')
+			.replace('const processImage = (img) =>', 'global.processImage = (img) =>')
 			.replace('const isImageVisible = (img) =>', 'global.isImageVisible = (img) =>')
 			.replace('const getImageDimensions = (img) =>', 'global.getImageDimensions = (img) =>')
-			.replace('const getGalleryId = (img, index) =>', 'global.getGalleryId = (img, index) =>');
+			.replace('const getGalleryId = (img) =>', 'global.getGalleryId = (img) =>');
 		eval(modifiedCode);
 		lightboxResizer = global.lightboxResizer;
 
@@ -74,6 +83,23 @@ describe('Lightbox Resizer - Comprehensive Tests', () => {
 		expect(mockImg.parentElement.getAttribute('data-lightbox')).toBe('post-galleryp123');
 	});
 
+	test('should assign unique standalone gallery IDs across processing passes', () => {
+		const secondContainer = document.createElement('div');
+		const secondImg = document.createElement('img');
+		secondImg.className = 'postimage';
+		secondImg.src = 'second.jpg';
+		Object.defineProperty(secondImg, 'complete', { value: true });
+		secondImg.getBoundingClientRect = jest.fn(() => ({ width: 1000, height: 800 }));
+		secondContainer.appendChild(secondImg);
+		document.body.appendChild(secondContainer);
+
+		lightboxResizer(mockContainer);
+		lightboxResizer(secondContainer);
+
+		expect(mockImg.parentElement.getAttribute('data-lightbox'))
+			.not.toBe(secondImg.parentElement.getAttribute('data-lightbox'));
+	});
+
 	test('should add image titles when enabled', () => {
 		mockImg.alt = 'Test Image';
 		mockImg.src = 'download/file.php?id=123';
@@ -98,6 +124,21 @@ describe('Lightbox Resizer - Comprehensive Tests', () => {
 
 		expect(title).toBe('&lt;img src=x onerror=alert(1)&gt;.png');
 		expect(caption.textContent).toBe(maliciousTitle);
+		expect(caption.firstElementChild).toBeNull();
+	});
+
+	test('should normalize phpBB-encoded entities before encoding titles', () => {
+		mockImg.alt = 'A&amp;B &lt;example&gt; &quot;caption&quot;';
+		mockImg.src = 'download/file.php?id=123';
+
+		lightboxResizer(mockContainer);
+
+		const title = mockImg.parentElement.getAttribute('data-title');
+		const caption = document.createElement('span');
+		caption.innerHTML = title;
+
+		expect(title).toBe('A&amp;B &lt;example&gt; &quot;caption&quot;');
+		expect(caption.textContent).toBe('A&B <example> "caption"');
 		expect(caption.firstElementChild).toBeNull();
 	});
 
@@ -171,6 +212,18 @@ describe('Lightbox Resizer - Comprehensive Tests', () => {
 				done();
 			}, 10);
 		}, 10);
+	});
+
+	test('should ignore deferred events after an image is removed', () => {
+		Object.defineProperty(mockImg, 'complete', { value: false, writable: true });
+
+		lightboxResizer(mockContainer);
+		mockContainer.removeChild(mockImg);
+		mockImg.dispatchEvent(new Event('load'));
+		mockContainer.appendChild(mockImg);
+		mockImg.dispatchEvent(new Event('error'));
+
+		expect(mockImg.parentElement).toBe(mockContainer);
 	});
 
 	test('should initialize Lightbox3 when all image processing is deferred', () => {
