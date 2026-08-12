@@ -1,13 +1,13 @@
 # Lightbox extension for phpBB
 
-This extension adds the [Lightbox 3](https://lokeshdhakar.com/projects/lightbox3/) jQuery plugin to phpBB. It will resize posted images to a maximum set width and/or height and display them full-screen in a Lightbox overlay effect.
+This extension adds the [Lightbox 3](https://lokeshdhakar.com/projects/lightbox3/) plugin to phpBB. It will resize posted images to a maximum set width and/or height and display them full-screen in a Lightbox overlay effect.
 
 [![Build Status](https://github.com/iMattPro/lightbox/actions/workflows/tests.yml/badge.svg)](https://github.com/iMattPro/lightbox/actions)
 [![codecov](https://codecov.io/gh/iMattPro/lightbox/branch/master/graph/badge.svg?token=YnBuha7JFN)](https://codecov.io/gh/iMattPro/lightbox)
 [![Latest Stable Version](https://poser.pugx.org/vse/lightbox/v/stable)](https://www.phpbb.com/customise/db/extension/lightbox/)
 
 ## Minimum Requirements
-* phpBB 3.2.0
+* phpBB 3.2.1
 * PHP 5.4
 
 ## Install
