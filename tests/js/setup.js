@@ -6,8 +6,7 @@ global.vseLightbox = {
 	lightboxAll: true,
 	lightboxSig: true,
 	lightboxGal: 0,
-	imageTitles: true,
-	downloadFile: 'download/file.php'
+	imageTitles: true
 };
 
 global.mChat = {};

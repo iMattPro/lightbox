@@ -71,7 +71,8 @@
 		link.setAttribute('data-lightbox', galleryId);
 
 		if (vseLightbox.imageTitles) {
-			const title = img.src.includes(vseLightbox.downloadFile) ? (img.alt || '') : (img.src.split('/').pop() || '');
+			const isAttachment = img.parentElement.matches('.attach-image');
+			const title = isAttachment ? (img.alt || '') : (new URL(img.currentSrc || img.src, document.baseURI).pathname.split('/').pop() || '');
 			link.setAttribute('data-title', escapeHtml(title));
 		}
 

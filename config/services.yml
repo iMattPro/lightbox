@@ -5,6 +5,5 @@ services:
             - '@config'
             - '@language'
             - '@template'
-            - '%core.php_ext%'
         tags:
             - { name: event.listener }

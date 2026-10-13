@@ -26,24 +26,19 @@ class listener implements EventSubscriberInterface
 	/** @var \phpbb\template\template */
 	protected $template;
 
-	/** @var string PHP file extension */
-	protected $php_ext;
-
 	/**
 	 * Constructor
 	 *
 	 * @param \phpbb\config\config     $config   Config object
 	 * @param \phpbb\language\language $language
 	 * @param \phpbb\template\template $template Template object
-	 * @param string                   $php_ext
 	 * @access public
 	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\language\language $language, \phpbb\template\template $template, $php_ext)
+	public function __construct(\phpbb\config\config $config, \phpbb\language\language $language, \phpbb\template\template $template)
 	{
 		$this->config = $config;
 		$this->language = $language;
 		$this->template = $template;
-		$this->php_ext = $php_ext;
 	}
 
 	/**
@@ -76,7 +71,6 @@ class listener implements EventSubscriberInterface
 			'S_LIGHTBOX_GALLERY'	 => (int) $this->config['lightbox_gallery'],
 			'S_LIGHTBOX_SIGNATURES'	 => (int) $this->config['lightbox_signatures'],
 			'S_LIGHTBOX_IMG_TITLES'	 => (int) $this->config['lightbox_img_titles'],
-			'PHP_EXTENSION'			 => $this->php_ext,
 		]);
 	}
 

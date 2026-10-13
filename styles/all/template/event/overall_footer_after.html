@@ -8,13 +8,12 @@
 	{% endif %}
 	<script>
 		const vseLightbox = {
-			resizeHeight: {{ LIGHTBOX_RESIZE_HEIGHT }},
-			resizeWidth: {{ LIGHTBOX_RESIZE_WIDTH }},
-			lightboxGal: {{ S_LIGHTBOX_GALLERY }},
-			lightboxSig: {{ S_LIGHTBOX_SIGNATURES }},
-			imageTitles: {{ S_LIGHTBOX_IMG_TITLES }},
-			lightboxAll: {{ S_LIGHTBOX_ALL_IMAGES }},
-			downloadFile: 'download/file.{{ PHP_EXTENSION|escape("js") }}'
+			resizeHeight: {{ LIGHTBOX_RESIZE_HEIGHT|int }},
+			resizeWidth: {{ LIGHTBOX_RESIZE_WIDTH|int }},
+			lightboxGal: {{ S_LIGHTBOX_GALLERY|int }},
+			lightboxSig: {{ S_LIGHTBOX_SIGNATURES|int }},
+			imageTitles: {{ S_LIGHTBOX_IMG_TITLES|int }},
+			lightboxAll: {{ S_LIGHTBOX_ALL_IMAGES|int }}
 		};
 	</script>
 {% endif %}

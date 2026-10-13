@@ -8,6 +8,12 @@ const path = require('path');
 
 describe('Lightbox Resizer - Comprehensive Tests', () => {
 	let mockImg, mockContainer, lightboxResizer;
+	const wrapAsAttachment = () => {
+		const attachment = document.createElement('dt');
+		attachment.className = 'attach-image';
+		mockContainer.replaceChild(attachment, mockImg);
+		attachment.appendChild(mockImg);
+	};
 
 	beforeEach(() => {
 		document.body.innerHTML = '';
@@ -17,8 +23,7 @@ describe('Lightbox Resizer - Comprehensive Tests', () => {
 			lightboxAll: true,
 			lightboxSig: true,
 			lightboxGal: 0,
-			imageTitles: true,
-			downloadFile: 'download/file.php'
+			imageTitles: true
 		});
 		const resizerPath = path.join(__dirname, '../../styles/all/template/js/resizer.js');
 		const resizerCode = fs.readFileSync(resizerPath, 'utf8');
@@ -100,9 +105,10 @@ describe('Lightbox Resizer - Comprehensive Tests', () => {
 			.not.toBe(secondImg.parentElement.getAttribute('data-lightbox'));
 	});
 
-	test('should add image titles when enabled', () => {
+	test('should use alt text for attachment titles', () => {
 		mockImg.alt = 'Test Image';
-		mockImg.src = 'download/file.php?id=123';
+		mockImg.src = 'attachments/opaque-image-route?id=123';
+		wrapAsAttachment();
 		global.vseLightbox.imageTitles = true;
 
 		lightboxResizer(mockContainer);
@@ -110,10 +116,20 @@ describe('Lightbox Resizer - Comprehensive Tests', () => {
 		expect(mockImg.parentElement.getAttribute('data-title')).toBe('Test Image');
 	});
 
+	test('should use URL pathname for BBCode image titles', () => {
+		mockImg.alt = 'Image';
+		mockImg.src = 'download/file.php?id=123#preview';
+
+		lightboxResizer(mockContainer);
+
+		expect(mockImg.parentElement.getAttribute('data-title')).toBe('file.php');
+	});
+
 	test('should encode attachment titles before passing them to Lightbox3', () => {
 		const maliciousTitle = '<img src=x onerror=alert(1)>.png';
 		mockImg.alt = maliciousTitle;
-		mockImg.src = 'download/file.php?id=123';
+		mockImg.src = 'attachments/opaque-image-route?id=123';
+		wrapAsAttachment();
 		global.vseLightbox.imageTitles = true;
 
 		lightboxResizer(mockContainer);
@@ -129,7 +145,8 @@ describe('Lightbox Resizer - Comprehensive Tests', () => {
 
 	test('should normalize phpBB-encoded entities before encoding titles', () => {
 		mockImg.alt = 'A&amp;B &lt;example&gt; &quot;caption&quot;';
-		mockImg.src = 'download/file.php?id=123';
+		mockImg.src = 'attachments/opaque-image-route?id=123';
+		wrapAsAttachment();
 
 		lightboxResizer(mockContainer);
 

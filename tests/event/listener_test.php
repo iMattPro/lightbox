@@ -26,9 +26,6 @@ class listener_test extends \phpbb_test_case
 	/** @var \phpbb\template\template|\PHPUnit\Framework\MockObject\MockObject */
 	protected $template;
 
-	/** @var string PHP file extension */
-	protected $php_ext;
-
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -38,7 +35,6 @@ class listener_test extends \phpbb_test_case
 		$this->config = new \phpbb\config\config(array());
 		$this->language = new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx));
 		$this->template = $this->createMock('\phpbb\template\template');
-		$this->php_ext = $phpEx;
 
 		$user = new \phpbb\user($this->language, '\phpbb\datetime');
 	}
@@ -48,8 +44,7 @@ class listener_test extends \phpbb_test_case
 		$this->listener = new \vse\lightbox\event\listener(
 			$this->config,
 			$this->language,
-			$this->template,
-			$this->php_ext
+			$this->template
 		);
 	}
 
@@ -122,7 +117,6 @@ class listener_test extends \phpbb_test_case
 				'S_LIGHTBOX_GALLERY'	=> (int) $lightbox_gallery,
 				'S_LIGHTBOX_SIGNATURES'	=> (int) $lightbox_signatures,
 				'S_LIGHTBOX_IMG_TITLES'	=> (int) $lightbox_img_titles,
-				'PHP_EXTENSION'			=> 'php',
 			));
 
 		$dispatcher = new \phpbb\event\dispatcher();
